@@ -162,7 +162,7 @@ body{
 
 
 /* =====================================================
-   CABEÇALHO DAS TELAS
+   TELAS
 ===================================================== */
 
 .screen{
@@ -216,7 +216,7 @@ body{
 
 
 /* =====================================================
-   GRID DE BOTÕES
+   GRID
 ===================================================== */
 
 .option-grid{
@@ -233,14 +233,16 @@ body{
 
 
 /* =====================================================
-   BOTÃO PRINCIPAL
+   BOTÕES
 ===================================================== */
 
 .option{
 
   min-height:145px;
 
-  border:1px solid #35363a;
+  border:
+    1px solid
+    #35363a;
 
   border-radius:25px;
 
@@ -409,7 +411,7 @@ body{
 
 .employee{
 
-  min-height:110px;
+  min-height:125px;
 
   background:
     linear-gradient(
@@ -422,7 +424,7 @@ body{
 
 .employee .option-icon{
 
-  font-size:42px;
+  font-size:45px;
 
 }
 
@@ -567,7 +569,7 @@ body{
 
 
 /* =====================================================
-   RETIRADA / DEVOLUÇÃO NA CONFIRMAÇÃO
+   MOVIMENTO
 ===================================================== */
 
 .confirm-movement{
@@ -591,8 +593,7 @@ body{
   background:
     rgba(255,23,38,.15);
 
-  color:
-    #ff5963;
+  color:#ff5963;
 
 }
 
@@ -601,8 +602,7 @@ body{
   background:
     rgba(22,212,107,.15);
 
-  color:
-    var(--green);
+  color:var(--green);
 
 }
 
@@ -840,7 +840,7 @@ body{
 
 
 /* =====================================================
-   CELULAR / TABLET
+   TABLET
 ===================================================== */
 
 @media(max-width:700px){
@@ -854,6 +854,7 @@ body{
 
   }
 
+
   .logo{
 
     width:94%;
@@ -861,6 +862,7 @@ body{
     max-height:100px;
 
   }
+
 
   .subtitle{
 
@@ -870,11 +872,13 @@ body{
 
   }
 
+
   .brand-line{
 
     margin-bottom:18px;
 
   }
+
 
   .screen-title{
 
@@ -884,6 +888,7 @@ body{
 
   }
 
+
   .screen-subtitle{
 
     font-size:16px;
@@ -892,61 +897,182 @@ body{
 
   }
 
+
+  /* ==========================================
+     DUAS COLUNAS NO TABLET
+  ========================================== */
+
   .option-grid{
 
-    grid-template-columns:1fr;
+    grid-template-columns:
+      1fr
+      1fr;
 
     gap:12px;
 
   }
 
+
+  /* ==========================================
+     BOTÕES NO TABLET
+  ========================================== */
+
   .option{
 
-    min-height:105px;
+    min-height:110px;
 
-    padding:15px;
+    padding:
+      12px
+      8px;
 
-    flex-direction:row;
+    flex-direction:column;
 
-    justify-content:flex-start;
+    justify-content:center;
 
-    text-align:left;
-
-  }
-
-  .option-icon{
-
-    font-size:40px;
-
-    min-width:55px;
+    align-items:center;
 
     text-align:center;
 
+    gap:5px;
+
   }
 
+
+  .option-icon{
+
+    font-size:38px;
+
+  }
+
+
   .option-name{
+
+    font-size:19px;
+
+    line-height:1.1;
+
+  }
+
+
+  .option-description{
+
+    font-size:12px;
+
+  }
+
+
+  /* ==========================================
+     RETIRADA / DEVOLUÇÃO
+  ========================================== */
+
+  .option.retirada,
+  .option.devolucao{
+
+    min-height:125px;
+
+  }
+
+
+  .option.retirada .option-icon,
+  .option.devolucao .option-icon{
+
+    font-size:45px;
+
+  }
+
+
+  .option.retirada .option-name,
+  .option.devolucao .option-name{
 
     font-size:21px;
 
   }
 
-  .option-description{
 
-    font-size:14px;
+  /* ==========================================
+     COLABORADORES
+  ========================================== */
+
+  .employee{
+
+    min-height:105px;
 
   }
+
+
+  .employee .option-icon{
+
+    font-size:36px;
+
+  }
+
+
+  .employee .option-name{
+
+    font-size:18px;
+
+  }
+
+
+  /* ==========================================
+     CATEGORIAS
+  ========================================== */
 
   .category{
 
-    min-height:90px;
+    min-height:105px;
 
   }
+
+
+  .category .option-icon{
+
+    font-size:38px;
+
+  }
+
+
+  .category .option-name{
+
+    font-size:18px;
+
+  }
+
+
+  /* ==========================================
+     ITENS
+  ========================================== */
 
   .item{
 
-    min-height:90px;
+    min-height:105px;
+
+    align-items:center;
+
+    text-align:center;
 
   }
+
+
+  .item .option-icon{
+
+    font-size:34px;
+
+  }
+
+
+  .item .option-name{
+
+    width:100%;
+
+    font-size:17px;
+
+  }
+
+
+  /* ==========================================
+     CONFIRMAÇÃO
+  ========================================== */
 
   .confirm-card{
 
@@ -954,11 +1080,13 @@ body{
 
   }
 
+
   .confirm-row{
 
     padding:14px 0;
 
   }
+
 
   .confirm-icon{
 
@@ -968,21 +1096,53 @@ body{
 
   }
 
+
   .confirm-value{
 
     font-size:20px;
 
   }
 
+
   .confirm-buttons{
 
-    grid-template-columns:1fr;
+    grid-template-columns:
+      1fr
+      1fr;
 
   }
+
 
   .confirm-button{
 
     min-height:65px;
+
+    font-size:17px;
+
+  }
+
+
+  /* ==========================================
+     HISTÓRICO
+  ========================================== */
+
+  .history-card{
+
+    padding:14px;
+
+  }
+
+
+  .history-main{
+
+    font-size:15px;
+
+  }
+
+
+  .history-small{
+
+    font-size:12px;
 
   }
 
@@ -990,14 +1150,128 @@ body{
 
 
 /* =====================================================
-   TABLET
+   CELULAR PEQUENO
 ===================================================== */
 
-@media(min-width:701px) and (max-width:1100px){
+@media(max-width:430px){
+
+  .option-grid{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:8px;
+
+  }
+
 
   .option{
 
-    min-height:130px;
+    min-height:95px;
+
+    padding:
+      8px
+      5px;
+
+  }
+
+
+  .option-icon{
+
+    font-size:32px;
+
+  }
+
+
+  .option-name{
+
+    font-size:16px;
+
+  }
+
+
+  .option-description{
+
+    display:none;
+
+  }
+
+
+  .employee{
+
+    min-height:90px;
+
+  }
+
+
+  .employee .option-name{
+
+    font-size:16px;
+
+  }
+
+
+  .category{
+
+    min-height:95px;
+
+  }
+
+
+  .category .option-name{
+
+    font-size:16px;
+
+  }
+
+
+  .item{
+
+    min-height:95px;
+
+  }
+
+
+  .item .option-name{
+
+    font-size:15px;
+
+  }
+
+
+  .confirm-buttons{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+
+/* =====================================================
+   TABLETS GRANDES / PAISAGEM
+===================================================== */
+
+@media(min-width:701px){
+
+  .employee{
+
+    min-height:135px;
+
+  }
+
+
+  .employee .option-icon{
+
+    font-size:50px;
+
+  }
+
+
+  .employee .option-name{
+
+    font-size:25px;
 
   }
 
@@ -1037,7 +1311,6 @@ body{
 
 <!-- =====================================================
      TELA 1
-     RETIRADA OU DEVOLUÇÃO
 ===================================================== -->
 
 <section
@@ -1108,8 +1381,7 @@ body{
 
 
 <!-- =====================================================
-     TELA 2
-     COLABORADOR
+     TELA 2 — COLABORADORES
 ===================================================== -->
 
 <section
@@ -1147,8 +1419,7 @@ body{
 
 
 <!-- =====================================================
-     TELA 3
-     CATEGORIA
+     TELA 3 — CATEGORIAS
 ===================================================== -->
 
 <section
@@ -1186,8 +1457,7 @@ body{
 
 
 <!-- =====================================================
-     TELA 4
-     ITEM
+     TELA 4 — ITENS
 ===================================================== -->
 
 <section
@@ -1229,8 +1499,7 @@ body{
 
 
 <!-- =====================================================
-     TELA 5
-     CONFIRMAÇÃO
+     TELA 5 — CONFIRMAÇÃO
 ===================================================== -->
 
 <section
@@ -1371,18 +1640,14 @@ body{
   <div class="history-card">
 
     <div class="history-title">
-
       📋 ÚLTIMAS MOVIMENTAÇÕES
-
     </div>
 
 
     <div id="historyList">
 
       <div class="empty">
-
         Nenhuma movimentação registrada.
-
       </div>
 
     </div>
@@ -1457,7 +1722,7 @@ const COLABORADORES = [
 
 
 /* =====================================================
-   CATEGORIAS
+   CATEGORIAS E ITENS
 ===================================================== */
 
 const CATEGORIAS = {
@@ -1581,7 +1846,7 @@ const CATEGORIAS = {
 
 
 /* =====================================================
-   VARIÁVEIS DA OPERAÇÃO
+   VARIÁVEIS
 ===================================================== */
 
 let movement = null;
@@ -1594,18 +1859,22 @@ let selectedItem = null;
 
 
 /* =====================================================
-   TELA
+   TROCAR TELA
 ===================================================== */
 
 function goToScreen(number){
 
   document
     .querySelectorAll(".screen")
-    .forEach(screen => {
+    .forEach(
+      screen => {
 
-      screen.classList.remove("active");
+        screen.classList.remove(
+          "active"
+        );
 
-    });
+      }
+    );
 
 
   const target =
@@ -1616,7 +1885,9 @@ function goToScreen(number){
 
   if(target){
 
-    target.classList.add("active");
+    target.classList.add(
+      "active"
+    );
 
   }
 
@@ -1639,14 +1910,18 @@ function goToScreen(number){
 function toast(message){
 
   const el =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
 
   el.textContent =
     message;
 
 
-  el.classList.add("show");
+  el.classList.add(
+    "show"
+  );
 
 
   clearTimeout(
@@ -1658,7 +1933,9 @@ function toast(message){
     setTimeout(
       () => {
 
-        el.classList.remove("show");
+        el.classList.remove(
+          "show"
+        );
 
       },
       2500
@@ -1668,8 +1945,7 @@ function toast(message){
 
 
 /* =====================================================
-   TELA 1
-   ESCOLHER RETIRADA / DEVOLUÇÃO
+   RETIRADA / DEVOLUÇÃO
 ===================================================== */
 
 function selectMovement(tipo){
@@ -1708,7 +1984,8 @@ function renderEmployees(){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   COLABORADORES.forEach(
@@ -1716,7 +1993,9 @@ function renderEmployees(){
 
 
       const button =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
 
       button.className =
@@ -1745,10 +2024,15 @@ function renderEmployees(){
 
 
       button.onclick =
-        () => selectEmployee(nome);
+        () =>
+          selectEmployee(
+            nome
+          );
 
 
-      box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
     }
   );
@@ -1786,51 +2070,62 @@ function renderCategories(){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
-  Object.entries(CATEGORIAS)
-    .forEach(
-      ([nome, categoria]) => {
+  Object.entries(
+    CATEGORIAS
+  )
+  .forEach(
+    ([nome,categoria]) => {
 
 
-        const button =
-          document.createElement("button");
+      const button =
+        document.createElement(
+          "button"
+        );
 
 
-        button.className =
-          "option category";
+      button.className =
+        "option category";
 
 
-        button.innerHTML = `
+      button.innerHTML = `
 
-          <div class="option-icon">
-            ${categoria.icon}
+        <div class="option-icon">
+          ${categoria.icon}
+        </div>
+
+        <div>
+
+          <div class="option-name">
+            ${escapeHtml(nome)}
           </div>
 
-          <div>
-
-            <div class="option-name">
-              ${escapeHtml(nome)}
-            </div>
-
-            <div class="option-description">
-              ${categoria.items.length} opções
-            </div>
-
+          <div class="option-description">
+            ${categoria.items.length}
+            opções
           </div>
 
-        `;
+        </div>
+
+      `;
 
 
-        button.onclick =
-          () => selectCategory(nome);
+      button.onclick =
+        () =>
+          selectCategory(
+            nome
+          );
 
 
-        box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
-      }
-    );
+    }
+  );
 
 }
 
@@ -1871,7 +2166,8 @@ function renderItems(){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   const categoria =
@@ -1889,7 +2185,9 @@ function renderItems(){
 
 
       const button =
-        document.createElement("button");
+        document.createElement(
+          "button"
+        );
 
 
       button.className =
@@ -1905,7 +2203,9 @@ function renderItems(){
         <div>
 
           <div class="option-name">
-            ${escapeHtml(itemName)}
+            ${escapeHtml(
+              itemName
+            )}
           </div>
 
           <div class="option-description">
@@ -1918,10 +2218,15 @@ function renderItems(){
 
 
       button.onclick =
-        () => selectItem(itemName);
+        () =>
+          selectItem(
+            itemName
+          );
 
 
-      box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
     }
   );
@@ -1961,12 +2266,15 @@ function showConfirmation(){
 
   movementEl.innerHTML = `
 
-    <span class="confirm-movement
+    <span class="
+      confirm-movement
       ${
-        movement === "RETIRADA"
+        movement ===
+        "RETIRADA"
           ? "retirada"
           : "devolucao"
-      }">
+      }
+    ">
 
       ${movement}
 
@@ -1990,7 +2298,7 @@ function showConfirmation(){
 
 
 /* =====================================================
-   CONFIRMAR
+   CONFIRMAR MOVIMENTAÇÃO
 ===================================================== */
 
 function confirmMovement(){
@@ -2021,23 +2329,18 @@ function confirmMovement(){
   records.push({
 
     dataHora:
-
       dataHora,
 
     movimento:
-
       movement,
 
     funcionario:
-
       selectedEmployee,
 
     categoria:
-
       selectedCategory,
 
     item:
-
       selectedItem
 
   });
@@ -2076,7 +2379,7 @@ function cancelSelection(){
 
 
 /* =====================================================
-   RESETAR OPERAÇÃO
+   RESETAR
 ===================================================== */
 
 function resetOperation(){
@@ -2109,7 +2412,9 @@ function saveRecords(){
 
     STORAGE_KEY,
 
-    JSON.stringify(records)
+    JSON.stringify(
+      records
+    )
 
   );
 
@@ -2157,9 +2462,11 @@ function renderHistory(){
       .map(
         r => `
 
-          <div class="history-item">
+          <div
+            class="history-item">
 
-            <div class="history-main">
+            <div
+              class="history-main">
 
               <span>
 
@@ -2170,7 +2477,9 @@ function renderHistory(){
                     : "📥"
                 }
 
-                ${escapeHtml(r.item)}
+                ${escapeHtml(
+                  r.item
+                )}
 
               </span>
 
@@ -2185,7 +2494,8 @@ function renderHistory(){
             </div>
 
 
-            <div class="history-small">
+            <div
+              class="history-small">
 
               👤
               ${escapeHtml(
@@ -2218,7 +2528,7 @@ function renderHistory(){
 
 
 /* =====================================================
-   ESCAPE HTML
+   SEGURANÇA
 ===================================================== */
 
 function escapeHtml(value){
@@ -2256,7 +2566,7 @@ function escapeHtml(value){
 
 
 /* =====================================================
-   EXPORTAR CSV
+   CSV
 ===================================================== */
 
 function exportCSV(){
@@ -2384,7 +2694,9 @@ function exportCSV(){
     ".csv";
 
 
-  document.body.appendChild(a);
+  document.body.appendChild(
+    a
+  );
 
 
   a.click();
@@ -2406,7 +2718,7 @@ function exportCSV(){
 
 
 /* =====================================================
-   INICIAR
+   INICIALIZAÇÃO
 ===================================================== */
 
 renderHistory();
