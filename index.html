@@ -169,16 +169,69 @@ body{
 
 
 /* =========================================================
+   STATUS FIREBASE
+========================================================= */
+
+.firebase-status{
+
+  width:max-content;
+
+  max-width:90%;
+
+  margin:
+    0
+    auto
+    12px;
+
+  padding:
+    7px
+    13px;
+
+  border-radius:30px;
+
+  font-size:13px;
+
+  font-weight:900;
+
+  background:#17181b;
+
+  border:1px solid #303136;
+
+  color:#aaa;
+
+}
+
+.firebase-status.online{
+
+  color:#16d46b;
+
+  border-color:#16d46b;
+
+}
+
+.firebase-status.offline{
+
+  color:#ff5b64;
+
+  border-color:#ff5b64;
+
+}
+
+
+/* =========================================================
    TOPO DAS TELAS
 ========================================================= */
 
 .page-top{
 
-  display:flex;
+  display:grid;
+
+  grid-template-columns:
+    auto
+    1fr
+    auto;
 
   align-items:center;
-
-  justify-content:space-between;
 
   gap:12px;
 
@@ -196,6 +249,8 @@ body{
     );
 
   font-weight:900;
+
+  text-align:center;
 
 }
 
@@ -222,7 +277,9 @@ body{
 }
 
 .back-button:active{
+
   transform:scale(.97);
+
 }
 
 
@@ -254,7 +311,7 @@ body{
 
 
 /* =========================================================
-   PERGUNTA INICIAL
+   PERGUNTAS
 ========================================================= */
 
 .question{
@@ -294,7 +351,7 @@ body{
 
 
 /* =========================================================
-   BOTÕES RETIRADA / DEVOLUÇÃO
+   RETIRADA / DEVOLUÇÃO
 ========================================================= */
 
 .movement-choice{
@@ -531,7 +588,7 @@ body{
 
 
 /* =========================================================
-   TELA
+   TELAS
 ========================================================= */
 
 .screen{
@@ -909,20 +966,16 @@ body{
 @media(min-width:701px){
 
   .app{
-    padding-top:20px;
-  }
 
-  .options-grid{
-    grid-template-columns:
-      1fr
-      1fr;
+    padding-top:20px;
+
   }
 
 }
 
 
 /* =========================================================
-   TABLET / CELULAR
+   TABLET
 ========================================================= */
 
 @media(max-width:700px){
@@ -1126,11 +1179,19 @@ body{
 
   <div class="brand-line"></div>
 
+  <div
+    class="firebase-status"
+    id="firebaseStatus"
+  >
+    🔄 CONECTANDO...
+  </div>
+
 </header>
 
 
+
 <!-- =====================================================
-     TELA 1 — RETIRADA / DEVOLUÇÃO
+     TELA 1 — MOVIMENTO
 ===================================================== -->
 
 <section
@@ -1140,9 +1201,13 @@ body{
 
   <div class="page-top">
 
+    <div></div>
+
     <div class="page-title">
       MOVIMENTAÇÃO
     </div>
+
+    <div></div>
 
   </div>
 
@@ -1577,16 +1642,97 @@ body{
 
 
 
-<script>
+<!-- =====================================================
+     FIREBASE + SISTEMA
+===================================================== -->
+
+<script type="module">
 
 /* =========================================================
-   BANCO DE DADOS
+   FIREBASE
 ========================================================= */
 
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-/* ---------------------------------------------------------
+
+import {
+
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  remove
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+
+
+/* =========================================================
+   CONFIGURAÇÃO FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyBi1X3MH9qeYQ0aZygiSvB3EL0Wp6ivF48",
+
+  authDomain:
+    "arasigns-almoxarifado.firebaseapp.com",
+
+  databaseURL:
+    "https://arasigns-almoxarifado-default-rtdb.firebaseio.com",
+
+  projectId:
+    "arasigns-almoxarifado",
+
+  storageBucket:
+    "arasigns-almoxarifado.firebasestorage.app",
+
+  messagingSenderId:
+    "326745400090",
+
+  appId:
+    "1:326745400090:web:091ffa5fa7734be50e02a3"
+
+};
+
+
+
+/* =========================================================
+   INICIAR FIREBASE
+========================================================= */
+
+const app =
+  initializeApp(
+    firebaseConfig
+  );
+
+
+const db =
+  getDatabase(
+    app
+  );
+
+
+
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
+
+const MOVIMENTACOES_PATH =
+  "movimentacoes";
+
+
+
+/* =========================================================
    COLABORADORES
---------------------------------------------------------- */
+========================================================= */
 
 const COLABORADORES = [
 
@@ -1608,9 +1754,10 @@ const COLABORADORES = [
 ];
 
 
-/* ---------------------------------------------------------
+
+/* =========================================================
    EMOJIS DOS COLABORADORES
---------------------------------------------------------- */
+========================================================= */
 
 const COLABORADOR_ICONS = {
 
@@ -1629,9 +1776,10 @@ const COLABORADOR_ICONS = {
 };
 
 
-/* ---------------------------------------------------------
-   CATEGORIAS E ITENS
---------------------------------------------------------- */
+
+/* =========================================================
+   CATEGORIAS
+========================================================= */
 
 const CATEGORIAS = {
 
@@ -1755,6 +1903,7 @@ const CATEGORIAS = {
 };
 
 
+
 /* =========================================================
    EMOJIS DOS ITENS
 ========================================================= */
@@ -1830,43 +1979,28 @@ const ITEM_ICONS = {
 };
 
 
-/* =========================================================
-   STORAGE
-========================================================= */
-
-const STORAGE_KEY =
-  "arasigns_movimentacoes_botoes_v1";
-
-
-let records =
-  JSON.parse(
-    localStorage.getItem(STORAGE_KEY)
-    || "[]"
-  );
-
 
 /* =========================================================
    ESTADO
 ========================================================= */
 
+let records = [];
+
 let currentScreen =
   "screenMovement";
-
 
 let selectedMovement =
   null;
 
-
 let selectedEmployee =
   null;
-
 
 let selectedCategory =
   null;
 
-
 let selectedItem =
   null;
+
 
 
 /* =========================================================
@@ -1874,25 +2008,80 @@ let selectedItem =
 ========================================================= */
 
 const toastEl =
-  document.getElementById("toast");
+  document.getElementById(
+    "toast"
+  );
+
+
+const firebaseStatus =
+  document.getElementById(
+    "firebaseStatus"
+  );
+
+
+
+/* =========================================================
+   STATUS FIREBASE
+========================================================= */
+
+function setFirebaseStatus(
+  status
+){
+
+  if(
+    status === "online"
+  ){
+
+    firebaseStatus.textContent =
+      "🟢 CONECTADO AO SERVIDOR";
+
+    firebaseStatus.classList.add(
+      "online"
+    );
+
+    firebaseStatus.classList.remove(
+      "offline"
+    );
+
+  }
+
+  else{
+
+    firebaseStatus.textContent =
+      "🔴 SEM CONEXÃO";
+
+    firebaseStatus.classList.add(
+      "offline"
+    );
+
+    firebaseStatus.classList.remove(
+      "online"
+    );
+
+  }
+
+}
+
 
 
 /* =========================================================
    TOAST
 ========================================================= */
 
-function toast(message){
+function toast(
+  message
+){
 
   toastEl.textContent =
     message;
 
-  toastEl.classList.add("show");
-
+  toastEl.classList.add(
+    "show"
+  );
 
   clearTimeout(
     window.toastTimer
   );
-
 
   window.toastTimer =
     setTimeout(
@@ -1912,14 +2101,19 @@ function toast(message){
 }
 
 
+
 /* =========================================================
    TROCAR TELA
 ========================================================= */
 
-function showScreen(id){
+function showScreen(
+  id
+){
 
   document
-    .querySelectorAll(".screen")
+    .querySelectorAll(
+      ".screen"
+    )
     .forEach(
       screen => {
 
@@ -1932,8 +2126,12 @@ function showScreen(id){
 
 
   document
-    .getElementById(id)
-    .classList.add("active");
+    .getElementById(
+      id
+    )
+    .classList.add(
+      "active"
+    );
 
 
   currentScreen =
@@ -1951,11 +2149,15 @@ function showScreen(id){
 }
 
 
+
 /* =========================================================
    MOVIMENTO
 ========================================================= */
 
-function selectMovement(type){
+window.selectMovement =
+function(
+  type
+){
 
   selectedMovement =
     type;
@@ -1965,11 +2167,12 @@ function selectMovement(type){
     "screenEmployee"
   );
 
-}
+};
+
 
 
 /* =========================================================
-   GERAR COLABORADORES
+   COLABORADORES
 ========================================================= */
 
 function renderEmployees(){
@@ -1980,12 +2183,12 @@ function renderEmployees(){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   COLABORADORES.forEach(
     name => {
-
 
       const button =
         document.createElement(
@@ -2016,10 +2219,18 @@ function renderEmployees(){
 
 
       button.onclick =
-        () => selectEmployee(name);
+        () => {
+
+          selectEmployee(
+            name
+          );
+
+        };
 
 
-      box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
     }
   );
@@ -2027,11 +2238,14 @@ function renderEmployees(){
 }
 
 
+
 /* =========================================================
    SELECIONAR COLABORADOR
 ========================================================= */
 
-function selectEmployee(name){
+function selectEmployee(
+  name
+){
 
   selectedEmployee =
     name;
@@ -2044,8 +2258,9 @@ function selectEmployee(name){
 }
 
 
+
 /* =========================================================
-   GERAR CATEGORIAS
+   CATEGORIAS
 ========================================================= */
 
 function renderCategories(){
@@ -2056,14 +2271,14 @@ function renderCategories(){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   Object.entries(
     CATEGORIAS
   ).forEach(
     ([name,data]) => {
-
 
       const button =
         document.createElement(
@@ -2089,10 +2304,18 @@ function renderCategories(){
 
 
       button.onclick =
-        () => selectCategory(name);
+        () => {
+
+          selectCategory(
+            name
+          );
+
+        };
 
 
-      box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
     }
   );
@@ -2100,11 +2323,14 @@ function renderCategories(){
 }
 
 
+
 /* =========================================================
    SELECIONAR CATEGORIA
 ========================================================= */
 
-function selectCategory(name){
+function selectCategory(
+  name
+){
 
   selectedCategory =
     name;
@@ -2118,7 +2344,9 @@ function selectCategory(name){
       name;
 
 
-  renderItems(name);
+  renderItems(
+    name
+  );
 
 
   showScreen(
@@ -2128,11 +2356,14 @@ function selectCategory(name){
 }
 
 
+
 /* =========================================================
-   GERAR ITENS
+   ITENS
 ========================================================= */
 
-function renderItems(category){
+function renderItems(
+  category
+){
 
   const box =
     document.getElementById(
@@ -2140,16 +2371,18 @@ function renderItems(category){
     );
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   const itens =
-    CATEGORIAS[category].itens;
+    CATEGORIAS[
+      category
+    ].itens;
 
 
   itens.forEach(
     name => {
-
 
       const button =
         document.createElement(
@@ -2180,10 +2413,18 @@ function renderItems(category){
 
 
       button.onclick =
-        () => selectItem(name);
+        () => {
+
+          selectItem(
+            name
+          );
+
+        };
 
 
-      box.appendChild(button);
+      box.appendChild(
+        button
+      );
 
     }
   );
@@ -2191,11 +2432,14 @@ function renderItems(category){
 }
 
 
+
 /* =========================================================
    SELECIONAR ITEM
 ========================================================= */
 
-function selectItem(name){
+function selectItem(
+  name
+){
 
   selectedItem =
     name;
@@ -2240,17 +2484,24 @@ function selectItem(name){
 }
 
 
+
 /* =========================================================
-   CONFIRMAR
+   CONFIRMAR MOVIMENTAÇÃO
 ========================================================= */
 
-function confirmMovement(){
+window.confirmMovement =
+async function(){
 
   if(
+
     !selectedMovement ||
+
     !selectedEmployee ||
+
     !selectedCategory ||
+
     !selectedItem
+
   ){
 
     toast(
@@ -2262,84 +2513,172 @@ function confirmMovement(){
   }
 
 
-  const now =
-    new Date();
+  try{
+
+    const movimentacoesRef =
+      ref(
+        db,
+        MOVIMENTACOES_PATH
+      );
 
 
-  const dataHora =
-    now.toLocaleString(
-      "pt-BR"
+    const agora =
+      new Date();
+
+
+    const registro = {
+
+      dataHora:
+        agora.toLocaleString(
+          "pt-BR"
+        ),
+
+      timestamp:
+        Date.now(),
+
+      movimento:
+        selectedMovement,
+
+      colaborador:
+        selectedEmployee,
+
+      categoria:
+        selectedCategory,
+
+      item:
+        selectedItem
+
+    };
+
+
+    await push(
+      movimentacoesRef,
+      registro
     );
 
 
-  records.push({
-
-    id:
-      Date.now(),
-
-    dataHora:
-
-      dataHora,
-
-    movimento:
-
-      selectedMovement,
-
-    colaborador:
-
-      selectedEmployee,
-
-    categoria:
-
-      selectedCategory,
-
-    item:
-
-      selectedItem
-
-  });
+    toast(
+      "✅ MOVIMENTAÇÃO REGISTRADA!"
+    );
 
 
-  saveRecords();
+    setTimeout(
+      () => {
+
+        resetProcess();
+
+      },
+      700
+    );
 
 
-  toast(
-    "Movimentação registrada!"
-  );
+  }
+
+  catch(error){
+
+    console.error(
+      error
+    );
 
 
-  setTimeout(
-    () => {
+    toast(
+      "❌ ERRO AO SALVAR."
+    );
 
-      resetProcess();
+  }
 
-    },
+};
 
-    800
-
-  );
-
-}
 
 
 /* =========================================================
-   SALVAR REGISTROS
+   ESCUTAR FIREBASE
 ========================================================= */
 
-function saveRecords(){
+function iniciarFirebase(){
 
-  localStorage.setItem(
+  const movimentacoesRef =
+    ref(
+      db,
+      MOVIMENTACOES_PATH
+    );
 
-    STORAGE_KEY,
 
-    JSON.stringify(records)
+  onValue(
+
+    movimentacoesRef,
+
+    snapshot => {
+
+      setFirebaseStatus(
+        "online"
+      );
+
+
+      const data =
+        snapshot.val();
+
+
+      if(!data){
+
+        records =
+          [];
+
+      }
+
+      else{
+
+        records =
+          Object
+            .entries(
+              data
+            )
+            .map(
+              ([id,record]) => ({
+
+                id,
+
+                ...record
+
+              })
+            );
+
+      }
+
+
+      records.sort(
+
+        (a,b) =>
+
+          (b.timestamp || 0)
+          -
+          (a.timestamp || 0)
+
+      );
+
+
+      renderHistory();
+
+    },
+
+    error => {
+
+      console.error(
+        "Firebase:",
+        error
+      );
+
+
+      setFirebaseStatus(
+        "offline"
+      );
+
+    }
 
   );
 
-
-  renderHistory();
-
 }
+
 
 
 /* =========================================================
@@ -2361,15 +2700,23 @@ function renderHistory(){
 
 
   count.textContent =
+
     records.length +
+
     (
+
       records.length === 1
+
         ? " REGISTRO"
+
         : " REGISTROS"
+
     );
 
 
-  if(!records.length){
+  if(
+    !records.length
+  ){
 
     box.innerHTML = `
 
@@ -2390,16 +2737,19 @@ function renderHistory(){
   }
 
 
-  box.innerHTML = "";
+  box.innerHTML =
+    "";
 
 
   records
-    .slice()
-    .reverse()
-    .slice(0,50)
+
+    .slice(
+      0,
+      50
+    )
+
     .forEach(
       record => {
-
 
         const div =
           document.createElement(
@@ -2412,9 +2762,12 @@ function renderHistory(){
 
 
         const movementIcon =
+
           record.movimento ===
           "RETIRADA"
+
             ? "⬆️"
+
             : "⬇️";
 
 
@@ -2484,7 +2837,9 @@ function renderHistory(){
         `;
 
 
-        box.appendChild(div);
+        box.appendChild(
+          div
+        );
 
       }
     );
@@ -2492,11 +2847,14 @@ function renderHistory(){
 }
 
 
+
 /* =========================================================
-   SEGURANÇA
+   SEGURANÇA HTML
 ========================================================= */
 
-function escapeHtml(value){
+function escapeHtml(
+  value
+){
 
   return String(
     value ?? ""
@@ -2530,11 +2888,13 @@ function escapeHtml(value){
 }
 
 
+
 /* =========================================================
    VOLTAR
 ========================================================= */
 
-function goBack(){
+window.goBack =
+function(){
 
   if(
     currentScreen ===
@@ -2591,14 +2951,16 @@ function goBack(){
 
   }
 
-}
+};
+
 
 
 /* =========================================================
-   CANCELAR / NOVA MOVIMENTAÇÃO
+   CANCELAR
 ========================================================= */
 
-function resetProcess(){
+window.resetProcess =
+function(){
 
   selectedMovement =
     null;
@@ -2613,20 +2975,56 @@ function resetProcess(){
     null;
 
 
+  document
+    .getElementById(
+      "summaryMovement"
+    )
+    .textContent =
+      "—";
+
+
+  document
+    .getElementById(
+      "summaryEmployee"
+    )
+    .textContent =
+      "—";
+
+
+  document
+    .getElementById(
+      "summaryCategory"
+    )
+    .textContent =
+      "—";
+
+
+  document
+    .getElementById(
+      "summaryItem"
+    )
+    .textContent =
+      "—";
+
+
   showScreen(
     "screenMovement"
   );
 
-}
+};
+
 
 
 /* =========================================================
    LIMPAR REGISTROS
 ========================================================= */
 
-function clearRecords(){
+window.clearRecords =
+async function(){
 
-  if(!records.length){
+  if(
+    !records.length
+  ){
 
     toast(
       "Não existem registros."
@@ -2640,40 +3038,73 @@ function clearRecords(){
   const confirmacao =
     confirm(
 
-      "Tem certeza que deseja apagar TODAS as movimentações?"
+      "ATENÇÃO!\n\n" +
+
+      "Isso vai apagar TODAS as movimentações " +
+
+      "do tablet e do computador.\n\n" +
+
+      "Deseja continuar?"
 
     );
 
 
-  if(!confirmacao)
+  if(
+    !confirmacao
+  ){
+
     return;
 
-
-  records = [];
-
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
+  }
 
 
-  renderHistory();
+  try{
+
+    const movimentacoesRef =
+      ref(
+        db,
+        MOVIMENTACOES_PATH
+      );
 
 
-  toast(
-    "Todos os registros foram apagados."
-  );
+    await remove(
+      movimentacoesRef
+    );
 
-}
+
+    toast(
+      "🗑️ REGISTROS APAGADOS!"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      error
+    );
+
+
+    toast(
+      "❌ ERRO AO APAGAR."
+    );
+
+  }
+
+};
+
 
 
 /* =========================================================
    GERAR CSV
 ========================================================= */
 
-function exportCSV(){
+window.exportCSV =
+function(){
 
-  if(!records.length){
+  if(
+    !records.length
+  ){
 
     toast(
       "Não existem movimentações para exportar."
@@ -2762,8 +3193,10 @@ function exportCSV(){
       [csv],
 
       {
+
         type:
           "text/csv;charset=utf-8;"
+
       }
 
     );
@@ -2784,7 +3217,10 @@ function exportCSV(){
   const date =
     new Date()
       .toISOString()
-      .slice(0,10);
+      .slice(
+        0,
+        10
+      );
 
 
   link.href =
@@ -2792,8 +3228,11 @@ function exportCSV(){
 
 
   link.download =
+
     "arasigns_movimentacoes_" +
+
     date +
+
     ".csv";
 
 
@@ -2814,10 +3253,11 @@ function exportCSV(){
 
 
   toast(
-    "CSV gerado com sucesso!"
+    "📄 CSV GERADO COM SUCESSO!"
   );
 
-}
+};
+
 
 
 /* =========================================================
@@ -2830,7 +3270,10 @@ renderCategories();
 
 renderHistory();
 
+iniciarFirebase();
+
 </script>
+
 
 </body>
 
