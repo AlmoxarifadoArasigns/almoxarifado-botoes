@@ -15,7 +15,7 @@
   content="#08090b"
 >
 
-<title>Arasigns — Almoxarifado</title>
+<title>Arasigns — Controle de Almoxarifado</title>
 
 <style>
 
@@ -24,11 +24,9 @@
 ===================================================== */
 
 :root{
-
   --bg:#08090b;
   --card:#111214;
   --card2:#151619;
-
   --line:#303136;
 
   --white:#f7f7f7;
@@ -39,7 +37,6 @@
   --yellow:#ffd000;
 
   --green:#16d46b;
-
 }
 
 
@@ -53,19 +50,16 @@
 
 html,
 body{
-
   margin:0;
   padding:0;
 
   background:var(--bg);
-
   color:var(--white);
 
   font-family:
     Arial,
     Helvetica,
     sans-serif;
-
 }
 
 body{
@@ -74,48 +68,39 @@ body{
 
 
 /* =====================================================
-   APP
+   APLICAÇÃO
 ===================================================== */
 
 .app{
-
   width:min(980px,100%);
-
   margin:0 auto;
 
   padding:
-    18px
-    18px
+    14px
+    14px
     40px;
-
 }
 
 
 /* =====================================================
-   HEADER
+   LOGO
 ===================================================== */
 
 .header{
-
   text-align:center;
-
   padding:
-    5px
+    4px
     0
-    20px;
-
+    15px;
 }
 
 .logo{
-
   width:min(560px,90%);
-
-  max-height:130px;
+  max-height:125px;
 
   object-fit:contain;
 
   display:block;
-
   margin:0 auto;
 
   filter:
@@ -123,36 +108,30 @@ body{
       0 4px 18px
       rgba(0,0,0,.45)
     );
-
 }
 
 .subtitle{
-
-  margin-top:8px;
+  margin-top:5px;
 
   font-size:
     clamp(
-      16px,
-      3vw,
-      24px
+      15px,
+      2.5vw,
+      23px
     );
 
   letter-spacing:4px;
-
   font-weight:900;
 
   color:#ddd;
-
 }
 
 .brand-line{
-
   height:4px;
-
   width:90%;
 
   margin:
-    15px
+    12px
     auto
     5px;
 
@@ -165,7 +144,6 @@ body{
     );
 
   border-radius:10px;
-
 }
 
 
@@ -174,41 +152,33 @@ body{
 ===================================================== */
 
 .screen{
-
   display:none;
-
 }
 
 .screen.active{
-
   display:block;
-
 }
 
 
 /* =====================================================
-   BOTÃO VOLTAR NO TOPO
+   BOTÃO VOLTAR
 ===================================================== */
 
 .top-navigation{
-
   display:flex;
-
   justify-content:flex-start;
 
-  margin-bottom:15px;
-
+  margin-bottom:12px;
 }
 
 .top-back{
-
-  min-height:52px;
+  min-height:50px;
 
   padding:
     0
-    22px;
+    20px;
 
-  border-radius:16px;
+  border-radius:15px;
 
   border:
     1px
@@ -220,7 +190,6 @@ body{
   color:#ddd;
 
   font-size:17px;
-
   font-weight:900;
 
   cursor:pointer;
@@ -228,19 +197,14 @@ body{
   transition:
     transform .15s,
     filter .15s;
-
 }
 
 .top-back:active{
-
   transform:scale(.97);
-
 }
 
 .top-back:hover{
-
   filter:brightness(1.15);
-
 }
 
 
@@ -249,7 +213,6 @@ body{
 ===================================================== */
 
 .screen-title{
-
   text-align:center;
 
   font-size:
@@ -264,49 +227,43 @@ body{
   margin:
     5px
     0
-    10px;
-
+    7px;
 }
 
 .screen-subtitle{
-
   text-align:center;
 
   color:var(--muted);
 
-  font-size:18px;
+  font-size:17px;
 
-  margin-bottom:24px;
-
+  margin-bottom:18px;
 }
 
 
 /* =====================================================
-   GRID DE OPÇÕES
+   GRIDS
 ===================================================== */
 
 .options-grid{
-
   display:grid;
 
   grid-template-columns:
     1fr
     1fr;
 
-  gap:16px;
-
+  gap:14px;
 }
 
 
 /* =====================================================
-   BOTÕES GRANDES
+   BOTÕES DE OPÇÃO
 ===================================================== */
 
 .option-button{
+  min-height:112px;
 
-  min-height:120px;
-
-  border-radius:22px;
+  border-radius:20px;
 
   border:
     1px
@@ -314,7 +271,6 @@ body{
     #343539;
 
   background:
-
     linear-gradient(
       145deg,
       #17181b,
@@ -325,56 +281,40 @@ body{
 
   cursor:pointer;
 
-  padding:20px;
+  padding:16px;
 
   display:flex;
 
   flex-direction:column;
 
   align-items:center;
-
   justify-content:center;
 
   text-align:center;
 
-  gap:8px;
+  gap:7px;
 
   font-weight:900;
 
   transition:
     transform .15s,
     filter .15s;
-
 }
 
 .option-button:hover{
-
   filter:brightness(1.12);
-
 }
 
 .option-button:active{
-
   transform:scale(.97);
-
 }
-
-
-/* ÍCONE */
 
 .option-icon{
-
-  font-size:42px;
-
+  font-size:38px;
 }
 
-
-/* TEXTO */
-
 .option-name{
-
-  font-size:20px;
-
+  font-size:19px;
 }
 
 
@@ -383,28 +323,25 @@ body{
 ===================================================== */
 
 .movement-grid{
-
   display:grid;
 
   grid-template-columns:
     1fr
     1fr;
 
-  gap:20px;
+  gap:18px;
 
   max-width:800px;
 
   margin:
-    35px
+    25px
     auto;
-
 }
 
 .movement-option{
+  min-height:175px;
 
-  min-height:190px;
-
-  border-radius:28px;
+  border-radius:26px;
 
   border:2px solid transparent;
 
@@ -417,29 +354,23 @@ body{
   flex-direction:column;
 
   align-items:center;
-
   justify-content:center;
 
-  gap:15px;
+  gap:12px;
 
   font-weight:900;
 
   transition:
     transform .15s,
     filter .15s;
-
 }
 
 .movement-option:active{
-
   transform:scale(.97);
-
 }
 
 .movement-out{
-
   background:
-
     linear-gradient(
       135deg,
       var(--red),
@@ -449,13 +380,10 @@ body{
   box-shadow:
     0 15px 35px
     rgba(255,23,38,.18);
-
 }
 
 .movement-in{
-
   background:
-
     linear-gradient(
       135deg,
       #0c9f50,
@@ -465,19 +393,14 @@ body{
   box-shadow:
     0 15px 35px
     rgba(22,212,107,.15);
-
 }
 
 .movement-icon{
-
-  font-size:60px;
-
+  font-size:55px;
 }
 
 .movement-title{
-
-  font-size:27px;
-
+  font-size:26px;
 }
 
 
@@ -486,9 +409,7 @@ body{
 ===================================================== */
 
 .card{
-
   background:
-
     linear-gradient(
       145deg,
       #111214,
@@ -500,12 +421,11 @@ body{
     solid
     #303136;
 
-  border-radius:24px;
+  border-radius:22px;
 
-  padding:22px;
+  padding:18px;
 
-  margin-top:18px;
-
+  margin-top:16px;
 }
 
 
@@ -514,77 +434,67 @@ body{
 ===================================================== */
 
 .confirm-card{
-
-  max-width:700px;
+  max-width:720px;
 
   margin:
-    20px
+    15px
     auto;
-
 }
 
 .confirm-row{
-
   display:flex;
 
   justify-content:space-between;
 
+  align-items:center;
+
   gap:15px;
 
   padding:
-    17px
+    15px
     0;
 
   border-bottom:
     1px
     solid
     #303136;
-
 }
 
 .confirm-row:last-child{
-
   border-bottom:0;
-
 }
 
 .confirm-label{
-
   color:var(--orange);
 
   font-weight:900;
-
 }
 
 .confirm-value{
-
   text-align:right;
 
-  font-size:19px;
+  font-size:18px;
 
   font-weight:900;
-
 }
 
 
 /* =====================================================
-   CONFIRMAR
+   BOTÃO CONFIRMAR
 ===================================================== */
 
 .confirm-button{
-
   width:100%;
 
-  min-height:75px;
+  min-height:68px;
 
-  margin-top:20px;
+  margin-top:18px;
 
   border:0;
 
-  border-radius:20px;
+  border-radius:18px;
 
   background:
-
     linear-gradient(
       90deg,
       var(--red),
@@ -594,18 +504,15 @@ body{
 
   color:white;
 
-  font-size:22px;
+  font-size:20px;
 
   font-weight:900;
 
   cursor:pointer;
-
 }
 
 .confirm-button:active{
-
   transform:scale(.98);
-
 }
 
 
@@ -614,14 +521,13 @@ body{
 ===================================================== */
 
 .cancel-button{
-
   width:100%;
 
-  min-height:58px;
+  min-height:54px;
 
-  margin-top:12px;
+  margin-top:10px;
 
-  border-radius:17px;
+  border-radius:16px;
 
   border:
     1px
@@ -637,7 +543,221 @@ body{
   font-weight:900;
 
   cursor:pointer;
+}
 
+
+/* =====================================================
+   PAINEL DE REGISTROS
+===================================================== */
+
+.records-panel{
+  margin-top:22px;
+}
+
+.records-header{
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:12px;
+}
+
+.records-title{
+  font-size:22px;
+  font-weight:900;
+}
+
+.records-count{
+  color:var(--yellow);
+  font-weight:900;
+}
+
+
+/* =====================================================
+   HISTÓRICO
+===================================================== */
+
+#movements{
+  display:flex;
+  flex-direction:column;
+
+  gap:8px;
+}
+
+.empty{
+  min-height:110px;
+
+  display:grid;
+  place-items:center;
+
+  text-align:center;
+
+  border:
+    1px
+    solid
+    #292a2d;
+
+  border-radius:17px;
+
+  background:#0d0e10;
+
+  color:var(--muted);
+
+  padding:18px;
+}
+
+.movement-record{
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    1fr
+    auto;
+
+  gap:10px;
+
+  align-items:center;
+
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #2d2e32;
+
+  border-radius:14px;
+
+  padding:
+    12px
+    13px;
+}
+
+.record-label{
+  display:block;
+
+  color:#888;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  margin-bottom:3px;
+}
+
+.record-value{
+  display:block;
+
+  font-size:15px;
+
+  font-weight:900;
+}
+
+.record-type{
+  font-size:14px;
+
+  font-weight:900;
+
+  white-space:nowrap;
+}
+
+.record-type.retirada{
+  color:var(--orange);
+}
+
+.record-type.devolucao{
+  color:var(--green);
+}
+
+
+/* =====================================================
+   TOTAL
+===================================================== */
+
+.footer-total{
+  margin-top:13px;
+
+  border:
+    1px
+    solid
+    #303136;
+
+  border-radius:16px;
+
+  padding:14px;
+
+  text-align:center;
+
+  font-weight:800;
+
+  color:#ccc;
+}
+
+.footer-total b{
+  color:var(--yellow);
+
+  font-size:28px;
+
+  margin-right:8px;
+}
+
+
+/* =====================================================
+   BOTÕES CSV
+===================================================== */
+
+.management-buttons{
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:12px;
+
+  margin-top:14px;
+}
+
+.management-button{
+  min-height:65px;
+
+  border-radius:17px;
+
+  border:0;
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+.csv-button{
+  background:
+    linear-gradient(
+      120deg,
+      var(--red),
+      var(--orange),
+      var(--yellow)
+    );
+}
+
+.clear-button{
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #35363a;
+}
+
+.management-button:active{
+  transform:scale(.98);
 }
 
 
@@ -646,12 +766,10 @@ body{
 ===================================================== */
 
 .toast{
-
   position:fixed;
 
   left:50%;
-
-  bottom:25px;
+  bottom:22px;
 
   transform:
     translate(-50%,120px);
@@ -667,11 +785,11 @@ body{
     solid
     #404146;
 
-  border-radius:15px;
+  border-radius:14px;
 
   padding:
-    15px
-    20px;
+    13px
+    18px;
 
   box-shadow:
     0 15px 35px
@@ -679,183 +797,144 @@ body{
 
   transition:.25s;
 
-  font-weight:900;
+  font-weight:800;
 
   max-width:90%;
 
   text-align:center;
-
 }
 
 .toast.show{
-
   transform:
     translate(-50%,0);
 
   opacity:1;
-
 }
 
 
 /* =====================================================
-   RESPONSIVO
+   TABLET / CELULAR
 ===================================================== */
 
 @media(max-width:700px){
 
   .app{
-
     padding:
-      10px
-      10px
+      9px
+      9px
       30px;
-
   }
 
   .logo{
-
     width:94%;
-
-    max-height:100px;
-
+    max-height:95px;
   }
 
   .subtitle{
-
     font-size:14px;
-
     letter-spacing:3px;
-
   }
 
   .screen-title{
-
     font-size:27px;
-
   }
 
   .screen-subtitle{
-
-    font-size:16px;
-
+    font-size:15px;
   }
 
   .options-grid{
-
     grid-template-columns:
       1fr
       1fr;
 
-    gap:10px;
-
+    gap:9px;
   }
 
   .option-button{
-
     min-height:105px;
 
-    padding:12px;
-
+    padding:11px 7px;
   }
 
   .option-icon{
-
-    font-size:34px;
-
+    font-size:32px;
   }
 
   .option-name{
-
-    font-size:16px;
-
+    font-size:15px;
   }
 
   .movement-grid{
-
-    gap:10px;
-
+    gap:9px;
   }
 
   .movement-option{
-
-    min-height:155px;
-
+    min-height:145px;
   }
 
   .movement-icon{
-
-    font-size:48px;
-
+    font-size:45px;
   }
 
   .movement-title{
-
-    font-size:21px;
-
+    font-size:20px;
   }
 
   .confirm-row{
-
     flex-direction:column;
 
-    gap:5px;
+    align-items:flex-start;
 
+    gap:5px;
   }
 
   .confirm-value{
-
     text-align:left;
-
   }
 
-}
+  .movement-record{
+    grid-template-columns:
+      1fr
+      1fr;
+  }
 
+  .record-type{
+    grid-column:
+      1 / -1;
+  }
 
-/* =====================================================
-   TABLET
-===================================================== */
-
-@media(min-width:701px){
-
-  .options-grid{
-
+  .management-buttons{
     grid-template-columns:
       1fr
       1fr;
 
+    gap:8px;
+  }
+
+  .management-button{
+    font-size:15px;
   }
 
 }
 
 
 /* =====================================================
-   CELULARES MUITO PEQUENOS
+   CELULAR PEQUENO
 ===================================================== */
 
 @media(max-width:420px){
 
-  .options-grid{
-
-    gap:8px;
-
-  }
-
   .option-button{
-
     min-height:95px;
-
   }
 
   .option-icon{
-
-    font-size:30px;
-
+    font-size:29px;
   }
 
   .option-name{
-
-    font-size:14px;
-
+    font-size:13px;
   }
 
 }
@@ -884,9 +963,7 @@ body{
   >
 
   <div class="subtitle">
-
     CONTROLE DE ALMOXARIFADO
-
   </div>
 
   <div class="brand-line"></div>
@@ -906,15 +983,11 @@ body{
 >
 
   <div class="screen-title">
-
     O QUE VOCÊ VAI FAZER?
-
   </div>
 
   <div class="screen-subtitle">
-
     Selecione uma opção para continuar
-
   </div>
 
 
@@ -955,6 +1028,99 @@ body{
 
   </div>
 
+
+  <!-- =================================================
+       REGISTROS
+  ================================================== -->
+
+  <section class="card records-panel">
+
+
+    <div class="records-header">
+
+      <div class="records-title">
+        MOVIMENTAÇÕES
+      </div>
+
+      <div
+        class="records-count"
+        id="count"
+      >
+        0 REGISTROS
+      </div>
+
+    </div>
+
+
+    <div id="movements">
+
+      <div class="empty">
+
+        <div>
+
+          <div
+            style="
+              font-size:36px;
+              margin-bottom:7px;
+            "
+          >
+            📋
+          </div>
+
+          Nenhuma movimentação registrada.
+
+          <br>
+
+          <small>
+            As movimentações aparecerão aqui.
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-total">
+
+      <b id="total">
+        0
+      </b>
+
+      MOVIMENTAÇÕES REGISTRADAS
+
+    </div>
+
+
+    <div class="management-buttons">
+
+
+      <button
+        class="management-button csv-button"
+        onclick="exportCSV()"
+      >
+
+        📄 GERAR CSV
+
+      </button>
+
+
+      <button
+        class="management-button clear-button"
+        onclick="clearRecords()"
+      >
+
+        🗑️ LIMPAR
+
+      </button>
+
+
+    </div>
+
+
+  </section>
+
 </section>
 
 
@@ -985,15 +1151,11 @@ body{
 
 
   <div class="screen-title">
-
     QUEM ESTÁ FAZENDO?
-
   </div>
 
   <div class="screen-subtitle">
-
     Selecione o colaborador
-
   </div>
 
 
@@ -1033,15 +1195,11 @@ body{
 
 
   <div class="screen-title">
-
     QUAL CATEGORIA?
-
   </div>
 
   <div class="screen-subtitle">
-
     Escolha o tipo de material
-
   </div>
 
 
@@ -1081,15 +1239,11 @@ body{
 
 
   <div class="screen-title">
-
     QUAL ITEM?
-
   </div>
 
   <div class="screen-subtitle">
-
     Selecione o material ou ferramenta
-
   </div>
 
 
@@ -1129,15 +1283,11 @@ body{
 
 
   <div class="screen-title">
-
-    CONFIRMAR
-
+    CONFIRMAR MOVIMENTAÇÃO
   </div>
 
   <div class="screen-subtitle">
-
     Confira os dados antes de registrar
-
   </div>
 
 
@@ -1255,7 +1405,7 @@ body{
 ===================================================== */
 
 const STORAGE_KEY =
-  "arasigns_almoxarifado_botoes_v1";
+  "arasigns_almoxarifado_botoes_v2";
 
 
 /* =====================================================
@@ -1455,7 +1605,7 @@ const ITEM_ICONS = {
 
 
 /* =====================================================
-   DADOS DA MOVIMENTAÇÃO
+   VARIÁVEIS
 ===================================================== */
 
 let movement = null;
@@ -1503,6 +1653,11 @@ function goToScreen(number){
 
     target.classList.add("active");
 
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
   }
 
 }
@@ -1522,7 +1677,7 @@ function selectMovement(type){
 
 
 /* =====================================================
-   CARREGAR COLABORADORES
+   COLABORADORES
 ===================================================== */
 
 function renderCollaborators(){
@@ -1531,7 +1686,6 @@ function renderCollaborators(){
     document.getElementById(
       "collaborators"
     );
-
 
   container.innerHTML = "";
 
@@ -1543,7 +1697,6 @@ function renderCollaborators(){
         document.createElement(
           "button"
         );
-
 
       button.className =
         "option-button";
@@ -1583,7 +1736,7 @@ function renderCollaborators(){
 
 
 /* =====================================================
-   CARREGAR CATEGORIAS
+   CATEGORIAS
 ===================================================== */
 
 function renderCategories(){
@@ -1592,7 +1745,6 @@ function renderCategories(){
     document.getElementById(
       "categories"
     );
-
 
   container.innerHTML = "";
 
@@ -1651,7 +1803,7 @@ function renderCategories(){
 
 
 /* =====================================================
-   CARREGAR ITENS
+   ITENS
 ===================================================== */
 
 function renderItems(){
@@ -1660,7 +1812,6 @@ function renderItems(){
     document.getElementById(
       "items"
     );
-
 
   container.innerHTML = "";
 
@@ -1769,7 +1920,7 @@ function prepareConfirmation(){
 
 
 /* =====================================================
-   FINALIZAR
+   FINALIZAR MOVIMENTAÇÃO
 ===================================================== */
 
 function finishMovement(){
@@ -1827,11 +1978,12 @@ function finishMovement(){
   );
 
 
-  toast(
+  renderRecords();
 
+
+  toast(
     movement +
     " registrada com sucesso!"
-
   );
 
 
@@ -1844,7 +1996,413 @@ function finishMovement(){
 
 
 /* =====================================================
-   CANCELAR MOVIMENTAÇÃO
+   HISTÓRICO
+===================================================== */
+
+function renderRecords(){
+
+  const count =
+    document.getElementById(
+      "count"
+    );
+
+
+  const total =
+    document.getElementById(
+      "total"
+    );
+
+
+  const box =
+    document.getElementById(
+      "movements"
+    );
+
+
+  count.textContent =
+    records.length +
+    (
+      records.length === 1
+      ? " REGISTRO"
+      : " REGISTROS"
+    );
+
+
+  total.textContent =
+    records.length;
+
+
+  if(!records.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <div>
+
+          <div
+            style="
+              font-size:36px;
+              margin-bottom:7px;
+            "
+          >
+            📋
+          </div>
+
+          Nenhuma movimentação registrada.
+
+          <br>
+
+          <small>
+            As movimentações aparecerão aqui.
+          </small>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  box.innerHTML =
+
+    records
+      .slice()
+      .reverse()
+      .slice(0,30)
+      .map(
+        record => {
+
+          const typeClass =
+            record.movimento ===
+            "RETIRADA"
+              ? "retirada"
+              : "devolucao";
+
+
+          return `
+
+            <div class="movement-record">
+
+
+              <div>
+
+                <span class="record-label">
+                  MOVIMENTAÇÃO
+                </span>
+
+                <span
+                  class="
+                    record-type
+                    ${typeClass}
+                  "
+                >
+                  ${escapeHtml(
+                    record.movimento
+                  )}
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <span class="record-label">
+                  COLABORADOR
+                </span>
+
+                <span class="record-value">
+                  ${escapeHtml(
+                    record.colaborador
+                  )}
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <span class="record-label">
+                  ITEM
+                </span>
+
+                <span class="record-value">
+                  ${escapeHtml(
+                    record.item
+                  )}
+                </span>
+
+              </div>
+
+
+              <div>
+
+                <span class="record-label">
+                  DATA/HORA
+                </span>
+
+                <span class="record-value">
+                  ${escapeHtml(
+                    record.dataHora
+                  )}
+                </span>
+
+              </div>
+
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   SEGURANÇA HTML
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  )
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   GERAR CSV
+===================================================== */
+
+function exportCSV(){
+
+  if(!records.length){
+
+    toast(
+      "Ainda não existem movimentações para exportar."
+    );
+
+    return;
+
+  }
+
+
+  const headers = [
+
+    "DATA/HORA",
+    "MOVIMENTAÇÃO",
+    "COLABORADOR",
+    "CATEGORIA",
+    "ITEM"
+
+  ];
+
+
+  const rows =
+    records.map(
+      record => [
+
+        record.dataHora,
+
+        record.movimento,
+
+        record.colaborador,
+
+        record.categoria,
+
+        record.item
+
+      ]
+    );
+
+
+  const csv =
+
+    "\uFEFF" +
+
+    [
+
+      headers,
+
+      ...rows
+
+    ]
+
+    .map(
+
+      row =>
+
+        row
+          .map(
+
+            value =>
+
+              `"${String(
+                value ?? ""
+              )
+              .replaceAll(
+                '"',
+                '""'
+              )}"`
+
+          )
+
+          .join(";")
+
+    )
+
+    .join("\r\n");
+
+
+  const blob =
+    new Blob(
+
+      [csv],
+
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const link =
+    document.createElement(
+      "a"
+    );
+
+
+  const date =
+    new Date()
+      .toISOString()
+      .slice(
+        0,
+        10
+      );
+
+
+  link.href =
+    url;
+
+
+  link.download =
+    "arasigns_almoxarifado_" +
+    date +
+    ".csv";
+
+
+  document.body.appendChild(
+    link
+  );
+
+
+  link.click();
+
+
+  link.remove();
+
+
+  URL.revokeObjectURL(
+    url
+  );
+
+
+  toast(
+    "CSV gerado com sucesso!"
+  );
+
+}
+
+
+/* =====================================================
+   LIMPAR REGISTROS
+===================================================== */
+
+function clearRecords(){
+
+  if(!records.length){
+
+    toast(
+      "Não existem registros para apagar."
+    );
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+
+      "Tem certeza que deseja apagar TODOS os registros deste aparelho?"
+
+    );
+
+
+  if(!confirmed)
+    return;
+
+
+  records = [];
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  renderRecords();
+
+
+  toast(
+    "Registros apagados."
+  );
+
+}
+
+
+/* =====================================================
+   CANCELAR
 ===================================================== */
 
 function cancelMovement(){
@@ -1867,6 +2425,34 @@ function resetSystem(){
   category = null;
 
   selectedItem = null;
+
+
+  document
+    .getElementById(
+      "confirmMovement"
+    )
+    .textContent = "—";
+
+
+  document
+    .getElementById(
+      "confirmCollaborator"
+    )
+    .textContent = "—";
+
+
+  document
+    .getElementById(
+      "confirmCategory"
+    )
+    .textContent = "—";
+
+
+  document
+    .getElementById(
+      "confirmItem"
+    )
+    .textContent = "—";
 
 
   goToScreen(1);
@@ -1922,6 +2508,8 @@ function toast(message){
 renderCollaborators();
 
 renderCategories();
+
+renderRecords();
 
 </script>
 
