@@ -15,20 +15,21 @@
   content="#08090b"
 >
 
-<title>Arasigns — Retirada de Almoxarifado</title>
+<title>Arasigns — Almoxarifado</title>
 
 
 <style>
 
-/* ==========================================
+/* =========================================================
    CORES
-========================================== */
+========================================================= */
 
 :root{
 
   --bg:#08090b;
   --card:#111214;
   --card2:#151619;
+
   --line:#303136;
 
   --white:#f7f7f7;
@@ -43,14 +44,13 @@
 }
 
 
-/* ==========================================
+/* =========================================================
    RESET
-========================================== */
+========================================================= */
 
 *{
   box-sizing:border-box;
 }
-
 
 html,
 body{
@@ -69,33 +69,34 @@ body{
 
 }
 
-
 body{
+
   min-height:100vh;
+
 }
 
 
-/* ==========================================
+/* =========================================================
    APLICAÇÃO
-========================================== */
+========================================================= */
 
 .app{
 
-  width:min(1050px,100%);
+  width:min(1000px,100%);
 
   margin:0 auto;
 
   padding:
     15px
     15px
-    35px;
+    40px;
 
 }
 
 
-/* ==========================================
-   CABEÇALHO
-========================================== */
+/* =========================================================
+   LOGO
+========================================================= */
 
 .header{
 
@@ -108,10 +109,9 @@ body{
 
 }
 
-
 .logo{
 
-  width:min(560px,92%);
+  width:min(500px,88%);
 
   max-height:130px;
 
@@ -123,31 +123,30 @@ body{
 
   filter:
     drop-shadow(
-      0 4px 18px rgba(0,0,0,.45)
+      0 4px 18px
+      rgba(0,0,0,.45)
     );
 
 }
 
-
 .subtitle{
 
-  margin-top:4px;
+  margin-top:5px;
 
   font-size:
     clamp(
       14px,
       2.5vw,
-      23px
+      22px
     );
 
   letter-spacing:4px;
 
-  font-weight:900;
+  font-weight:800;
 
   color:#ddd;
 
 }
-
 
 .brand-line{
 
@@ -156,7 +155,7 @@ body{
   width:90%;
 
   margin:
-    13px
+    14px
     auto
     18px;
 
@@ -173,56 +172,13 @@ body{
 }
 
 
-/* ==========================================
-   TÍTULOS
-========================================== */
-
-.page-title{
-
-  text-align:center;
-
-  margin-bottom:15px;
-
-}
-
-
-.page-title h1{
-
-  margin:0;
-
-  font-size:
-    clamp(
-      25px,
-      5vw,
-      38px
-    );
-
-  font-weight:900;
-
-}
-
-
-.page-title p{
-
-  margin:
-    6px
-    0
-    0;
-
-  color:var(--muted);
-
-  font-size:16px;
-
-}
-
-
-/* ==========================================
+/* =========================================================
    CARDS
-========================================== */
+========================================================= */
 
 .card{
 
-  margin-top:15px;
+  margin-top:14px;
 
   background:
     linear-gradient(
@@ -236,246 +192,253 @@ body{
     solid
     #303136;
 
-  border-radius:23px;
+  border-radius:22px;
 
   padding:18px;
 
 }
 
 
-/* ==========================================
-   STATUS
-========================================== */
+/* =========================================================
+   TÍTULOS
+========================================================= */
 
-.status-card{
+.section-header{
 
-  border:
-    2px
-    solid
-    transparent;
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:15px;
+
+}
+
+.section-title{
+
+  font-size:23px;
+
+  font-weight:900;
+
+}
+
+.section-sub{
+
+  color:var(--muted);
+
+  font-size:14px;
+
+  margin-top:4px;
+
+}
+
+.badge{
 
   background:
-    linear-gradient(
-      var(--card),
-      var(--card)
-    ) padding-box,
-
     linear-gradient(
       90deg,
       var(--red),
       var(--orange),
       var(--yellow)
-    ) border-box;
+    );
 
-}
-
-
-.status-label{
-
-  color:var(--orange);
+  color:white;
 
   font-size:13px;
 
   font-weight:900;
 
-  letter-spacing:1px;
+  padding:
+    7px
+    11px;
+
+  border-radius:20px;
+
+  white-space:nowrap;
 
 }
 
 
-.status{
+/* =========================================================
+   COLABORADORES
+========================================================= */
 
-  font-size:
-    clamp(
-      21px,
-      4vw,
-      32px
-    );
-
-  font-weight:900;
-
-  margin-top:5px;
-
-}
-
-
-.status-sub{
-
-  color:var(--muted);
-
-  margin-top:5px;
-
-}
-
-
-/* ==========================================
-   CABEÇALHO DAS SEÇÕES
-========================================== */
-
-.section-title{
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:10px;
-
-  margin-bottom:14px;
-
-}
-
-
-.section-title h2{
-
-  margin:0;
-
-  font-size:
-    clamp(
-      21px,
-      4vw,
-      28px
-    );
-
-  font-weight:900;
-
-}
-
-
-.section-title span{
-
-  color:var(--yellow);
-
-  font-size:14px;
-
-  font-weight:900;
-
-}
-
-
-/* ==========================================
-   GRID
-========================================== */
-
-.grid{
+.collaborators{
 
   display:grid;
 
   grid-template-columns:
     repeat(
-      2,
-      minmax(0,1fr)
+      3,
+      1fr
     );
 
-  gap:12px;
+  gap:10px;
 
 }
 
-
-/* ==========================================
-   BOTÕES
-========================================== */
-
-button{
-
-  border:0;
-
-  cursor:pointer;
-
-  color:white;
-
-  font:inherit;
-
-}
-
-
-.select-button{
-
-  min-height:78px;
-
-  border-radius:18px;
-
-  padding:
-    14px
-    16px;
-
-  background:#17181b;
+.collaborator{
 
   border:
     1px
     solid
-    #343539;
+    #333438;
 
-  display:flex;
+  background:#151619;
 
-  align-items:center;
+  color:white;
 
-  gap:14px;
+  border-radius:16px;
+
+  min-height:68px;
+
+  padding:
+    10px
+    12px;
+
+  cursor:pointer;
 
   text-align:left;
 
   font-weight:900;
 
   transition:
-    transform .12s,
-    filter .12s,
-    border-color .12s;
+    .15s transform,
+    .15s border,
+    .15s background;
 
 }
 
+.collaborator:hover{
 
-.select-button:hover{
-
-  filter:brightness(1.12);
-
-  border-color:#55565c;
+  border-color:
+    var(--orange);
 
 }
 
-
-.select-button:active{
+.collaborator:active{
 
   transform:scale(.97);
 
 }
 
-
-.button-icon{
-
-  width:48px;
-
-  height:48px;
-
-  flex:0 0 48px;
-
-  display:grid;
-
-  place-items:center;
-
-  border-radius:14px;
+.collaborator.selected{
 
   background:
     linear-gradient(
       135deg,
       var(--red),
-      var(--orange),
-      var(--yellow)
+      var(--orange)
     );
 
-  font-size:25px;
+  border-color:
+    var(--yellow);
+
+}
+
+.collab-number{
+
+  display:block;
+
+  color:#999;
+
+  font-size:12px;
+
+  margin-bottom:5px;
+
+}
+
+.collaborator.selected
+.collab-number{
+
+  color:#fff;
 
 }
 
 
-.button-text{
+/* =========================================================
+   CATEGORIAS
+========================================================= */
 
-  min-width:0;
+.categories{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      3,
+      1fr
+    );
+
+  gap:12px;
 
 }
 
+.category{
 
-.button-title{
+  border:
+    1px
+    solid
+    #333438;
+
+  background:#151619;
+
+  color:white;
+
+  border-radius:18px;
+
+  padding:17px;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  transition:
+    .15s transform,
+    .15s border,
+    .15s background;
+
+}
+
+.category:hover{
+
+  border-color:
+    var(--orange);
+
+}
+
+.category:active{
+
+  transform:scale(.97);
+
+}
+
+.category.selected{
+
+  border-color:
+    var(--yellow);
+
+  background:
+    linear-gradient(
+      145deg,
+      #241714,
+      #151619
+    );
+
+}
+
+.category-icon{
+
+  font-size:36px;
+
+  margin-bottom:8px;
+
+}
+
+.category-name{
 
   font-size:18px;
 
@@ -483,151 +446,216 @@ button{
 
 }
 
+.category-description{
 
-.button-sub{
+  margin-top:4px;
 
-  margin-top:3px;
+  color:var(--muted);
 
-  color:#999;
-
-  font-size:13px;
-
-}
-
-
-/* ==========================================
-   FUNCIONÁRIOS
-========================================== */
-
-.employee-button{
-
-  min-height:72px;
+  font-size:12px;
 
 }
 
 
-.employee-number{
+/* =========================================================
+   ITENS
+========================================================= */
 
-  color:var(--yellow);
+.items{
 
-  font-size:15px;
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      1fr
+    );
+
+  gap:10px;
+
+}
+
+.item{
+
+  border:
+    1px
+    solid
+    #333438;
+
+  background:#151619;
+
+  color:white;
+
+  border-radius:17px;
+
+  min-height:75px;
+
+  padding:
+    13px
+    15px;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  text-align:left;
+
+  transition:
+    .15s transform,
+    .15s border,
+    .15s background;
+
+}
+
+.item:hover{
+
+  border-color:
+    var(--orange);
+
+}
+
+.item:active{
+
+  transform:scale(.97);
+
+}
+
+.item.selected{
+
+  border-color:
+    var(--yellow);
+
+  background:
+    linear-gradient(
+      120deg,
+      #2a1912,
+      #17181b
+    );
+
+}
+
+.item-icon{
+
+  width:45px;
+
+  height:45px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:13px;
+
+  background:#242529;
+
+  font-size:25px;
+
+  flex-shrink:0;
+
+}
+
+.item.selected
+.item-icon{
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--red),
+      var(--orange)
+    );
+
+}
+
+.item-name{
+
+  font-size:16px;
 
   font-weight:900;
 
-  min-width:32px;
+}
+
+.item-status{
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  margin-top:3px;
 
 }
 
 
-/* ==========================================
-   CATEGORIAS
-========================================== */
+/* =========================================================
+   CONFIRMAÇÃO
+========================================================= */
 
-.category-button{
+.confirm-box{
 
-  min-height:105px;
+  display:none;
 
-  flex-direction:column;
+  border:
+    2px
+    solid
+    var(--orange);
 
-  align-items:flex-start;
+  border-radius:20px;
 
-  justify-content:center;
+  padding:18px;
+
+  margin-top:14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #191312,
+      #101113
+    );
 
 }
 
+.confirm-box.show{
 
-.category-button .button-icon{
-
-  width:50px;
-
-  height:50px;
+  display:block;
 
 }
 
+.confirm-title{
 
-.category-name{
+  color:var(--orange);
+
+  font-size:14px;
+
+  font-weight:900;
+
+  letter-spacing:1px;
+
+  margin-bottom:10px;
+
+}
+
+.confirm-info{
 
   font-size:20px;
 
   font-weight:900;
 
-}
-
-
-/* ==========================================
-   ITENS
-========================================== */
-
-.item-button{
-
-  min-height:85px;
+  margin-bottom:5px;
 
 }
 
+.confirm-sub{
 
-.item-button .button-icon{
+  color:var(--muted);
 
-  background:
-    linear-gradient(
-      135deg,
-      #242529,
-      #3b3c41
-    );
+  font-size:14px;
 
 }
 
-
-/* ==========================================
-   BOTÃO RETIRAR
-========================================== */
-
-.withdraw-area{
-
-  display:none;
-
-  margin-top:15px;
-
-}
-
-
-.withdraw-button{
-
-  width:100%;
-
-  min-height:90px;
-
-  border-radius:20px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--red),
-      var(--orange)
-    );
-
-  font-size:26px;
-
-  font-weight:900;
-
-  box-shadow:
-    0 10px 30px
-    rgba(255,23,38,.18);
-
-}
-
-
-.withdraw-button:active{
-
-  transform:scale(.98);
-
-}
-
-
-/* ==========================================
-   BOTÕES VOLTAR / CANCELAR
-========================================== */
-
-.navigation{
+.confirm-actions{
 
   display:grid;
 
@@ -637,66 +665,245 @@ button{
 
   gap:10px;
 
-  margin-top:12px;
-
-}
-
-
-.nav-button{
-
-  min-height:55px;
-
-  border-radius:15px;
-
-  background:#202125;
-
-  border:
-    1px
-    solid
-    #393a3f;
-
-  font-weight:900;
-
-  color:#ddd;
-
-}
-
-
-.cancel-button{
-
-  background:#17181b;
-
-  color:#ff727a;
-
-  border-color:
-    rgba(255,23,38,.35);
-
-}
-
-
-/* ==========================================
-   HISTÓRICO
-========================================== */
-
-.history{
-
   margin-top:15px;
 
 }
 
+.confirm-button{
 
-.history-list{
+  border:0;
+
+  border-radius:16px;
+
+  padding:16px;
+
+  color:white;
+
+  font-size:17px;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+.confirm{
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--red),
+      var(--orange),
+      var(--yellow)
+    );
+
+}
+
+.cancel{
+
+  background:#25262a;
+
+  border:
+    1px
+    solid
+    #3b3c40;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:12px;
+
+}
+
+.status-box{
+
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #303136;
+
+  border-radius:17px;
+
+  padding:15px;
+
+}
+
+.status-label{
+
+  color:var(--orange);
+
+  font-size:12px;
+
+  font-weight:900;
+
+  margin-bottom:6px;
+
+}
+
+.status-value{
+
+  font-size:20px;
+
+  font-weight:900;
+
+}
+
+.status-muted{
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-top:4px;
+
+}
+
+
+/* =========================================================
+   AÇÕES
+========================================================= */
+
+.actions{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:12px;
+
+}
+
+.action{
+
+  min-height:80px;
+
+  border-radius:18px;
+
+  border:0;
+
+  padding:15px;
+
+  color:white;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:13px;
+
+  text-align:left;
+
+  font-weight:900;
+
+}
+
+.action-icon{
+
+  font-size:35px;
+
+}
+
+.action-title{
+
+  font-size:18px;
+
+}
+
+.action-sub{
+
+  color:#ddd;
+
+  font-size:12px;
+
+  margin-top:3px;
+
+}
+
+.csv{
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--red),
+      var(--orange),
+      var(--yellow)
+    );
+
+}
+
+.clear{
+
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #35363a;
+
+}
+
+
+/* =========================================================
+   HISTÓRICO
+========================================================= */
+
+.history{
 
   display:flex;
 
   flex-direction:column;
 
-  gap:9px;
+  gap:8px;
 
 }
 
+.history-empty{
 
-.history-item{
+  text-align:center;
+
+  padding:30px 15px;
+
+  color:var(--muted);
+
+  border:
+    1px
+    solid
+    #292a2d;
+
+  border-radius:16px;
+
+}
+
+.record{
+
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #2d2e32;
+
+  border-radius:15px;
+
+  padding:13px;
 
   display:grid;
 
@@ -709,93 +916,97 @@ button{
 
   align-items:center;
 
-  padding:13px;
-
-  background:#151619;
-
-  border:
-    1px
-    solid
-    #2d2e32;
-
-  border-radius:15px;
-
 }
 
-
-.history-item strong{
-
-  display:block;
-
-  font-size:15px;
-
-}
-
-
-.history-item small{
-
-  display:block;
+.record-label{
 
   color:#888;
 
-  font-size:11px;
+  font-size:10px;
+
+  font-weight:900;
 
   margin-bottom:3px;
 
 }
 
+.record-value{
 
-.history-action{
-
-  color:var(--orange);
+  font-size:14px;
 
   font-weight:900;
 
-  font-size:13px;
-
 }
 
+.record-time{
 
-.empty{
-
-  padding:30px 15px;
-
-  text-align:center;
-
-  color:var(--muted);
-
-  background:#0d0e10;
-
-  border:
-    1px
-    solid
-    #292a2d;
-
-  border-radius:17px;
-
-}
-
-
-/* ==========================================
-   RODAPÉ
-========================================== */
-
-.footer{
-
-  margin-top:15px;
-
-  text-align:center;
-
-  color:#777;
+  color:#aaa;
 
   font-size:12px;
 
 }
 
+.record-badge{
 
-/* ==========================================
+  background:
+    linear-gradient(
+      90deg,
+      var(--red),
+      var(--orange)
+    );
+
+  border-radius:10px;
+
+  padding:
+    7px
+    9px;
+
+  font-size:11px;
+
+  font-weight:900;
+
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.total{
+
+  margin-top:12px;
+
+  border:
+    1px
+    solid
+    #303136;
+
+  border-radius:15px;
+
+  padding:15px;
+
+  text-align:center;
+
+  color:#ccc;
+
+  font-weight:900;
+
+}
+
+.total strong{
+
+  color:var(--yellow);
+
+  font-size:27px;
+
+  margin-right:7px;
+
+}
+
+
+/* =========================================================
    TOAST
-========================================== */
+========================================================= */
 
 .toast{
 
@@ -803,156 +1014,163 @@ button{
 
   left:50%;
 
-  bottom:25px;
-
-  z-index:100;
+  bottom:22px;
 
   transform:
-    translate(-50%,120px);
+    translate(
+      -50%,
+      120px
+    );
 
   opacity:0;
 
-  max-width:90%;
+  z-index:999;
+
+  background:#18191c;
+
+  border:
+    1px
+    solid
+    #45464a;
+
+  border-radius:15px;
 
   padding:
     14px
     20px;
 
-  background:#17181b;
+  font-weight:900;
 
-  border:
-    1px
-    solid
-    #46474c;
-
-  border-radius:15px;
-
-  box-shadow:
-    0 15px 40px
-    rgba(0,0,0,.55);
+  max-width:90%;
 
   text-align:center;
 
-  font-weight:900;
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.5);
 
   transition:.25s;
 
 }
 
-
 .toast.show{
 
   transform:
-    translate(-50%,0);
+    translate(
+      -50%,
+      0
+    );
 
   opacity:1;
 
 }
 
 
-/* ==========================================
+/* =========================================================
    RESPONSIVO
-========================================== */
+========================================================= */
 
 @media(max-width:700px){
 
   .app{
 
     padding:
-      9px
-      9px
+      8px
+      8px
       30px;
 
   }
 
-
   .logo{
 
-    width:94%;
+    width:92%;
 
     max-height:95px;
 
   }
 
-
   .subtitle{
-
-    letter-spacing:2px;
 
     font-size:13px;
 
-  }
-
-
-  .grid{
-
-    grid-template-columns:1fr;
-
-    gap:9px;
+    letter-spacing:2px;
 
   }
-
 
   .card{
 
-    border-radius:19px;
+    padding:13px;
 
-    padding:14px;
-
-  }
-
-
-  .employee-button{
-
-    min-height:66px;
+    border-radius:18px;
 
   }
 
+  .collaborators{
 
-  .category-button{
-
-    min-height:85px;
-
-    flex-direction:row;
-
-    align-items:center;
-
-  }
-
-
-  .category-button .button-icon{
-
-    width:48px;
-
-    height:48px;
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
 
   }
 
+  .categories{
 
-  .item-button{
-
-    min-height:72px;
-
-  }
-
-
-  .button-title{
-
-    font-size:17px;
+    grid-template-columns:
+      repeat(
+        2,
+        1fr
+      );
 
   }
 
+  .items{
 
-  .withdraw-button{
-
-    min-height:80px;
-
-    font-size:22px;
+    grid-template-columns:
+      1fr;
 
   }
 
+  .status{
 
-  .history-item{
+    grid-template-columns:
+      1fr;
+
+  }
+
+  .actions{
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+  .section-title{
+
+    font-size:19px;
+
+  }
+
+  .category{
+
+    padding:13px;
+
+  }
+
+  .category-icon{
+
+    font-size:29px;
+
+  }
+
+  .category-name{
+
+    font-size:15px;
+
+  }
+
+  .record{
 
     grid-template-columns:
       1fr
@@ -960,14 +1178,44 @@ button{
 
   }
 
+  .record-time{
 
-  .history-action{
-
-    grid-column:2;
-
-    grid-row:1 / span 2;
+    grid-column:
+      1 / -1;
 
   }
+
+}
+
+
+/* =========================================================
+   TABLET GRANDE
+========================================================= */
+
+@media(min-width:701px){
+
+  .collaborators{
+
+    grid-template-columns:
+      repeat(
+        4,
+        1fr
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   BOTÃO DESABILITADO
+========================================================= */
+
+button:disabled{
+
+  opacity:.45;
+
+  cursor:not-allowed;
 
 }
 
@@ -982,9 +1230,9 @@ button{
 <div class="app">
 
 
-<!-- ==========================================
+<!-- =====================================================
      CABEÇALHO
-========================================== -->
+===================================================== -->
 
 <header class="header">
 
@@ -1003,209 +1251,183 @@ button{
 </header>
 
 
-<!-- ==========================================
-     TÍTULO
-========================================== -->
 
-<div class="page-title">
+<!-- =====================================================
+     COLABORADORES
+===================================================== -->
 
-  <h1>📦 RETIRADA DE MATERIAIS</h1>
+<section class="card">
 
-  <p>
-    Selecione o funcionário e o material que será retirado.
-  </p>
+  <div class="section-header">
 
-</div>
+    <div>
 
+      <div class="section-title">
+        👤 COLABORADORES
+      </div>
 
-<!-- ==========================================
-     STATUS
-========================================== -->
+      <div class="section-sub">
+        Selecione quem está retirando
+      </div>
 
-<section class="card status-card">
+    </div>
 
-  <div class="status-label">
-    STATUS DA RETIRADA
-  </div>
-
-  <div
-    class="status"
-    id="status"
-  >
-    AGUARDANDO FUNCIONÁRIO
-  </div>
-
-  <div
-    class="status-sub"
-    id="statusSub"
-  >
-    Toque no nome do funcionário.
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     FUNCIONÁRIOS
-========================================== -->
-
-<section
-  class="card"
-  id="employeeSection"
->
-
-  <div class="section-title">
-
-    <h2>👤 FUNCIONÁRIO</h2>
-
-    <span>1º PASSO</span>
+    <div
+      class="badge"
+      id="collaboratorBadge"
+    >
+      0 SELECIONADO
+    </div>
 
   </div>
 
 
   <div
-    class="grid"
-    id="employeeGrid"
+    class="collaborators"
+    id="collaborators"
   ></div>
 
 </section>
 
 
-<!-- ==========================================
+
+<!-- =====================================================
      CATEGORIAS
-========================================== -->
+===================================================== -->
 
-<section
-  class="card"
-  id="categorySection"
-  style="display:none"
->
+<section class="card">
 
-  <div class="section-title">
+  <div class="section-header">
 
-    <h2>📦 CATEGORIA</h2>
+    <div>
 
-    <span>2º PASSO</span>
+      <div class="section-title">
+        📦 CATEGORIAS
+      </div>
+
+      <div class="section-sub">
+        Escolha o tipo de material
+      </div>
+
+    </div>
+
+    <div
+      class="badge"
+      id="categoryBadge"
+    >
+      SELECIONE
+    </div>
 
   </div>
 
 
   <div
-    class="grid"
-    id="categoryGrid"
+    class="categories"
+    id="categories"
   ></div>
-
-
-  <div class="navigation">
-
-    <button
-      class="nav-button"
-      onclick="backToEmployees()"
-    >
-      ← VOLTAR
-    </button>
-
-    <button
-      class="nav-button cancel-button"
-      onclick="cancelSelection()"
-    >
-      ✕ CANCELAR
-    </button>
-
-  </div>
 
 </section>
 
 
-<!-- ==========================================
+
+<!-- =====================================================
      ITENS
-========================================== -->
+===================================================== -->
 
 <section
   class="card"
-  id="itemSection"
-  style="display:none"
+  id="itemsCard"
 >
 
-  <div class="section-title">
+  <div class="section-header">
 
-    <h2 id="itemTitle">
-      🔧 ITEM
-    </h2>
+    <div>
 
-    <span>3º PASSO</span>
+      <div class="section-title">
+        🛠️ PRODUTOS / FERRAMENTAS
+      </div>
 
-  </div>
+      <div
+        class="section-sub"
+        id="itemsSubtitle"
+      >
+        Selecione uma categoria primeiro
+      </div>
 
-
-  <div
-    class="grid"
-    id="itemGrid"
-  ></div>
-
-
-  <div class="withdraw-area" id="withdrawArea">
-
-    <button
-      class="withdraw-button"
-      onclick="confirmWithdraw()"
-    >
-      🔴 CONFIRMAR RETIRADA
-    </button>
-
-  </div>
-
-
-  <div class="navigation">
-
-    <button
-      class="nav-button"
-      onclick="backToCategories()"
-    >
-      ← VOLTAR
-    </button>
-
-    <button
-      class="nav-button cancel-button"
-      onclick="cancelSelection()"
-    >
-      ✕ CANCELAR
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     HISTÓRICO
-========================================== -->
-
-<section class="card history">
-
-  <div class="section-title">
-
-    <h2>📋 ÚLTIMAS RETIRADAS</h2>
-
-    <span id="count">
-      0
-    </span>
+    </div>
 
   </div>
 
 
   <div
-    class="history-list"
-    id="historyList"
+    class="items"
+    id="items"
   >
 
-    <div class="empty">
+    <div class="history-empty">
 
-      📋
+      👆
 
       <br><br>
 
-      Nenhuma retirada registrada.
+      Selecione uma categoria acima.
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ===================================================
+       CONFIRMAÇÃO
+  =================================================== -->
+
+  <div
+    class="confirm-box"
+    id="confirmBox"
+  >
+
+    <div class="confirm-title">
+      CONFIRMAR RETIRADA
+    </div>
+
+    <div
+      class="confirm-info"
+      id="confirmCollaborator"
+    >
+      —
+    </div>
+
+    <div
+      class="confirm-info"
+      id="confirmItem"
+    >
+      —
+    </div>
+
+    <div
+      class="confirm-sub"
+      id="confirmCategory"
+    >
+      —
+    </div>
+
+
+    <div class="confirm-actions">
+
+      <button
+        class="confirm-button cancel"
+        onclick="cancelSelection()"
+      >
+        ✖ CANCELAR
+      </button>
+
+      <button
+        class="confirm-button confirm"
+        onclick="confirmWithdrawal()"
+      >
+        ✓ CONFIRMAR RETIRADA
+      </button>
 
     </div>
 
@@ -1214,19 +1436,188 @@ button{
 </section>
 
 
-<div class="footer">
 
-  Arasigns — Controle interno de almoxarifado
+<!-- =====================================================
+     STATUS
+===================================================== -->
+
+<section class="card">
+
+  <div class="section-header">
+
+    <div class="section-title">
+      📋 STATUS
+    </div>
+
+  </div>
+
+
+  <div class="status">
+
+
+    <div class="status-box">
+
+      <div class="status-label">
+        COLABORADOR
+      </div>
+
+      <div
+        class="status-value"
+        id="selectedCollaborator"
+      >
+        Nenhum selecionado
+      </div>
+
+      <div class="status-muted">
+        Toque no nome acima
+      </div>
+
+    </div>
+
+
+
+    <div class="status-box">
+
+      <div class="status-label">
+        PRODUTO / FERRAMENTA
+      </div>
+
+      <div
+        class="status-value"
+        id="selectedItem"
+      >
+        Nenhum selecionado
+      </div>
+
+      <div class="status-muted">
+        Escolha uma categoria e um item
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AÇÕES
+===================================================== -->
+
+<section class="card actions">
+
+
+  <button
+    class="action csv"
+    onclick="exportCSV()"
+  >
+
+    <div class="action-icon">
+      📄
+    </div>
+
+    <div>
+
+      <div class="action-title">
+        GERAR CSV
+      </div>
+
+      <div class="action-sub">
+        Exportar todas as retiradas
+      </div>
+
+    </div>
+
+  </button>
+
+
+
+  <button
+    class="action clear"
+    onclick="clearRecords()"
+  >
+
+    <div class="action-icon">
+      🗑️
+    </div>
+
+    <div>
+
+      <div class="action-title">
+        LIMPAR REGISTROS
+      </div>
+
+      <div class="action-sub">
+        Apagar histórico deste aparelho
+      </div>
+
+    </div>
+
+  </button>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
+
+<section class="card">
+
+  <div class="section-header">
+
+    <div>
+
+      <div class="section-title">
+        🧾 ÚLTIMAS RETIRADAS
+      </div>
+
+      <div class="section-sub">
+        Registro das movimentações
+      </div>
+
+    </div>
+
+    <div
+      class="badge"
+      id="recordCount"
+    >
+      0 REGISTROS
+    </div>
+
+  </div>
+
+
+  <div
+    class="history"
+    id="history"
+  ></div>
+
+
+  <div class="total">
+
+    <strong id="totalRecords">
+      0
+    </strong>
+
+    RETIRADAS REGISTRADAS
+
+  </div>
+
+</section>
+
 
 </div>
 
 
-</div>
 
-
-<!-- ==========================================
+<!-- =====================================================
      TOAST
-========================================== -->
+===================================================== -->
 
 <div
   class="toast"
@@ -1234,13 +1625,23 @@ button{
 ></div>
 
 
+
 <script>
 
-/* ==========================================
-   FUNCIONÁRIOS
-========================================== */
 
-const FUNCIONARIOS = [
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
+
+const STORAGE_KEY =
+  "arasigns_retiradas_v1";
+
+
+/* =========================================================
+   COLABORADORES
+========================================================= */
+
+const COLABORADORES = [
 
   {
     codigo:"001",
@@ -1315,9 +1716,9 @@ const FUNCIONARIOS = [
 ];
 
 
-/* ==========================================
-   MATERIAIS / FERRAMENTAS
-========================================== */
+/* =========================================================
+   CATEGORIAS
+========================================================= */
 
 const CATEGORIAS = [
 
@@ -1325,7 +1726,7 @@ const CATEGORIAS = [
     id:"ferramentas",
     nome:"FERRAMENTAS",
     icone:"🔧",
-    descricao:"Ferramentas para uso nas atividades"
+    descricao:"Ferramentas para uso"
   },
 
   {
@@ -1339,7 +1740,7 @@ const CATEGORIAS = [
     id:"modulos",
     nome:"MÓDULOS LED",
     icone:"💡",
-    descricao:"Módulos LED"
+    descricao:"Módulos de LED"
   },
 
   {
@@ -1361,58 +1762,77 @@ const CATEGORIAS = [
     nome:"COLAS / FITAS",
     icone:"🧰",
     descricao:"Colas, fitas e vedantes"
+  },
+
+  {
+    id:"higiene",
+    nome:"HIGIENE",
+    icone:"🧼",
+    descricao:"Higiene e limpeza"
   }
 
 ];
 
 
+/* =========================================================
+   ITENS
+========================================================= */
+
 const ITENS = {
 
+
+  /* -------------------------------------------------------
+     FERRAMENTAS
+  ------------------------------------------------------- */
 
   ferramentas:[
 
     {
-      nome:"Alicate decapador",
+      nome:"Alicate Decapador",
       icone:"🔧"
     },
 
     {
-      nome:"Alicate de corte",
+      nome:"Alicate de Corte",
       icone:"✂️"
     },
 
     {
       nome:"Tupia",
-      icone:"🔧"
+      icone:"🔩"
     },
 
     {
-      nome:"Lixadeira plana",
+      nome:"Lixadeira Plana",
       icone:"⚙️"
     },
 
     {
-      nome:"Serra tico-tico",
+      nome:"Serra Tico-Tico",
       icone:"🪚"
     },
 
     {
-      nome:"Ferro de solda pistola",
+      nome:"Ferro de Solda Pistola",
       icone:"🔥"
     },
 
     {
-      nome:"Ferro de solda",
+      nome:"Ferro de Solda",
       icone:"🔥"
     },
 
     {
       nome:"Ventosa",
-      icone:"⭕"
+      icone:"🔴"
     }
 
   ],
 
+
+  /* -------------------------------------------------------
+     FONTES
+  ------------------------------------------------------- */
 
   fontes:[
 
@@ -1429,50 +1849,62 @@ const ITENS = {
   ],
 
 
+  /* -------------------------------------------------------
+     MÓDULOS LED
+  ------------------------------------------------------- */
+
   modulos:[
 
     {
-      nome:"Módulo LED — Branco Quente",
-      icone:"🟡"
+      nome:"Módulo LED Branco Quente",
+      icone:"💡"
     },
 
     {
-      nome:"Módulo LED — Branco Frio",
-      icone:"⚪"
+      nome:"Módulo LED Branco Frio",
+      icone:"💡"
     }
 
   ],
 
+
+  /* -------------------------------------------------------
+     FITAS LED
+  ------------------------------------------------------- */
 
   fitas:[
 
     {
-      nome:"Fita LED — Branco Quente",
-      icone:"🟡"
+      nome:"Fita LED Branco Quente",
+      icone:"💡"
     },
 
     {
-      nome:"Fita LED — Branco Frio",
-      icone:"⚪"
+      nome:"Fita LED Branco Frio",
+      icone:"💡"
     }
 
   ],
 
 
+  /* -------------------------------------------------------
+     CONSUMÍVEIS
+  ------------------------------------------------------- */
+
   consumiveis:[
 
     {
-      nome:"Disco flap",
+      nome:"Disco Flap",
       icone:"⚙️"
     },
 
     {
-      nome:"Lâmina pequena",
+      nome:"Lâmina Pequena",
       icone:"🔪"
     },
 
     {
-      nome:"Lâmina grande",
+      nome:"Lâmina Grande",
       icone:"🔪"
     },
 
@@ -1482,48 +1914,86 @@ const ITENS = {
     },
 
     {
-      nome:"Bastão de madeira",
+      nome:"Bastão de Madeira",
       icone:"🪵"
+    },
+
+    {
+      nome:"Agulha P",
+      icone:"📌"
+    },
+
+    {
+      nome:"Agulha G",
+      icone:"📌"
     }
 
   ],
 
 
+  /* -------------------------------------------------------
+     COLAS / FITAS
+  ------------------------------------------------------- */
+
   colasfitas:[
 
     {
-      nome:"Fita isolante",
+      nome:"Fita Isolante",
       icone:"🖤"
     },
 
     {
-      nome:"Fita dupla face amarela",
-      icone:"🟡"
+      nome:"Fita Dupla Face Amarela",
+      icone:"🟨"
     },
 
     {
-      nome:"Fita crepe verde",
-      icone:"🟢"
+      nome:"Fita Crepe Verde",
+      icone:"🟩"
     },
 
     {
-      nome:"Fita silicone transparente",
-      icone:"🔳"
-    },
-
-    {
-      nome:"Fita silicone branca",
+      nome:"Fita Silicone Transparente",
       icone:"⬜"
     },
 
     {
-      nome:"Veda-calha",
-      icone:"🧱"
+      nome:"Fita Silicone Branca",
+      icone:"⬜"
+    },
+
+    {
+      nome:"Veda Calha",
+      icone:"🧴"
     },
 
     {
       nome:"PU",
-      icone:"🧰"
+      icone:"🧴"
+    }
+
+  ],
+
+
+  /* -------------------------------------------------------
+     HIGIENE
+  ------------------------------------------------------- */
+
+  higiene:[
+
+    {
+      nome:"Saco de Lixo",
+      icone:"🗑️"
+    },
+
+    {
+      nome:"Luvas Latex",
+      icone:"🧤"
+    },
+
+    {
+      nome:"Bufalo",
+      icone:"🧽"
     }
 
   ]
@@ -1531,115 +2001,1121 @@ const ITENS = {
 };
 
 
-/* ==========================================
-   ESTADO
-========================================== */
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
 
-let funcionarioSelecionado = null;
-
-let categoriaSelecionada = null;
-
-let itemSelecionado = null;
-
-
-/* ==========================================
-   STORAGE
-========================================== */
-
-const STORAGE_KEY =
-  "arasigns_retiradas_botoes_v1";
-
-
-let registros =
+let records =
   JSON.parse(
-    localStorage.getItem(STORAGE_KEY)
-    || "[]"
+    localStorage.getItem(
+      STORAGE_KEY
+    ) || "[]"
   );
 
 
-/* ==========================================
+let selectedCollaborator = null;
+
+let selectedCategory = null;
+
+let selectedItem = null;
+
+
+/* =========================================================
    ELEMENTOS
-========================================== */
+========================================================= */
 
-const employeeGrid =
+const collaboratorsEl =
   document.getElementById(
-    "employeeGrid"
+    "collaborators"
   );
 
 
-const categoryGrid =
+const categoriesEl =
   document.getElementById(
-    "categoryGrid"
+    "categories"
   );
 
 
-const itemGrid =
+const itemsEl =
   document.getElementById(
-    "itemGrid"
+    "items"
   );
 
 
-const employeeSection =
+const itemsSubtitleEl =
   document.getElementById(
-    "employeeSection"
+    "itemsSubtitle"
   );
 
 
-const categorySection =
+const confirmBox =
   document.getElementById(
-    "categorySection"
+    "confirmBox"
   );
 
 
-const itemSection =
+const confirmCollaboratorEl =
   document.getElementById(
-    "itemSection"
+    "confirmCollaborator"
   );
 
 
-const withdrawArea =
+const confirmItemEl =
   document.getElementById(
-    "withdrawArea"
+    "confirmItem"
   );
 
 
-const statusEl =
+const confirmCategoryEl =
   document.getElementById(
-    "status"
+    "confirmCategory"
   );
 
 
-const statusSubEl =
+const selectedCollaboratorEl =
   document.getElementById(
-    "statusSub"
+    "selectedCollaborator"
   );
 
 
-const itemTitle =
+const selectedItemEl =
   document.getElementById(
-    "itemTitle"
+    "selectedItem"
   );
 
 
-const historyList =
+const collaboratorBadgeEl =
   document.getElementById(
-    "historyList"
+    "collaboratorBadge"
   );
 
 
-const countEl =
+const categoryBadgeEl =
   document.getElementById(
-    "count"
+    "categoryBadge"
   );
 
 
-/* ==========================================
-   ESCAPE HTML
-========================================== */
+const historyEl =
+  document.getElementById(
+    "history"
+  );
 
-function escapeHtml(value){
 
-  return String(value ?? "")
+const recordCountEl =
+  document.getElementById(
+    "recordCount"
+  );
+
+
+const totalRecordsEl =
+  document.getElementById(
+    "totalRecords"
+  );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+  const el =
+    document.getElementById(
+      "toast"
+    );
+
+  el.textContent =
+    message;
+
+  el.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    window.toastTimer
+  );
+
+  window.toastTimer =
+    setTimeout(
+
+      () => {
+
+        el.classList.remove(
+          "show"
+        );
+
+      },
+
+      2600
+
+    );
+
+}
+
+
+/* =========================================================
+   RENDERIZAR COLABORADORES
+========================================================= */
+
+function renderCollaborators(){
+
+  collaboratorsEl.innerHTML = "";
+
+
+  COLABORADORES.forEach(
+    collaborator => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "collaborator";
+
+
+      button.dataset.codigo =
+        collaborator.codigo;
+
+
+      button.innerHTML = `
+
+        <span class="collab-number">
+
+          ${collaborator.codigo}
+
+        </span>
+
+        ${escapeHtml(
+          collaborator.nome
+        )}
+
+      `;
+
+
+      button.onclick =
+        () => {
+
+          selectCollaborator(
+            collaborator,
+            button
+          );
+
+        };
+
+
+      collaboratorsEl.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SELECIONAR COLABORADOR
+========================================================= */
+
+function selectCollaborator(
+  collaborator,
+  button
+){
+
+  selectedCollaborator =
+    collaborator;
+
+
+  document
+    .querySelectorAll(
+      ".collaborator"
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          "selected"
+        )
+    );
+
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  selectedCollaboratorEl.textContent =
+    collaborator.nome;
+
+
+  collaboratorBadgeEl.textContent =
+    collaborator.nome;
+
+
+  toast(
+    "Colaborador selecionado: " +
+    collaborator.nome
+  );
+
+
+  cancelSelection();
+
+}
+
+
+/* =========================================================
+   RENDERIZAR CATEGORIAS
+========================================================= */
+
+function renderCategories(){
+
+  categoriesEl.innerHTML = "";
+
+
+  CATEGORIAS.forEach(
+    category => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "category";
+
+
+      button.dataset.id =
+        category.id;
+
+
+      button.innerHTML = `
+
+        <div class="category-icon">
+
+          ${category.icone}
+
+        </div>
+
+        <div class="category-name">
+
+          ${escapeHtml(
+            category.nome
+          )}
+
+        </div>
+
+        <div class="category-description">
+
+          ${escapeHtml(
+            category.descricao
+          )}
+
+        </div>
+
+      `;
+
+
+      button.onclick =
+        () => {
+
+          selectCategory(
+            category,
+            button
+          );
+
+        };
+
+
+      categoriesEl.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SELECIONAR CATEGORIA
+========================================================= */
+
+function selectCategory(
+  category,
+  button
+){
+
+  selectedCategory =
+    category;
+
+
+  selectedItem =
+    null;
+
+
+  document
+    .querySelectorAll(
+      ".category"
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          "selected"
+        )
+    );
+
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  categoryBadgeEl.textContent =
+    category.nome;
+
+
+  renderItems(
+    category.id
+  );
+
+
+  selectedItemEl.textContent =
+    "Nenhum selecionado";
+
+
+  confirmBox.classList.remove(
+    "show"
+  );
+
+
+  toast(
+    category.nome
+  );
+
+}
+
+
+/* =========================================================
+   RENDERIZAR ITENS
+========================================================= */
+
+function renderItems(
+  categoryId
+){
+
+  const list =
+    ITENS[categoryId] || [];
+
+
+  itemsEl.innerHTML = "";
+
+
+  if(!list.length){
+
+    itemsEl.innerHTML = `
+
+      <div class="history-empty">
+
+        Nenhum item cadastrado nesta categoria.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  itemsSubtitleEl.textContent =
+    "Selecione o produto ou ferramenta";
+
+
+  list.forEach(
+    (item,index) => {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "item";
+
+
+      button.dataset.index =
+        index;
+
+
+      button.innerHTML = `
+
+        <div class="item-icon">
+
+          ${item.icone}
+
+        </div>
+
+        <div>
+
+          <div class="item-name">
+
+            ${escapeHtml(
+              item.nome
+            )}
+
+          </div>
+
+          <div class="item-status">
+
+            TOQUE PARA SELECIONAR
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      button.onclick =
+        () => {
+
+          selectItem(
+            item,
+            button
+          );
+
+        };
+
+
+      itemsEl.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SELECIONAR ITEM
+========================================================= */
+
+function selectItem(
+  item,
+  button
+){
+
+  if(!selectedCollaborator){
+
+    toast(
+      "Primeiro selecione um colaborador."
+    );
+
+    return;
+
+  }
+
+
+  selectedItem =
+    item;
+
+
+  document
+    .querySelectorAll(
+      ".item"
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          "selected"
+        )
+    );
+
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  selectedItemEl.textContent =
+    item.nome;
+
+
+  confirmCollaboratorEl.textContent =
+    "👤 " +
+    selectedCollaborator.nome;
+
+
+  confirmItemEl.textContent =
+    "🛠️ " +
+    item.nome;
+
+
+  confirmCategoryEl.textContent =
+    "Categoria: " +
+    selectedCategory.nome;
+
+
+  confirmBox.classList.add(
+    "show"
+  );
+
+
+  confirmBox.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+
+
+  toast(
+    "Confira a retirada antes de confirmar."
+  );
+
+}
+
+
+/* =========================================================
+   CANCELAR SELEÇÃO
+========================================================= */
+
+function cancelSelection(){
+
+  selectedItem =
+    null;
+
+
+  document
+    .querySelectorAll(
+      ".item"
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          "selected"
+        )
+    );
+
+
+  confirmBox.classList.remove(
+    "show"
+  );
+
+
+  selectedItemEl.textContent =
+    "Nenhum selecionado";
+
+}
+
+
+/* =========================================================
+   CONFIRMAR RETIRADA
+========================================================= */
+
+function confirmWithdrawal(){
+
+  if(!selectedCollaborator){
+
+    toast(
+      "Selecione um colaborador."
+    );
+
+    return;
+
+  }
+
+
+  if(!selectedCategory){
+
+    toast(
+      "Selecione uma categoria."
+    );
+
+    return;
+
+  }
+
+
+  if(!selectedItem){
+
+    toast(
+      "Selecione um item."
+    );
+
+    return;
+
+  }
+
+
+  const now =
+    new Date();
+
+
+  const record = {
+
+    dataHora:
+      now.toLocaleString(
+        "pt-BR"
+      ),
+
+    timestamp:
+      now.getTime(),
+
+    colaborador:
+      selectedCollaborator.nome,
+
+    codigoColaborador:
+      selectedCollaborator.codigo,
+
+    categoria:
+      selectedCategory.nome,
+
+    item:
+      selectedItem.nome
+
+  };
+
+
+  records.push(
+    record
+  );
+
+
+  saveRecords();
+
+
+  toast(
+    "✓ Retirada registrada!"
+  );
+
+
+  cancelSelection();
+
+
+  selectedCategory =
+    null;
+
+
+  document
+    .querySelectorAll(
+      ".category"
+    )
+    .forEach(
+      el =>
+        el.classList.remove(
+          "selected"
+        )
+    );
+
+
+  categoryBadgeEl.textContent =
+    "SELECIONE";
+
+
+  itemsEl.innerHTML = `
+
+    <div class="history-empty">
+
+      👆
+
+      <br><br>
+
+      Selecione uma categoria acima.
+
+    </div>
+
+  `;
+
+
+  itemsSubtitleEl.textContent =
+    "Selecione uma categoria primeiro";
+
+
+  selectedItemEl.textContent =
+    "Nenhum selecionado";
+
+}
+
+
+/* =========================================================
+   SALVAR REGISTROS
+========================================================= */
+
+function saveRecords(){
+
+  localStorage.setItem(
+
+    STORAGE_KEY,
+
+    JSON.stringify(
+      records
+    )
+
+  );
+
+
+  renderHistory();
+
+}
+
+
+/* =========================================================
+   RENDERIZAR HISTÓRICO
+========================================================= */
+
+function renderHistory(){
+
+  recordCountEl.textContent =
+
+    records.length +
+
+    (
+      records.length === 1
+        ? " REGISTRO"
+        : " REGISTROS"
+    );
+
+
+  totalRecordsEl.textContent =
+    records.length;
+
+
+  if(!records.length){
+
+    historyEl.innerHTML = `
+
+      <div class="history-empty">
+
+        📋
+
+        <br><br>
+
+        Nenhuma retirada registrada ainda.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  historyEl.innerHTML =
+
+    records
+      .slice()
+      .reverse()
+      .slice(0,50)
+      .map(
+        record => `
+
+          <div class="record">
+
+
+            <div>
+
+              <div class="record-label">
+                COLABORADOR
+              </div>
+
+              <div class="record-value">
+
+                ${escapeHtml(
+                  record.colaborador
+                )}
+
+              </div>
+
+            </div>
+
+
+
+            <div>
+
+              <div class="record-label">
+                ITEM
+              </div>
+
+              <div class="record-value">
+
+                ${escapeHtml(
+                  record.item
+                )}
+
+              </div>
+
+            </div>
+
+
+
+            <div>
+
+              <div class="record-label">
+                CATEGORIA
+              </div>
+
+              <div class="record-value">
+
+                ${escapeHtml(
+                  record.categoria
+                )}
+
+              </div>
+
+            </div>
+
+
+
+            <div class="record-time">
+
+              ${escapeHtml(
+                record.dataHora
+              )}
+
+            </div>
+
+
+
+            <div>
+
+              <span class="record-badge">
+
+                RETIRADA
+
+              </span>
+
+            </div>
+
+
+          </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   LIMPAR REGISTROS
+========================================================= */
+
+function clearRecords(){
+
+  if(!records.length){
+
+    toast(
+      "Não existem registros."
+    );
+
+    return;
+
+  }
+
+
+  const confirmation =
+    confirm(
+      "Tem certeza que deseja apagar TODOS os registros deste aparelho?"
+    );
+
+
+  if(!confirmation)
+    return;
+
+
+  records = [];
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  renderHistory();
+
+
+  toast(
+    "Registros apagados."
+  );
+
+}
+
+
+/* =========================================================
+   EXPORTAR CSV
+========================================================= */
+
+function exportCSV(){
+
+  if(!records.length){
+
+    toast(
+      "Ainda não existem retiradas para exportar."
+    );
+
+    return;
+
+  }
+
+
+  const headers = [
+
+    "DATA/HORA",
+
+    "COLABORADOR",
+
+    "CÓD. COLABORADOR",
+
+    "CATEGORIA",
+
+    "ITEM",
+
+    "TIPO"
+
+  ];
+
+
+  const rows =
+    records.map(
+      record => [
+
+        record.dataHora,
+
+        record.colaborador,
+
+        record.codigoColaborador,
+
+        record.categoria,
+
+        record.item,
+
+        "RETIRADA"
+
+      ]
+    );
+
+
+  const csv =
+
+    "\uFEFF" +
+
+    [
+
+      headers,
+
+      ...rows
+
+    ]
+
+    .map(
+
+      row =>
+
+        row
+
+          .map(
+
+            value =>
+
+              `"${String(
+                value ?? ""
+              ).replaceAll(
+                '"',
+                '""'
+              )}"`
+
+          )
+
+          .join(";")
+
+    )
+
+    .join("\r\n");
+
+
+  const blob =
+    new Blob(
+
+      [csv],
+
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+
+  const date =
+    new Date()
+      .toISOString()
+      .slice(
+        0,
+        10
+      );
+
+
+  a.href =
+    url;
+
+
+  a.download =
+    "arasigns_retiradas_" +
+    date +
+    ".csv";
+
+
+  document.body.appendChild(
+    a
+  );
+
+
+  a.click();
+
+
+  a.remove();
+
+
+  URL.revokeObjectURL(
+    url
+  );
+
+
+  toast(
+    "✓ CSV gerado com sucesso!"
+  );
+
+}
+
+
+/* =========================================================
+   SEGURANÇA HTML
+========================================================= */
+
+function escapeHtml(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
 
     .replaceAll(
       "&",
@@ -1669,643 +3145,11 @@ function escapeHtml(value){
 }
 
 
-/* ==========================================
-   TOAST
-========================================== */
-
-function toast(message){
-
-  const el =
-    document.getElementById(
-      "toast"
-    );
-
-
-  el.textContent =
-    message;
-
-
-  el.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    window.toastTimer
-  );
-
-
-  window.toastTimer =
-    setTimeout(
-      () => {
-
-        el.classList.remove(
-          "show"
-        );
-
-      },
-      2500
-    );
-
-}
-
-
-/* ==========================================
-   DATA / HORA
-========================================== */
-
-function nowBR(){
-
-  return new Date()
-    .toLocaleString(
-      "pt-BR"
-    );
-
-}
-
-
-/* ==========================================
-   FUNCIONÁRIOS
-========================================== */
-
-function renderEmployees(){
-
-  employeeGrid.innerHTML =
-    FUNCIONARIOS
-      .map(
-        funcionario => `
-
-          <button
-            class="select-button employee-button"
-            onclick="selectEmployee('${funcionario.codigo}')"
-          >
-
-            <div class="employee-number">
-              ${funcionario.codigo}
-            </div>
-
-            <div class="button-icon">
-              👤
-            </div>
-
-            <div class="button-text">
-
-              <div class="button-title">
-                ${escapeHtml(funcionario.nome)}
-              </div>
-
-              <div class="button-sub">
-                Toque para selecionar
-              </div>
-
-            </div>
-
-          </button>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/* ==========================================
-   SELECIONAR FUNCIONÁRIO
-========================================== */
-
-function selectEmployee(codigo){
-
-  const funcionario =
-    FUNCIONARIOS.find(
-      f =>
-        f.codigo === codigo
-    );
-
-
-  if(!funcionario)
-    return;
-
-
-  funcionarioSelecionado =
-    funcionario;
-
-
-  categoriaSelecionada =
-    null;
-
-
-  itemSelecionado =
-    null;
-
-
-  employeeSection.style.display =
-    "none";
-
-
-  categorySection.style.display =
-    "block";
-
-
-  itemSection.style.display =
-    "none";
-
-
-  withdrawArea.style.display =
-    "none";
-
-
-  statusEl.textContent =
-    funcionario.nome;
-
-
-  statusSubEl.textContent =
-    "Funcionário selecionado. Escolha a categoria.";
-
-  
-  toast(
-    "Funcionário: " +
-    funcionario.nome
-  );
-
-}
-
-
-/* ==========================================
-   CATEGORIAS
-========================================== */
-
-function renderCategories(){
-
-  categoryGrid.innerHTML =
-    CATEGORIAS
-      .map(
-        categoria => `
-
-          <button
-            class="select-button category-button"
-            onclick="selectCategory('${categoria.id}')"
-          >
-
-            <div class="button-icon">
-              ${categoria.icone}
-            </div>
-
-            <div class="button-text">
-
-              <div class="category-name">
-                ${escapeHtml(categoria.nome)}
-              </div>
-
-              <div class="button-sub">
-                ${escapeHtml(categoria.descricao)}
-              </div>
-
-            </div>
-
-          </button>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/* ==========================================
-   SELECIONAR CATEGORIA
-========================================== */
-
-function selectCategory(id){
-
-  const categoria =
-    CATEGORIAS.find(
-      c =>
-        c.id === id
-    );
-
-
-  if(!categoria)
-    return;
-
-
-  categoriaSelecionada =
-    categoria;
-
-
-  itemSelecionado =
-    null;
-
-
-  categorySection.style.display =
-    "none";
-
-
-  itemSection.style.display =
-    "block";
-
-
-  withdrawArea.style.display =
-    "none";
-
-
-  itemTitle.textContent =
-    categoria.icone +
-    " " +
-    categoria.nome;
-
-
-  statusEl.textContent =
-    funcionarioSelecionado.nome;
-
-
-  statusSubEl.textContent =
-    "Escolha o material ou ferramenta.";
-
-
-  renderItems(
-    categoria.id
-  );
-
-}
-
-
-/* ==========================================
-   ITENS
-========================================== */
-
-function renderItems(categoryId){
-
-  const lista =
-    ITENS[categoryId]
-    || [];
-
-
-  itemGrid.innerHTML =
-    lista
-      .map(
-        (item,index) => `
-
-          <button
-            class="select-button item-button"
-            onclick="selectItem(${index})"
-          >
-
-            <div class="button-icon">
-              ${item.icone}
-            </div>
-
-            <div class="button-text">
-
-              <div class="button-title">
-                ${escapeHtml(item.nome)}
-              </div>
-
-              <div class="button-sub">
-                Toque para selecionar
-              </div>
-
-            </div>
-
-          </button>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/* ==========================================
-   SELECIONAR ITEM
-========================================== */
-
-function selectItem(index){
-
-  const lista =
-    ITENS[
-      categoriaSelecionada.id
-    ];
-
-
-  itemSelecionado =
-    lista[index];
-
-
-  if(!itemSelecionado)
-    return;
-
-
-  statusEl.textContent =
-    itemSelecionado.nome;
-
-
-  statusSubEl.textContent =
-    funcionarioSelecionado.nome +
-    " → " +
-    "pronto para retirada.";
-
-
-  withdrawArea.style.display =
-    "block";
-
-
-  toast(
-    "Item selecionado: " +
-    itemSelecionado.nome
-  );
-
-}
-
-
-/* ==========================================
-   CONFIRMAR RETIRADA
-========================================== */
-
-function confirmWithdraw(){
-
-  if(
-    !funcionarioSelecionado ||
-    !categoriaSelecionada ||
-    !itemSelecionado
-  ){
-
-    toast(
-      "Selecione funcionário e item."
-    );
-
-    return;
-
-  }
-
-
-  const registro = {
-
-    id:
-      Date.now(),
-
-    dataHora:
-      nowBR(),
-
-    funcionario:
-      funcionarioSelecionado.nome,
-
-    codigoFuncionario:
-      funcionarioSelecionado.codigo,
-
-    categoria:
-      categoriaSelecionada.nome,
-
-    item:
-      itemSelecionado.nome,
-
-    tipo:
-      "RETIRADA"
-
-  };
-
-
-  registros.push(
-    registro
-  );
-
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(
-      registros
-    )
-  );
-
-
-  toast(
-    "✅ Retirada registrada!"
-  );
-
-
-  renderHistory();
-
-
-  setTimeout(
-    () => {
-
-      resetAll();
-
-    },
-    700
-  );
-
-}
-
-
-/* ==========================================
-   VOLTAR PARA FUNCIONÁRIOS
-========================================== */
-
-function backToEmployees(){
-
-  resetAll();
-
-}
-
-
-/* ==========================================
-   VOLTAR PARA CATEGORIAS
-========================================== */
-
-function backToCategories(){
-
-  categoriaSelecionada =
-    null;
-
-  itemSelecionado =
-    null;
-
-
-  categorySection.style.display =
-    "block";
-
-
-  itemSection.style.display =
-    "none";
-
-
-  withdrawArea.style.display =
-    "none";
-
-
-  statusEl.textContent =
-    funcionarioSelecionado.nome;
-
-
-  statusSubEl.textContent =
-    "Escolha a categoria.";
-
-}
-
-
-/* ==========================================
-   CANCELAR
-========================================== */
-
-function cancelSelection(){
-
-  resetAll();
-
-}
-
-
-/* ==========================================
-   RESET COMPLETO
-========================================== */
-
-function resetAll(){
-
-  funcionarioSelecionado =
-    null;
-
-  categoriaSelecionada =
-    null;
-
-  itemSelecionado =
-    null;
-
-
-  employeeSection.style.display =
-    "block";
-
-
-  categorySection.style.display =
-    "none";
-
-
-  itemSection.style.display =
-    "none";
-
-
-  withdrawArea.style.display =
-    "none";
-
-
-  statusEl.textContent =
-    "AGUARDANDO FUNCIONÁRIO";
-
-
-  statusSubEl.textContent =
-    "Toque no nome do funcionário.";
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* ==========================================
-   HISTÓRICO
-========================================== */
-
-function renderHistory(){
-
-  countEl.textContent =
-    registros.length;
-
-
-  if(!registros.length){
-
-    historyList.innerHTML = `
-
-      <div class="empty">
-
-        📋
-
-        <br><br>
-
-        Nenhuma retirada registrada.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  historyList.innerHTML =
-
-    registros
-      .slice()
-      .reverse()
-      .slice(0,30)
-      .map(
-        registro => `
-
-          <div class="history-item">
-
-            <div>
-
-              <small>
-                FUNCIONÁRIO
-              </small>
-
-              <strong>
-                ${escapeHtml(
-                  registro.funcionario
-                )}
-              </strong>
-
-              <small>
-                ${escapeHtml(
-                  registro.dataHora
-                )}
-              </small>
-
-            </div>
-
-
-            <div>
-
-              <small>
-                MATERIAL / FERRAMENTA
-              </small>
-
-              <strong>
-                ${escapeHtml(
-                  registro.item
-                )}
-              </strong>
-
-              <small>
-                ${escapeHtml(
-                  registro.categoria
-                )}
-              </small>
-
-            </div>
-
-
-            <div class="history-action">
-
-              🔴 RETIRADA
-
-            </div>
-
-          </div>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/* ==========================================
+/* =========================================================
    INICIALIZAÇÃO
-========================================== */
+========================================================= */
 
-renderEmployees();
+renderCollaborators();
 
 renderCategories();
 
