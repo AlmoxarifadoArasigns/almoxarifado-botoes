@@ -15,15 +15,16 @@
   content="#08090b"
 >
 
-<title>Arasigns — Controle de Almoxarifado</title>
+<title>Arasigns — Almoxarifado</title>
 
 <style>
 
-/* =====================================================
+/* =========================================================
    CORES
-===================================================== */
+========================================================= */
 
 :root{
+
   --bg:#08090b;
   --card:#111214;
   --card2:#151619;
@@ -37,12 +38,13 @@
   --yellow:#ffd000;
 
   --green:#16d46b;
+
 }
 
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 *{
   box-sizing:border-box;
@@ -50,16 +52,19 @@
 
 html,
 body{
+
   margin:0;
   padding:0;
 
   background:var(--bg);
+
   color:var(--white);
 
   font-family:
     Arial,
     Helvetica,
     sans-serif;
+
 }
 
 body{
@@ -67,40 +72,49 @@ body{
 }
 
 
-/* =====================================================
-   APLICAÇÃO
-===================================================== */
+/* =========================================================
+   APP
+========================================================= */
 
 .app{
-  width:min(980px,100%);
+
+  width:min(1000px,100%);
+
   margin:0 auto;
 
   padding:
     14px
-    14px
+    16px
     40px;
+
 }
 
 
-/* =====================================================
-   LOGO
-===================================================== */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
+
   text-align:center;
+
   padding:
-    4px
+    5px
     0
-    15px;
+    12px;
+
 }
 
 .logo{
-  width:min(560px,90%);
-  max-height:125px;
+
+  width:min(520px,90%);
+
+  max-height:110px;
 
   object-fit:contain;
 
   display:block;
+
   margin:0 auto;
 
   filter:
@@ -108,32 +122,38 @@ body{
       0 4px 18px
       rgba(0,0,0,.45)
     );
+
 }
 
 .subtitle{
-  margin-top:5px;
+
+  margin-top:4px;
 
   font-size:
     clamp(
       15px,
       2.5vw,
-      23px
+      22px
     );
 
   letter-spacing:4px;
-  font-weight:900;
+
+  font-weight:800;
 
   color:#ddd;
+
 }
 
 .brand-line{
-  height:4px;
+
+  height:3px;
+
   width:90%;
 
   margin:
     12px
     auto
-    5px;
+    15px;
 
   background:
     linear-gradient(
@@ -144,271 +164,76 @@ body{
     );
 
   border-radius:10px;
+
 }
 
 
-/* =====================================================
-   TELAS
-===================================================== */
+/* =========================================================
+   TOPO DAS TELAS
+========================================================= */
 
-.screen{
-  display:none;
-}
-
-.screen.active{
-  display:block;
-}
-
-
-/* =====================================================
-   BOTÃO VOLTAR
-===================================================== */
-
-.top-navigation{
-  display:flex;
-  justify-content:flex-start;
-
-  margin-bottom:12px;
-}
-
-.top-back{
-  min-height:50px;
-
-  padding:
-    0
-    20px;
-
-  border-radius:15px;
-
-  border:
-    1px
-    solid
-    #35363a;
-
-  background:#151619;
-
-  color:#ddd;
-
-  font-size:17px;
-  font-weight:900;
-
-  cursor:pointer;
-
-  transition:
-    transform .15s,
-    filter .15s;
-}
-
-.top-back:active{
-  transform:scale(.97);
-}
-
-.top-back:hover{
-  filter:brightness(1.15);
-}
-
-
-/* =====================================================
-   TÍTULOS
-===================================================== */
-
-.screen-title{
-  text-align:center;
-
-  font-size:
-    clamp(
-      27px,
-      5vw,
-      40px
-    );
-
-  font-weight:900;
-
-  margin:
-    5px
-    0
-    7px;
-}
-
-.screen-subtitle{
-  text-align:center;
-
-  color:var(--muted);
-
-  font-size:17px;
-
-  margin-bottom:18px;
-}
-
-
-/* =====================================================
-   GRIDS
-===================================================== */
-
-.options-grid{
-  display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  gap:14px;
-}
-
-
-/* =====================================================
-   BOTÕES DE OPÇÃO
-===================================================== */
-
-.option-button{
-  min-height:112px;
-
-  border-radius:20px;
-
-  border:
-    1px
-    solid
-    #343539;
-
-  background:
-    linear-gradient(
-      145deg,
-      #17181b,
-      #101114
-    );
-
-  color:white;
-
-  cursor:pointer;
-
-  padding:16px;
+.page-top{
 
   display:flex;
-
-  flex-direction:column;
 
   align-items:center;
-  justify-content:center;
 
-  text-align:center;
-
-  gap:7px;
-
-  font-weight:900;
-
-  transition:
-    transform .15s,
-    filter .15s;
-}
-
-.option-button:hover{
-  filter:brightness(1.12);
-}
-
-.option-button:active{
-  transform:scale(.97);
-}
-
-.option-icon{
-  font-size:38px;
-}
-
-.option-name{
-  font-size:19px;
-}
-
-
-/* =====================================================
-   RETIRADA / DEVOLUÇÃO
-===================================================== */
-
-.movement-grid{
-  display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  gap:18px;
-
-  max-width:800px;
-
-  margin:
-    25px
-    auto;
-}
-
-.movement-option{
-  min-height:175px;
-
-  border-radius:26px;
-
-  border:2px solid transparent;
-
-  color:white;
-
-  cursor:pointer;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-  justify-content:center;
+  justify-content:space-between;
 
   gap:12px;
 
-  font-weight:900;
+  margin-bottom:15px;
 
-  transition:
-    transform .15s,
-    filter .15s;
 }
 
-.movement-option:active{
+.page-title{
+
+  font-size:
+    clamp(
+      21px,
+      4vw,
+      30px
+    );
+
+  font-weight:900;
+
+}
+
+.back-button{
+
+  border:1px solid #3b3c40;
+
+  background:#17181b;
+
+  color:white;
+
+  padding:
+    12px
+    18px;
+
+  border-radius:14px;
+
+  font-size:17px;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+}
+
+.back-button:active{
   transform:scale(.97);
 }
 
-.movement-out{
-  background:
-    linear-gradient(
-      135deg,
-      var(--red),
-      var(--orange)
-    );
 
-  box-shadow:
-    0 15px 35px
-    rgba(255,23,38,.18);
-}
-
-.movement-in{
-  background:
-    linear-gradient(
-      135deg,
-      #0c9f50,
-      var(--green)
-    );
-
-  box-shadow:
-    0 15px 35px
-    rgba(22,212,107,.15);
-}
-
-.movement-icon{
-  font-size:55px;
-}
-
-.movement-title{
-  font-size:26px;
-}
-
-
-/* =====================================================
+/* =========================================================
    CARD
-===================================================== */
+========================================================= */
 
 .card{
+
+  margin-top:14px;
+
   background:
     linear-gradient(
       145deg,
@@ -425,70 +250,368 @@ body{
 
   padding:18px;
 
-  margin-top:16px;
 }
 
 
-/* =====================================================
-   CONFIRMAÇÃO
-===================================================== */
+/* =========================================================
+   PERGUNTA INICIAL
+========================================================= */
 
-.confirm-card{
-  max-width:720px;
+.question{
 
-  margin:
-    15px
-    auto;
+  text-align:center;
+
+  margin-bottom:20px;
+
 }
 
-.confirm-row{
-  display:flex;
+.question-label{
 
-  justify-content:space-between;
+  color:var(--orange);
 
-  align-items:center;
+  font-size:15px;
+
+  font-weight:900;
+
+  letter-spacing:1px;
+
+  margin-bottom:7px;
+
+}
+
+.question-title{
+
+  font-size:
+    clamp(
+      24px,
+      5vw,
+      34px
+    );
+
+  font-weight:900;
+
+}
+
+
+/* =========================================================
+   BOTÕES RETIRADA / DEVOLUÇÃO
+========================================================= */
+
+.movement-choice{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
 
   gap:15px;
 
-  padding:
-    15px
-    0;
+}
 
-  border-bottom:
+.movement-choice button{
+
+  min-height:105px;
+
+  border:0;
+
+  border-radius:20px;
+
+  color:white;
+
+  font-size:
+    clamp(
+      19px,
+      4vw,
+      26px
+    );
+
+  font-weight:900;
+
+  cursor:pointer;
+
+  transition:.15s;
+
+}
+
+.movement-choice button:active{
+
+  transform:scale(.97);
+
+}
+
+.btn-retirada{
+
+  background:
+    linear-gradient(
+      120deg,
+      var(--red),
+      var(--orange)
+    );
+
+}
+
+.btn-devolucao{
+
+  background:
+    linear-gradient(
+      120deg,
+      #079447,
+      var(--green)
+    );
+
+}
+
+
+/* =========================================================
+   GRID DE OPÇÕES
+========================================================= */
+
+.options-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:12px;
+
+}
+
+.option{
+
+  min-height:78px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:13px;
+
+  border:
     1px
     solid
     #303136;
+
+  border-radius:17px;
+
+  background:#151619;
+
+  color:white;
+
+  padding:
+    13px
+    15px;
+
+  cursor:pointer;
+
+  text-align:left;
+
+  transition:
+    .15s transform,
+    .15s background;
+
 }
 
-.confirm-row:last-child{
-  border-bottom:0;
+.option:active{
+
+  transform:scale(.97);
+
 }
 
-.confirm-label{
-  color:var(--orange);
+.option:hover{
+
+  background:#1c1d20;
+
+}
+
+.option-icon{
+
+  width:48px;
+
+  height:48px;
+
+  flex:0 0 48px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--red),
+      var(--orange),
+      var(--yellow)
+    );
+
+  font-size:26px;
+
+}
+
+.option-name{
+
+  font-size:
+    clamp(
+      17px,
+      3vw,
+      22px
+    );
 
   font-weight:900;
+
 }
 
-.confirm-value{
-  text-align:right;
+
+/* =========================================================
+   CATEGORIAS
+========================================================= */
+
+.category-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:14px;
+
+}
+
+.category{
+
+  min-height:105px;
+
+  border:
+    1px
+    solid
+    #303136;
+
+  border-radius:20px;
+
+  background:#151619;
+
+  color:white;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+  cursor:pointer;
+
+  font-weight:900;
 
   font-size:18px;
 
-  font-weight:900;
+  transition:.15s;
+
+}
+
+.category:active{
+
+  transform:scale(.97);
+
+}
+
+.category-icon{
+
+  font-size:38px;
+
 }
 
 
-/* =====================================================
-   BOTÃO CONFIRMAR
-===================================================== */
+/* =========================================================
+   TELA
+========================================================= */
+
+.screen{
+
+  display:none;
+
+}
+
+.screen.active{
+
+  display:block;
+
+}
+
+
+/* =========================================================
+   RESUMO
+========================================================= */
+
+.summary{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap:12px;
+
+  margin-bottom:14px;
+
+}
+
+.summary-box{
+
+  background:#151619;
+
+  border:
+    1px
+    solid
+    #303136;
+
+  border-radius:17px;
+
+  padding:14px;
+
+}
+
+.summary-label{
+
+  color:var(--orange);
+
+  font-size:13px;
+
+  font-weight:900;
+
+  margin-bottom:5px;
+
+}
+
+.summary-value{
+
+  font-size:20px;
+
+  font-weight:900;
+
+}
+
+
+/* =========================================================
+   CONFIRMAÇÃO
+========================================================= */
 
 .confirm-button{
+
   width:100%;
 
-  min-height:68px;
+  margin-top:16px;
 
-  margin-top:18px;
+  padding:18px;
 
   border:0;
 
@@ -504,93 +627,92 @@ body{
 
   color:white;
 
-  font-size:20px;
+  font-size:21px;
 
   font-weight:900;
 
   cursor:pointer;
+
 }
-
-.confirm-button:active{
-  transform:scale(.98);
-}
-
-
-/* =====================================================
-   CANCELAR
-===================================================== */
 
 .cancel-button{
-  width:100%;
 
-  min-height:54px;
+  width:100%;
 
   margin-top:10px;
 
-  border-radius:16px;
+  padding:14px;
 
   border:
     1px
     solid
-    #3a3b3f;
+    #38393d;
 
-  background:#17181b;
+  border-radius:15px;
+
+  background:#18191c;
 
   color:#ddd;
 
   font-size:17px;
 
-  font-weight:900;
+  font-weight:800;
 
   cursor:pointer;
+
 }
 
 
-/* =====================================================
-   PAINEL DE REGISTROS
-===================================================== */
+/* =========================================================
+   HISTÓRICO
+========================================================= */
 
-.records-panel{
-  margin-top:22px;
-}
+.history-header{
 
-.records-header{
   display:flex;
 
   justify-content:space-between;
+
   align-items:center;
 
   gap:10px;
 
-  margin-bottom:12px;
+  margin-bottom:13px;
+
 }
 
-.records-title{
+.history-title{
+
   font-size:22px;
+
   font-weight:900;
+
 }
 
-.records-count{
+.history-count{
+
   color:var(--yellow);
+
   font-weight:900;
+
 }
 
+#history{
 
-/* =====================================================
-   HISTÓRICO
-===================================================== */
-
-#movements{
   display:flex;
+
   flex-direction:column;
 
-  gap:8px;
+  gap:9px;
+
 }
 
 .empty{
-  min-height:110px;
+
+  min-height:120px;
 
   display:grid;
+
   place-items:center;
 
   text-align:center;
@@ -602,25 +724,13 @@ body{
 
   border-radius:17px;
 
-  background:#0d0e10;
-
   color:var(--muted);
 
-  padding:18px;
+  padding:20px;
+
 }
 
-.movement-record{
-  display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr
-    1fr
-    auto;
-
-  gap:10px;
-
-  align-items:center;
+.record{
 
   background:#151619;
 
@@ -629,87 +739,61 @@ body{
     solid
     #2d2e32;
 
-  border-radius:14px;
+  border-radius:15px;
 
-  padding:
-    12px
-    13px;
+  padding:13px;
+
 }
 
-.record-label{
-  display:block;
+.record-top{
 
-  color:#888;
+  display:flex;
 
-  font-size:11px;
+  justify-content:space-between;
 
-  font-weight:700;
+  align-items:center;
 
-  margin-bottom:3px;
-}
+  gap:10px;
 
-.record-value{
-  display:block;
-
-  font-size:15px;
-
-  font-weight:900;
 }
 
 .record-type{
-  font-size:14px;
 
   font-weight:900;
 
-  white-space:nowrap;
-}
-
-.record-type.retirada{
-  color:var(--orange);
-}
-
-.record-type.devolucao{
-  color:var(--green);
-}
-
-
-/* =====================================================
-   TOTAL
-===================================================== */
-
-.footer-total{
-  margin-top:13px;
-
-  border:
-    1px
-    solid
-    #303136;
-
-  border-radius:16px;
-
-  padding:14px;
-
-  text-align:center;
-
-  font-weight:800;
-
-  color:#ccc;
-}
-
-.footer-total b{
   color:var(--yellow);
 
-  font-size:28px;
+}
 
-  margin-right:8px;
+.record-date{
+
+  color:#999;
+
+  font-size:13px;
+
+}
+
+.record-line{
+
+  margin-top:7px;
+
+  color:#ddd;
+
+}
+
+.record-line b{
+
+  color:white;
+
 }
 
 
-/* =====================================================
-   BOTÕES CSV
-===================================================== */
+/* =========================================================
+   AÇÕES
+========================================================= */
 
-.management-buttons{
+.actions{
+
   display:grid;
 
   grid-template-columns:
@@ -718,26 +802,28 @@ body{
 
   gap:12px;
 
-  margin-top:14px;
 }
 
-.management-button{
-  min-height:65px;
+.action{
 
-  border-radius:17px;
+  min-height:80px;
 
   border:0;
 
+  border-radius:18px;
+
   color:white;
 
-  font-size:18px;
+  cursor:pointer;
 
   font-weight:900;
 
-  cursor:pointer;
+  font-size:18px;
+
 }
 
-.csv-button{
+.csv{
+
   background:
     linear-gradient(
       120deg,
@@ -745,30 +831,31 @@ body{
       var(--orange),
       var(--yellow)
     );
+
 }
 
-.clear-button{
-  background:#151619;
+.clear{
+
+  background:#17181b;
 
   border:
     1px
     solid
     #35363a;
-}
 
-.management-button:active{
-  transform:scale(.98);
 }
 
 
-/* =====================================================
+/* =========================================================
    TOAST
-===================================================== */
+========================================================= */
 
 .toast{
+
   position:fixed;
 
   left:50%;
+
   bottom:22px;
 
   transform:
@@ -785,11 +872,11 @@ body{
     solid
     #404146;
 
-  border-radius:14px;
+  border-radius:15px;
 
   padding:
-    13px
-    18px;
+    14px
+    20px;
 
   box-shadow:
     0 15px 35px
@@ -797,144 +884,215 @@ body{
 
   transition:.25s;
 
-  font-weight:800;
+  font-weight:900;
 
   max-width:90%;
 
   text-align:center;
+
 }
 
 .toast.show{
+
   transform:
     translate(-50%,0);
 
   opacity:1;
+
 }
 
 
-/* =====================================================
-   TABLET / CELULAR
-===================================================== */
+/* =========================================================
+   DESKTOP
+========================================================= */
 
-@media(max-width:700px){
+@media(min-width:701px){
 
   .app{
-    padding:
-      9px
-      9px
-      30px;
-  }
-
-  .logo{
-    width:94%;
-    max-height:95px;
-  }
-
-  .subtitle{
-    font-size:14px;
-    letter-spacing:3px;
-  }
-
-  .screen-title{
-    font-size:27px;
-  }
-
-  .screen-subtitle{
-    font-size:15px;
+    padding-top:20px;
   }
 
   .options-grid{
     grid-template-columns:
       1fr
       1fr;
-
-    gap:9px;
-  }
-
-  .option-button{
-    min-height:105px;
-
-    padding:11px 7px;
-  }
-
-  .option-icon{
-    font-size:32px;
-  }
-
-  .option-name{
-    font-size:15px;
-  }
-
-  .movement-grid{
-    gap:9px;
-  }
-
-  .movement-option{
-    min-height:145px;
-  }
-
-  .movement-icon{
-    font-size:45px;
-  }
-
-  .movement-title{
-    font-size:20px;
-  }
-
-  .confirm-row{
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:5px;
-  }
-
-  .confirm-value{
-    text-align:left;
-  }
-
-  .movement-record{
-    grid-template-columns:
-      1fr
-      1fr;
-  }
-
-  .record-type{
-    grid-column:
-      1 / -1;
-  }
-
-  .management-buttons{
-    grid-template-columns:
-      1fr
-      1fr;
-
-    gap:8px;
-  }
-
-  .management-button{
-    font-size:15px;
   }
 
 }
 
 
-/* =====================================================
-   CELULAR PEQUENO
-===================================================== */
+/* =========================================================
+   TABLET / CELULAR
+========================================================= */
 
-@media(max-width:420px){
+@media(max-width:700px){
 
-  .option-button{
-    min-height:95px;
+  .app{
+
+    padding:
+      8px
+      10px
+      30px;
+
+  }
+
+  .logo{
+
+    width:90%;
+
+    max-height:90px;
+
+  }
+
+  .subtitle{
+
+    font-size:13px;
+
+    letter-spacing:3px;
+
+  }
+
+  .brand-line{
+
+    margin-bottom:11px;
+
+  }
+
+  .card{
+
+    padding:14px;
+
+    border-radius:18px;
+
+  }
+
+  .options-grid{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:9px;
+
+  }
+
+  .option{
+
+    min-height:72px;
+
+    padding:10px;
+
   }
 
   .option-icon{
-    font-size:29px;
+
+    width:42px;
+
+    height:42px;
+
+    flex-basis:42px;
+
+    font-size:23px;
+
   }
 
   .option-name{
-    font-size:13px;
+
+    font-size:16px;
+
+  }
+
+  .category-grid{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:9px;
+
+  }
+
+  .category{
+
+    min-height:92px;
+
+    font-size:15px;
+
+  }
+
+  .category-icon{
+
+    font-size:31px;
+
+  }
+
+  .movement-choice{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap:9px;
+
+  }
+
+  .movement-choice button{
+
+    min-height:90px;
+
+    font-size:18px;
+
+  }
+
+  .summary{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+  }
+
+  .summary-value{
+
+    font-size:17px;
+
+  }
+
+  .actions{
+
+    grid-template-columns:
+      1fr
+      1fr;
+
+  }
+
+  .action{
+
+    min-height:72px;
+
+    font-size:15px;
+
+  }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media(max-width:390px){
+
+  .options-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .category-grid{
+
+    grid-template-columns:1fr;
+
   }
 
 }
@@ -971,396 +1129,347 @@ body{
 </header>
 
 
-
 <!-- =====================================================
-     TELA 1
-     RETIRADA / DEVOLUÇÃO
+     TELA 1 — RETIRADA / DEVOLUÇÃO
 ===================================================== -->
 
 <section
   class="screen active"
-  id="screen1"
+  id="screenMovement"
 >
 
-  <div class="screen-title">
-    O QUE VOCÊ VAI FAZER?
-  </div>
+  <div class="page-top">
 
-  <div class="screen-subtitle">
-    Selecione uma opção para continuar
-  </div>
-
-
-  <div class="movement-grid">
-
-
-    <button
-      class="movement-option movement-out"
-      onclick="selectMovement('RETIRADA')"
-    >
-
-      <div class="movement-icon">
-        ⬆️
-      </div>
-
-      <div class="movement-title">
-        RETIRADA
-      </div>
-
-    </button>
-
-
-    <button
-      class="movement-option movement-in"
-      onclick="selectMovement('DEVOLUÇÃO')"
-    >
-
-      <div class="movement-icon">
-        ⬇️
-      </div>
-
-      <div class="movement-title">
-        DEVOLUÇÃO
-      </div>
-
-    </button>
-
+    <div class="page-title">
+      MOVIMENTAÇÃO
+    </div>
 
   </div>
 
 
-  <!-- =================================================
-       REGISTROS
-  ================================================== -->
+  <div class="card">
 
-  <section class="card records-panel">
+    <div class="question">
 
-
-    <div class="records-header">
-
-      <div class="records-title">
-        MOVIMENTAÇÕES
+      <div class="question-label">
+        PRIMEIRO PASSO
       </div>
 
-      <div
-        class="records-count"
-        id="count"
-      >
-        0 REGISTROS
+      <div class="question-title">
+        RETIRADA OU DEVOLUÇÃO?
       </div>
 
     </div>
 
 
-    <div id="movements">
+    <div class="movement-choice">
 
-      <div class="empty">
+      <button
+        class="btn-retirada"
+        onclick="selectMovement('RETIRADA')"
+      >
 
-        <div>
+        ⬆️<br>
+        RETIRADA
 
-          <div
-            style="
-              font-size:36px;
-              margin-bottom:7px;
-            "
-          >
-            📋
-          </div>
+      </button>
 
-          Nenhuma movimentação registrada.
 
-          <br>
+      <button
+        class="btn-devolucao"
+        onclick="selectMovement('DEVOLUÇÃO')"
+      >
 
-          <small>
-            As movimentações aparecerão aqui.
-          </small>
+        ⬇️<br>
+        DEVOLUÇÃO
 
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TELA 2 — COLABORADOR
+===================================================== -->
+
+<section
+  class="screen"
+  id="screenEmployee"
+>
+
+  <div class="page-top">
+
+    <button
+      class="back-button"
+      onclick="goBack()"
+    >
+      ← VOLTAR
+    </button>
+
+    <div class="page-title">
+      COLABORADOR
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="question">
+
+      <div class="question-label">
+        QUEM ESTÁ FAZENDO?
+      </div>
+
+      <div class="question-title">
+        SELECIONE O COLABORADOR
+      </div>
+
+    </div>
+
+
+    <div
+      class="options-grid"
+      id="employeeOptions"
+    ></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TELA 3 — CATEGORIA
+===================================================== -->
+
+<section
+  class="screen"
+  id="screenCategory"
+>
+
+  <div class="page-top">
+
+    <button
+      class="back-button"
+      onclick="goBack()"
+    >
+      ← VOLTAR
+    </button>
+
+    <div class="page-title">
+      CATEGORIA
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="question">
+
+      <div class="question-label">
+        PRÓXIMO PASSO
+      </div>
+
+      <div class="question-title">
+        ESCOLHA A CATEGORIA
+      </div>
+
+    </div>
+
+
+    <div
+      class="category-grid"
+      id="categoryOptions"
+    ></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TELA 4 — ITEM
+===================================================== -->
+
+<section
+  class="screen"
+  id="screenItem"
+>
+
+  <div class="page-top">
+
+    <button
+      class="back-button"
+      onclick="goBack()"
+    >
+      ← VOLTAR
+    </button>
+
+    <div class="page-title">
+      ITEM
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="question">
+
+      <div class="question-label">
+        ESCOLHA O MATERIAL
+      </div>
+
+      <div
+        class="question-title"
+        id="categoryTitle"
+      >
+        ITEM
+      </div>
+
+    </div>
+
+
+    <div
+      class="options-grid"
+      id="itemOptions"
+    ></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     TELA 5 — CONFIRMAÇÃO
+===================================================== -->
+
+<section
+  class="screen"
+  id="screenConfirm"
+>
+
+  <div class="page-top">
+
+    <button
+      class="back-button"
+      onclick="goBack()"
+    >
+      ← VOLTAR
+    </button>
+
+    <div class="page-title">
+      CONFIRMAR
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="question">
+
+      <div class="question-label">
+        CONFIRME A MOVIMENTAÇÃO
+      </div>
+
+      <div class="question-title">
+        TUDO CERTO?
+      </div>
+
+    </div>
+
+
+    <div class="summary">
+
+
+      <div class="summary-box">
+
+        <div class="summary-label">
+          MOVIMENTO
+        </div>
+
+        <div
+          class="summary-value"
+          id="summaryMovement"
+        >
+          —
         </div>
 
       </div>
 
-    </div>
 
+      <div class="summary-box">
 
-    <div class="footer-total">
+        <div class="summary-label">
+          COLABORADOR
+        </div>
 
-      <b id="total">
-        0
-      </b>
+        <div
+          class="summary-value"
+          id="summaryEmployee"
+        >
+          —
+        </div>
 
-      MOVIMENTAÇÕES REGISTRADAS
-
-    </div>
-
-
-    <div class="management-buttons">
-
-
-      <button
-        class="management-button csv-button"
-        onclick="exportCSV()"
-      >
-
-        📄 GERAR CSV
-
-      </button>
-
-
-      <button
-        class="management-button clear-button"
-        onclick="clearRecords()"
-      >
-
-        🗑️ LIMPAR
-
-      </button>
-
-
-    </div>
-
-
-  </section>
-
-</section>
-
-
-
-<!-- =====================================================
-     TELA 2
-     COLABORADORES
-===================================================== -->
-
-<section
-  class="screen"
-  id="screen2"
->
-
-
-  <div class="top-navigation">
-
-    <button
-      class="top-back"
-      onclick="goToScreen(1)"
-    >
-
-      ← VOLTAR
-
-    </button>
-
-  </div>
-
-
-  <div class="screen-title">
-    QUEM ESTÁ FAZENDO?
-  </div>
-
-  <div class="screen-subtitle">
-    Selecione o colaborador
-  </div>
-
-
-  <div
-    class="options-grid"
-    id="collaborators"
-  ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     TELA 3
-     CATEGORIAS
-===================================================== -->
-
-<section
-  class="screen"
-  id="screen3"
->
-
-
-  <div class="top-navigation">
-
-    <button
-      class="top-back"
-      onclick="goToScreen(2)"
-    >
-
-      ← VOLTAR
-
-    </button>
-
-  </div>
-
-
-  <div class="screen-title">
-    QUAL CATEGORIA?
-  </div>
-
-  <div class="screen-subtitle">
-    Escolha o tipo de material
-  </div>
-
-
-  <div
-    class="options-grid"
-    id="categories"
-  ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     TELA 4
-     ITENS
-===================================================== -->
-
-<section
-  class="screen"
-  id="screen4"
->
-
-
-  <div class="top-navigation">
-
-    <button
-      class="top-back"
-      onclick="goToScreen(3)"
-    >
-
-      ← VOLTAR
-
-    </button>
-
-  </div>
-
-
-  <div class="screen-title">
-    QUAL ITEM?
-  </div>
-
-  <div class="screen-subtitle">
-    Selecione o material ou ferramenta
-  </div>
-
-
-  <div
-    class="options-grid"
-    id="items"
-  ></div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     TELA 5
-     CONFIRMAÇÃO
-===================================================== -->
-
-<section
-  class="screen"
-  id="screen5"
->
-
-
-  <div class="top-navigation">
-
-    <button
-      class="top-back"
-      onclick="goToScreen(4)"
-    >
-
-      ← VOLTAR
-
-    </button>
-
-  </div>
-
-
-  <div class="screen-title">
-    CONFIRMAR MOVIMENTAÇÃO
-  </div>
-
-  <div class="screen-subtitle">
-    Confira os dados antes de registrar
-  </div>
-
-
-  <div class="card confirm-card">
-
-
-    <div class="confirm-row">
-
-      <div class="confirm-label">
-        MOVIMENTAÇÃO
       </div>
 
-      <div
-        class="confirm-value"
-        id="confirmMovement"
-      >
-        —
+
+      <div class="summary-box">
+
+        <div class="summary-label">
+          CATEGORIA
+        </div>
+
+        <div
+          class="summary-value"
+          id="summaryCategory"
+        >
+          —
+        </div>
+
       </div>
 
-    </div>
 
+      <div class="summary-box">
 
-    <div class="confirm-row">
+        <div class="summary-label">
+          ITEM
+        </div>
 
-      <div class="confirm-label">
-        COLABORADOR
+        <div
+          class="summary-value"
+          id="summaryItem"
+        >
+          —
+        </div>
+
       </div>
 
-      <div
-        class="confirm-value"
-        id="confirmCollaborator"
-      >
-        —
-      </div>
-
-    </div>
-
-
-    <div class="confirm-row">
-
-      <div class="confirm-label">
-        CATEGORIA
-      </div>
-
-      <div
-        class="confirm-value"
-        id="confirmCategory"
-      >
-        —
-      </div>
-
-    </div>
-
-
-    <div class="confirm-row">
-
-      <div class="confirm-label">
-        ITEM
-      </div>
-
-      <div
-        class="confirm-value"
-        id="confirmItem"
-      >
-        —
-      </div>
 
     </div>
 
 
     <button
       class="confirm-button"
-      onclick="finishMovement()"
+      onclick="confirmMovement()"
     >
 
       ✅ CONFIRMAR MOVIMENTAÇÃO
@@ -1370,17 +1479,90 @@ body{
 
     <button
       class="cancel-button"
-      onclick="cancelMovement()"
+      onclick="resetProcess()"
     >
 
       ❌ CANCELAR
 
     </button>
 
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HISTÓRICO
+===================================================== -->
+
+<section class="card">
+
+  <div class="history-header">
+
+    <div class="history-title">
+      MOVIMENTAÇÕES
+    </div>
+
+    <div
+      class="history-count"
+      id="historyCount"
+    >
+      0 REGISTROS
+    </div>
+
+  </div>
+
+
+  <div id="history">
+
+    <div class="empty">
+
+      📋
+
+      <br><br>
+
+      Nenhuma movimentação registrada.
+
+    </div>
 
   </div>
 
 </section>
+
+
+
+<!-- =====================================================
+     AÇÕES
+===================================================== -->
+
+<section class="card actions">
+
+
+  <button
+    class="action csv"
+    onclick="exportCSV()"
+  >
+
+    📄 GERAR CSV
+
+  </button>
+
+
+  <button
+    class="action clear"
+    onclick="clearRecords()"
+  >
+
+    🗑️ LIMPAR
+
+  </button>
+
+
+</section>
+
+
+</div>
 
 
 
@@ -1394,37 +1576,31 @@ body{
 ></div>
 
 
-</div>
-
-
 
 <script>
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-const STORAGE_KEY =
-  "arasigns_almoxarifado_botoes_v2";
+/* =========================================================
+   BANCO DE DADOS
+========================================================= */
 
 
-/* =====================================================
+/* ---------------------------------------------------------
    COLABORADORES
-===================================================== */
+--------------------------------------------------------- */
 
 const COLABORADORES = [
 
   "TOCO",
   "RAMALHO",
   "LUAN",
-  "TAMY",
+  "THAMI",
   "DIEGO",
   "WELTON",
   "GILDO",
   "WESLEY",
   "DENIS",
-  "ISA",
-  "JULIA",
+  "BELLA",
+  "JU",
   "MARI",
   "CAMINHÃO",
   "SAVEIRO"
@@ -1432,280 +1608,404 @@ const COLABORADORES = [
 ];
 
 
-/* =====================================================
-   CATEGORIAS
-===================================================== */
+/* ---------------------------------------------------------
+   EMOJIS DOS COLABORADORES
+--------------------------------------------------------- */
 
-const CATEGORIAS = [
+const COLABORADOR_ICONS = {
 
-  {
-    nome:"FERRAMENTAS",
-    icon:"🧰"
-  },
+  "THAMI":"👩",
 
-  {
-    nome:"FONTES",
-    icon:"⚡"
-  },
+  "BELLA":"👩",
 
-  {
-    nome:"MÓDULOS DE LED",
-    icon:"💡"
-  },
+  "JU":"👩",
 
-  {
-    nome:"FITAS DE LED",
-    icon:"💡"
-  },
+  "MARI":"👩",
 
-  {
-    nome:"CONSUMÍVEIS",
-    icon:"🔩"
-  },
+  "CAMINHÃO":"🚚",
 
-  {
-    nome:"COLAS / FITAS",
-    icon:"🧴"
-  },
-
-  {
-    nome:"HIGIENE",
-    icon:"🧼"
-  }
-
-];
-
-
-/* =====================================================
-   ITENS
-===================================================== */
-
-const ITENS = {
-
-  "FERRAMENTAS":[
-
-    "ALICATE DECAPADOR",
-    "ALICATE DE CORTE",
-    "TUPIA",
-    "LIXADEIRA PLANA",
-    "SERRA TICO TICO",
-    "FERRO DE SOLDA PISTOLA",
-    "FERRO DE SOLDA",
-    "VENTOSA"
-
-  ],
-
-
-  "FONTES":[
-
-    "FONTE 30A",
-    "FONTE 50A"
-
-  ],
-
-
-  "MÓDULOS DE LED":[
-
-    "MÓDULO LED BRANCO QUENTE",
-    "MÓDULO LED BRANCO FRIO"
-
-  ],
-
-
-  "FITAS DE LED":[
-
-    "FITA LED BRANCO QUENTE",
-    "FITA LED BRANCO FRIO"
-
-  ],
-
-
-  "CONSUMÍVEIS":[
-
-    "DISCO FLAP",
-    "LÂMINA PEQUENA",
-    "LÂMINA GRANDE",
-    "BANANINHA",
-    "BASTÃO DE MADEIRA",
-    "AGULHA P",
-    "AGULHA G"
-
-  ],
-
-
-  "COLAS / FITAS":[
-
-    "FITA ISOLANTE",
-    "FITA DUPLA FACE AMARELA",
-    "FITA CREPE VERDE",
-    "FITA SILICONE TRANSPARENTE",
-    "FITA SILICONE BRANCA",
-    "VEDA CALHA",
-    "PU"
-
-  ],
-
-
-  "HIGIENE":[
-
-    "SACO DE LIXO",
-    "LUVAS LATEX",
-    "BUFALO"
-
-  ]
+  "SAVEIRO":"🚗"
 
 };
 
 
-/* =====================================================
-   ÍCONES DOS ITENS
-===================================================== */
+/* ---------------------------------------------------------
+   CATEGORIAS E ITENS
+--------------------------------------------------------- */
+
+const CATEGORIAS = {
+
+
+  "FERRAMENTAS":{
+
+    icon:"🛠️",
+
+    itens:[
+
+      "ALICATE DECAPADOR",
+      "ALICATE DE CORTE",
+      "TUPIA",
+      "LIXADEIRA PLANA",
+      "SERRA TICO TICO",
+      "FERRO DE SOLDA PISTOLA",
+      "FERRO DE SOLDA",
+      "VENTOSA"
+
+    ]
+
+  },
+
+
+  "FONTES":{
+
+    icon:"⚡",
+
+    itens:[
+
+      "FONTE 30A",
+      "FONTE 50A"
+
+    ]
+
+  },
+
+
+  "MÓDULOS DE LED":{
+
+    icon:"💡",
+
+    itens:[
+
+      "MÓDULO DE LED BRANCO QUENTE",
+      "MÓDULO DE LED BRANCO FRIO"
+
+    ]
+
+  },
+
+
+  "FITAS DE LED":{
+
+    icon:"🔆",
+
+    itens:[
+
+      "FITA DE LED BRANCO QUENTE",
+      "FITA DE LED BRANCO FRIO"
+
+    ]
+
+  },
+
+
+  "CONSUMÍVEIS":{
+
+    icon:"⚙️",
+
+    itens:[
+
+      "DISCO DE CORTE",
+      "DISCO FLAP",
+      "LÂMINA PEQUENA",
+      "LÂMINA GRANDE",
+      "BANANINHA",
+      "BASTÃO DE MADEIRA",
+      "AGULHA P",
+      "AGULHA G"
+
+    ]
+
+  },
+
+
+  "COLAS/FITAS":{
+
+    icon:"🧴",
+
+    itens:[
+
+      "COLA",
+      "FITA ISOLANTE",
+      "FITA DUPLA FACE AMARELA",
+      "FITA CREPE VERDE",
+      "FITA SILICONE TRANSPARENTE",
+      "FITA SILICONE BRANCA",
+      "VEDA CALHA",
+      "PU"
+
+    ]
+
+  },
+
+
+  "HIGIENE":{
+
+    icon:"🧼",
+
+    itens:[
+
+      "SACO DE LIXO",
+      "LUVAS LATEX",
+      "BUFALO"
+
+    ]
+
+  }
+
+};
+
+
+/* =========================================================
+   EMOJIS DOS ITENS
+========================================================= */
 
 const ITEM_ICONS = {
 
-  "ALICATE DECAPADOR":"🛠️",
+  "ALICATE DECAPADOR":"🗜️",
+
   "ALICATE DE CORTE":"✂️",
+
   "TUPIA":"🛠️",
+
   "LIXADEIRA PLANA":"⚙️",
+
   "SERRA TICO TICO":"🪚",
-  "FERRO DE SOLDA PISTOLA":"🔥",
-  "FERRO DE SOLDA":"🔥",
-  "VENTOSA":"⭕",
+
+  "FERRO DE SOLDA PISTOLA":"🔧",
+
+  "FERRO DE SOLDA":"🔧",
+
+  "VENTOSA":"🔵",
 
   "FONTE 30A":"⚡",
+
   "FONTE 50A":"⚡",
 
-  "MÓDULO LED BRANCO QUENTE":"💡",
-  "MÓDULO LED BRANCO FRIO":"💡",
+  "MÓDULO DE LED BRANCO QUENTE":"💡",
 
-  "FITA LED BRANCO QUENTE":"💡",
-  "FITA LED BRANCO FRIO":"💡",
+  "MÓDULO DE LED BRANCO FRIO":"💡",
+
+  "FITA DE LED BRANCO QUENTE":"🔆",
+
+  "FITA DE LED BRANCO FRIO":"🔆",
+
+  "DISCO DE CORTE":"⚙️",
 
   "DISCO FLAP":"⚙️",
+
   "LÂMINA PEQUENA":"🔪",
+
   "LÂMINA GRANDE":"🔪",
-  "BANANINHA":"🔧",
+
+  "BANANINHA":"🔩",
+
   "BASTÃO DE MADEIRA":"🪵",
-  "AGULHA P":"📌",
-  "AGULHA G":"📌",
+
+  "AGULHA P":"📍",
+
+  "AGULHA G":"📍",
+
+  "COLA":"🧴",
 
   "FITA ISOLANTE":"🖤",
+
   "FITA DUPLA FACE AMARELA":"🟨",
+
   "FITA CREPE VERDE":"🟩",
-  "FITA SILICONE TRANSPARENTE":"🧴",
+
+  "FITA SILICONE TRANSPARENTE":"🔘",
+
   "FITA SILICONE BRANCA":"⚪",
+
   "VEDA CALHA":"🧴",
+
   "PU":"🧴",
 
   "SACO DE LIXO":"🗑️",
+
   "LUVAS LATEX":"🧤",
-  "BUFALO":"🧼"
+
+  "BUFALO":"🧽"
 
 };
 
 
-/* =====================================================
-   VARIÁVEIS
-===================================================== */
+/* =========================================================
+   STORAGE
+========================================================= */
 
-let movement = null;
-
-let collaborator = null;
-
-let category = null;
-
-let selectedItem = null;
+const STORAGE_KEY =
+  "arasigns_movimentacoes_botoes_v1";
 
 
-/* =====================================================
-   REGISTROS
-===================================================== */
-
-let records = JSON.parse(
-
-  localStorage.getItem(STORAGE_KEY)
-  || "[]"
-
-);
+let records =
+  JSON.parse(
+    localStorage.getItem(STORAGE_KEY)
+    || "[]"
+  );
 
 
-/* =====================================================
-   NAVEGAÇÃO
-===================================================== */
+/* =========================================================
+   ESTADO
+========================================================= */
 
-function goToScreen(number){
+let currentScreen =
+  "screenMovement";
+
+
+let selectedMovement =
+  null;
+
+
+let selectedEmployee =
+  null;
+
+
+let selectedCategory =
+  null;
+
+
+let selectedItem =
+  null;
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const toastEl =
+  document.getElementById("toast");
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toast(message){
+
+  toastEl.textContent =
+    message;
+
+  toastEl.classList.add("show");
+
+
+  clearTimeout(
+    window.toastTimer
+  );
+
+
+  window.toastTimer =
+    setTimeout(
+
+      () => {
+
+        toastEl.classList.remove(
+          "show"
+        );
+
+      },
+
+      2400
+
+    );
+
+}
+
+
+/* =========================================================
+   TROCAR TELA
+========================================================= */
+
+function showScreen(id){
 
   document
     .querySelectorAll(".screen")
     .forEach(
-      screen =>
-        screen.classList.remove("active")
+      screen => {
+
+        screen.classList.remove(
+          "active"
+        );
+
+      }
     );
 
 
-  const target =
-    document.getElementById(
-      "screen" + number
-    );
+  document
+    .getElementById(id)
+    .classList.add("active");
 
 
-  if(target){
+  currentScreen =
+    id;
 
-    target.classList.add("active");
 
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
+  window.scrollTo({
 
-  }
+    top:0,
+
+    behavior:"smooth"
+
+  });
 
 }
 
 
-/* =====================================================
-   RETIRADA / DEVOLUÇÃO
-===================================================== */
+/* =========================================================
+   MOVIMENTO
+========================================================= */
 
 function selectMovement(type){
 
-  movement = type;
+  selectedMovement =
+    type;
 
-  goToScreen(2);
+
+  showScreen(
+    "screenEmployee"
+  );
 
 }
 
 
-/* =====================================================
-   COLABORADORES
-===================================================== */
+/* =========================================================
+   GERAR COLABORADORES
+========================================================= */
 
-function renderCollaborators(){
+function renderEmployees(){
 
-  const container =
+  const box =
     document.getElementById(
-      "collaborators"
+      "employeeOptions"
     );
 
-  container.innerHTML = "";
+
+  box.innerHTML = "";
 
 
   COLABORADORES.forEach(
     name => {
+
 
       const button =
         document.createElement(
           "button"
         );
 
+
       button.className =
-        "option-button";
+        "option";
+
+
+      const icon =
+        COLABORADOR_ICONS[name]
+        || "👤";
 
 
       button.innerHTML = `
 
         <div class="option-icon">
-          👤
+          ${icon}
         </div>
 
         <div class="option-name">
@@ -1716,18 +2016,10 @@ function renderCollaborators(){
 
 
       button.onclick =
-        () => {
-
-          collaborator = name;
-
-          goToScreen(3);
-
-        };
+        () => selectEmployee(name);
 
 
-      container.appendChild(
-        button
-      );
+      box.appendChild(button);
 
     }
   );
@@ -1735,22 +2027,43 @@ function renderCollaborators(){
 }
 
 
-/* =====================================================
-   CATEGORIAS
-===================================================== */
+/* =========================================================
+   SELECIONAR COLABORADOR
+========================================================= */
+
+function selectEmployee(name){
+
+  selectedEmployee =
+    name;
+
+
+  showScreen(
+    "screenCategory"
+  );
+
+}
+
+
+/* =========================================================
+   GERAR CATEGORIAS
+========================================================= */
 
 function renderCategories(){
 
-  const container =
+  const box =
     document.getElementById(
-      "categories"
+      "categoryOptions"
     );
 
-  container.innerHTML = "";
+
+  box.innerHTML = "";
 
 
-  CATEGORIAS.forEach(
-    categoryData => {
+  Object.entries(
+    CATEGORIAS
+  ).forEach(
+    ([name,data]) => {
+
 
       const button =
         document.createElement(
@@ -1759,42 +2072,27 @@ function renderCategories(){
 
 
       button.className =
-        "option-button";
+        "category";
 
 
       button.innerHTML = `
 
-        <div class="option-icon">
-
-          ${categoryData.icon}
-
+        <div class="category-icon">
+          ${data.icon}
         </div>
 
-        <div class="option-name">
-
-          ${categoryData.nome}
-
+        <div>
+          ${name}
         </div>
 
       `;
 
 
       button.onclick =
-        () => {
-
-          category =
-            categoryData.nome;
-
-          renderItems();
-
-          goToScreen(4);
-
-        };
+        () => selectCategory(name);
 
 
-      container.appendChild(
-        button
-      );
+      box.appendChild(button);
 
     }
   );
@@ -1802,27 +2100,56 @@ function renderCategories(){
 }
 
 
-/* =====================================================
-   ITENS
-===================================================== */
+/* =========================================================
+   SELECIONAR CATEGORIA
+========================================================= */
 
-function renderItems(){
+function selectCategory(name){
 
-  const container =
+  selectedCategory =
+    name;
+
+
+  document
+    .getElementById(
+      "categoryTitle"
+    )
+    .textContent =
+      name;
+
+
+  renderItems(name);
+
+
+  showScreen(
+    "screenItem"
+  );
+
+}
+
+
+/* =========================================================
+   GERAR ITENS
+========================================================= */
+
+function renderItems(category){
+
+  const box =
     document.getElementById(
-      "items"
+      "itemOptions"
     );
 
-  container.innerHTML = "";
+
+  box.innerHTML = "";
 
 
-  const items =
-    ITENS[category]
-    || [];
+  const itens =
+    CATEGORIAS[category].itens;
 
 
-  items.forEach(
-    itemName => {
+  itens.forEach(
+    name => {
+
 
       const button =
         document.createElement(
@@ -1831,47 +2158,32 @@ function renderItems(){
 
 
       button.className =
-        "option-button";
+        "option";
 
 
       const icon =
-        ITEM_ICONS[itemName]
+        ITEM_ICONS[name]
         || "📦";
 
 
       button.innerHTML = `
 
         <div class="option-icon">
-
           ${icon}
-
         </div>
 
         <div class="option-name">
-
-          ${itemName}
-
+          ${name}
         </div>
 
       `;
 
 
       button.onclick =
-        () => {
-
-          selectedItem =
-            itemName;
-
-          prepareConfirmation();
-
-          goToScreen(5);
-
-        };
+        () => selectItem(name);
 
 
-      container.appendChild(
-        button
-      );
+      box.appendChild(button);
 
     }
   );
@@ -1879,61 +2191,70 @@ function renderItems(){
 }
 
 
-/* =====================================================
-   CONFIRMAÇÃO
-===================================================== */
+/* =========================================================
+   SELECIONAR ITEM
+========================================================= */
 
-function prepareConfirmation(){
+function selectItem(name){
 
-  document
-    .getElementById(
-      "confirmMovement"
-    )
-    .textContent =
-    movement;
+  selectedItem =
+    name;
 
 
   document
     .getElementById(
-      "confirmCollaborator"
+      "summaryMovement"
     )
     .textContent =
-    collaborator;
+      selectedMovement;
 
 
   document
     .getElementById(
-      "confirmCategory"
+      "summaryEmployee"
     )
     .textContent =
-    category;
+      selectedEmployee;
 
 
   document
     .getElementById(
-      "confirmItem"
+      "summaryCategory"
     )
     .textContent =
-    selectedItem;
+      selectedCategory;
+
+
+  document
+    .getElementById(
+      "summaryItem"
+    )
+    .textContent =
+      selectedItem;
+
+
+  showScreen(
+    "screenConfirm"
+  );
 
 }
 
 
-/* =====================================================
-   FINALIZAR MOVIMENTAÇÃO
-===================================================== */
+/* =========================================================
+   CONFIRMAR
+========================================================= */
 
-function finishMovement(){
+function confirmMovement(){
 
   if(
-    !movement ||
-    !collaborator ||
-    !category ||
+    !selectedMovement ||
+    !selectedEmployee ||
+    !selectedCategory ||
     !selectedItem
   ){
 
     toast(
-      "Faltam informações para registrar."
+      "Complete todas as etapas."
     );
 
     return;
@@ -1941,33 +2262,71 @@ function finishMovement(){
   }
 
 
-  const record = {
+  const now =
+    new Date();
+
+
+  const dataHora =
+    now.toLocaleString(
+      "pt-BR"
+    );
+
+
+  records.push({
+
+    id:
+      Date.now(),
 
     dataHora:
-      new Date()
-        .toLocaleString(
-          "pt-BR"
-        ),
+
+      dataHora,
 
     movimento:
-      movement,
+
+      selectedMovement,
 
     colaborador:
-      collaborator,
+
+      selectedEmployee,
 
     categoria:
-      category,
+
+      selectedCategory,
 
     item:
+
       selectedItem
 
-  };
+  });
 
 
-  records.push(
-    record
+  saveRecords();
+
+
+  toast(
+    "Movimentação registrada!"
   );
 
+
+  setTimeout(
+    () => {
+
+      resetProcess();
+
+    },
+
+    800
+
+  );
+
+}
+
+
+/* =========================================================
+   SALVAR REGISTROS
+========================================================= */
+
+function saveRecords(){
 
   localStorage.setItem(
 
@@ -1978,44 +2337,26 @@ function finishMovement(){
   );
 
 
-  renderRecords();
-
-
-  toast(
-    movement +
-    " registrada com sucesso!"
-  );
-
-
-  setTimeout(
-    resetSystem,
-    700
-  );
+  renderHistory();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HISTÓRICO
-===================================================== */
+========================================================= */
 
-function renderRecords(){
-
-  const count =
-    document.getElementById(
-      "count"
-    );
-
-
-  const total =
-    document.getElementById(
-      "total"
-    );
-
+function renderHistory(){
 
   const box =
     document.getElementById(
-      "movements"
+      "history"
+    );
+
+
+  const count =
+    document.getElementById(
+      "historyCount"
     );
 
 
@@ -2023,13 +2364,9 @@ function renderRecords(){
     records.length +
     (
       records.length === 1
-      ? " REGISTRO"
-      : " REGISTROS"
+        ? " REGISTRO"
+        : " REGISTROS"
     );
-
-
-  total.textContent =
-    records.length;
 
 
   if(!records.length){
@@ -2038,26 +2375,11 @@ function renderRecords(){
 
       <div class="empty">
 
-        <div>
+        📋
 
-          <div
-            style="
-              font-size:36px;
-              margin-bottom:7px;
-            "
-          >
-            📋
-          </div>
+        <br><br>
 
-          Nenhuma movimentação registrada.
-
-          <br>
-
-          <small>
-            As movimentações aparecerão aqui.
-          </small>
-
-        </div>
+        Nenhuma movimentação registrada.
 
       </div>
 
@@ -2068,106 +2390,111 @@ function renderRecords(){
   }
 
 
-  box.innerHTML =
-
-    records
-      .slice()
-      .reverse()
-      .slice(0,30)
-      .map(
-        record => {
-
-          const typeClass =
-            record.movimento ===
-            "RETIRADA"
-              ? "retirada"
-              : "devolucao";
+  box.innerHTML = "";
 
 
-          return `
-
-            <div class="movement-record">
-
-
-              <div>
-
-                <span class="record-label">
-                  MOVIMENTAÇÃO
-                </span>
-
-                <span
-                  class="
-                    record-type
-                    ${typeClass}
-                  "
-                >
-                  ${escapeHtml(
-                    record.movimento
-                  )}
-                </span>
-
-              </div>
+  records
+    .slice()
+    .reverse()
+    .slice(0,50)
+    .forEach(
+      record => {
 
 
-              <div>
-
-                <span class="record-label">
-                  COLABORADOR
-                </span>
-
-                <span class="record-value">
-                  ${escapeHtml(
-                    record.colaborador
-                  )}
-                </span>
-
-              </div>
+        const div =
+          document.createElement(
+            "div"
+          );
 
 
-              <div>
-
-                <span class="record-label">
-                  ITEM
-                </span>
-
-                <span class="record-value">
-                  ${escapeHtml(
-                    record.item
-                  )}
-                </span>
-
-              </div>
+        div.className =
+          "record";
 
 
-              <div>
+        const movementIcon =
+          record.movimento ===
+          "RETIRADA"
+            ? "⬆️"
+            : "⬇️";
 
-                <span class="record-label">
-                  DATA/HORA
-                </span>
 
-                <span class="record-value">
-                  ${escapeHtml(
-                    record.dataHora
-                  )}
-                </span>
+        div.innerHTML = `
 
-              </div>
+          <div class="record-top">
 
+            <div class="record-type">
+
+              ${movementIcon}
+
+              ${escapeHtml(
+                record.movimento
+              )}
 
             </div>
 
-          `;
+            <div class="record-date">
 
-        }
-      )
-      .join("");
+              ${escapeHtml(
+                record.dataHora
+              )}
+
+            </div>
+
+          </div>
+
+
+          <div class="record-line">
+
+            👤
+
+            <b>Colaborador:</b>
+
+            ${escapeHtml(
+              record.colaborador
+            )}
+
+          </div>
+
+
+          <div class="record-line">
+
+            📂
+
+            <b>Categoria:</b>
+
+            ${escapeHtml(
+              record.categoria
+            )}
+
+          </div>
+
+
+          <div class="record-line">
+
+            📦
+
+            <b>Item:</b>
+
+            ${escapeHtml(
+              record.item
+            )}
+
+          </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+      }
+    );
 
 }
 
 
-/* =====================================================
-   SEGURANÇA HTML
-===================================================== */
+/* =========================================================
+   SEGURANÇA
+========================================================= */
 
 function escapeHtml(value){
 
@@ -2175,44 +2502,181 @@ function escapeHtml(value){
     value ?? ""
   )
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
 
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
 
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
 
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
 
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   VOLTAR
+========================================================= */
+
+function goBack(){
+
+  if(
+    currentScreen ===
+    "screenEmployee"
+  ){
+
+    showScreen(
+      "screenMovement"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    currentScreen ===
+    "screenCategory"
+  ){
+
+    showScreen(
+      "screenEmployee"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    currentScreen ===
+    "screenItem"
+  ){
+
+    showScreen(
+      "screenCategory"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    currentScreen ===
+    "screenConfirm"
+  ){
+
+    showScreen(
+      "screenItem"
+    );
+
+    return;
+
+  }
+
+}
+
+
+/* =========================================================
+   CANCELAR / NOVA MOVIMENTAÇÃO
+========================================================= */
+
+function resetProcess(){
+
+  selectedMovement =
+    null;
+
+  selectedEmployee =
+    null;
+
+  selectedCategory =
+    null;
+
+  selectedItem =
+    null;
+
+
+  showScreen(
+    "screenMovement"
+  );
+
+}
+
+
+/* =========================================================
+   LIMPAR REGISTROS
+========================================================= */
+
+function clearRecords(){
+
+  if(!records.length){
+
+    toast(
+      "Não existem registros."
+    );
+
+    return;
+
+  }
+
+
+  const confirmacao =
+    confirm(
+
+      "Tem certeza que deseja apagar TODAS as movimentações?"
+
+    );
+
+
+  if(!confirmacao)
+    return;
+
+
+  records = [];
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+
+  renderHistory();
+
+
+  toast(
+    "Todos os registros foram apagados."
+  );
+
+}
+
+
+/* =========================================================
    GERAR CSV
-===================================================== */
+========================================================= */
 
 function exportCSV(){
 
   if(!records.length){
 
     toast(
-      "Ainda não existem movimentações para exportar."
+      "Não existem movimentações para exportar."
     );
 
     return;
@@ -2223,9 +2687,13 @@ function exportCSV(){
   const headers = [
 
     "DATA/HORA",
-    "MOVIMENTAÇÃO",
+
+    "MOVIMENTO",
+
     "COLABORADOR",
+
     "CATEGORIA",
+
     "ITEM"
 
   ];
@@ -2266,6 +2734,7 @@ function exportCSV(){
       row =>
 
         row
+
           .map(
 
             value =>
@@ -2315,10 +2784,7 @@ function exportCSV(){
   const date =
     new Date()
       .toISOString()
-      .slice(
-        0,
-        10
-      );
+      .slice(0,10);
 
 
   link.href =
@@ -2326,7 +2792,7 @@ function exportCSV(){
 
 
   link.download =
-    "arasigns_almoxarifado_" +
+    "arasigns_movimentacoes_" +
     date +
     ".csv";
 
@@ -2354,165 +2820,17 @@ function exportCSV(){
 }
 
 
-/* =====================================================
-   LIMPAR REGISTROS
-===================================================== */
-
-function clearRecords(){
-
-  if(!records.length){
-
-    toast(
-      "Não existem registros para apagar."
-    );
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-
-      "Tem certeza que deseja apagar TODOS os registros deste aparelho?"
-
-    );
-
-
-  if(!confirmed)
-    return;
-
-
-  records = [];
-
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
-
-
-  renderRecords();
-
-
-  toast(
-    "Registros apagados."
-  );
-
-}
-
-
-/* =====================================================
-   CANCELAR
-===================================================== */
-
-function cancelMovement(){
-
-  resetSystem();
-
-}
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-function resetSystem(){
-
-  movement = null;
-
-  collaborator = null;
-
-  category = null;
-
-  selectedItem = null;
-
-
-  document
-    .getElementById(
-      "confirmMovement"
-    )
-    .textContent = "—";
-
-
-  document
-    .getElementById(
-      "confirmCollaborator"
-    )
-    .textContent = "—";
-
-
-  document
-    .getElementById(
-      "confirmCategory"
-    )
-    .textContent = "—";
-
-
-  document
-    .getElementById(
-      "confirmItem"
-    )
-    .textContent = "—";
-
-
-  goToScreen(1);
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function toast(message){
-
-  const element =
-    document.getElementById(
-      "toast"
-    );
-
-
-  element.textContent =
-    message;
-
-
-  element.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    window.toastTimer
-  );
-
-
-  window.toastTimer =
-    setTimeout(
-      () => {
-
-        element.classList.remove(
-          "show"
-        );
-
-      },
-      2600
-    );
-
-}
-
-
-/* =====================================================
+/* =========================================================
    INICIALIZAÇÃO
-===================================================== */
+========================================================= */
 
-renderCollaborators();
+renderEmployees();
 
 renderCategories();
 
-renderRecords();
+renderHistory();
 
 </script>
-
 
 </body>
 
