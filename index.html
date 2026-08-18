@@ -226,7 +226,6 @@ function loadMovements(){
 let movimentacoes=loadMovements(),ordens=JSON.parse(localStorage.getItem(OS_STORAGE)||"[]");
 let firebaseReady=false;
 let firstFirebaseLoad=true;
-let firstMovFirebaseLoad=true;
 
 // Escuta o histórico do almoxarifado em TEMPO REAL.
 movimentacoesRef.on("value",snapshot=>{
@@ -251,8 +250,6 @@ movimentacoesRef.on("value",snapshot=>{
   almoxFirebaseReady=false;
   toast("Erro ao sincronizar o histórico do almoxarifado.");
 });
-
-let firstFirebaseLoad=true;
 
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
 ordensRef.on("value",snapshot=>{
