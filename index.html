@@ -1,102 +1,1150 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#08090b">
-<title>Arasigns — Almoxarifado + OS</title>
+<title>Arasigns — Almoxarifado</title>
+
 <style>
-:root{--bg:#08090b;--card:#111214;--white:#f7f7f7;--muted:#a9aaae;--red:#ff1726;--orange:#ff6a00;--yellow:#ffd000;--green:#16d46b;--purple:#8b45ff}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}body{min-height:100vh}.app{width:min(1000px,100%);margin:auto;padding:14px 16px 40px}
-.header{text-align:center;padding:5px 0 12px}.logo{width:min(520px,90%);max-height:110px;object-fit:contain;display:block;margin:auto;filter:drop-shadow(0 4px 18px rgba(0,0,0,.45))}.subtitle{margin-top:4px;font-size:clamp(15px,2.5vw,22px);letter-spacing:4px;font-weight:800;color:#ddd}.brand-line{height:3px;width:90%;margin:12px auto 15px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));border-radius:10px}
-.screen{display:none}.screen.active{display:block}.page-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.page-title{font-size:clamp(21px,4vw,30px);font-weight:900}.back-button{border:1px solid #3b3c40;background:#17181b;color:white;padding:12px 18px;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer}
-.card{margin-top:14px;background:linear-gradient(145deg,#111214,#0d0e10);border:1px solid #303136;border-radius:22px;padding:18px}.question{text-align:center;margin-bottom:20px}.question-label{color:var(--orange);font-size:15px;font-weight:900;letter-spacing:1px;margin-bottom:7px}.question-title{font-size:clamp(24px,5vw,34px);font-weight:900}
-.main-menu-grid,.movement-choice,.actions,.summary,.options-grid,.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.main-button{min-height:130px;border:1px solid #303136;border-radius:22px;background:#151619;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-size:20px;font-weight:900}.main-button .icon{font-size:48px}.main-button.almox{background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow))}.main-button.os{background:linear-gradient(135deg,#402080,var(--purple))}
-.movement-choice button{min-height:105px;border:0;border-radius:20px;color:white;font-size:clamp(19px,4vw,26px);font-weight:900;cursor:pointer}.btn-retirada{background:linear-gradient(120deg,var(--red),var(--orange))}.btn-devolucao{background:linear-gradient(120deg,#079447,var(--green))}
-.option{min-height:78px;display:flex;align-items:center;gap:13px;border:1px solid #303136;border-radius:17px;background:#151619;color:white;padding:13px 15px;cursor:pointer;text-align:left}.option-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow));font-size:26px}.option-name{font-size:clamp(17px,3vw,22px);font-weight:900}
-.category{min-height:105px;border:1px solid #303136;border-radius:20px;background:#151619;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-weight:900;font-size:18px}.category-icon{font-size:38px}
-.summary{gap:12px;margin-bottom:14px}.summary-box{background:#151619;border:1px solid #303136;border-radius:17px;padding:14px}.summary-label{color:var(--orange);font-size:13px;font-weight:900;margin-bottom:5px}.summary-value{font-size:20px;font-weight:900}
-.confirm-button,.cancel-button,.primary{width:100%;margin-top:10px;padding:17px;border:0;border-radius:18px;color:white;font-size:19px;font-weight:900;cursor:pointer}.confirm-button,.primary{background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow))}.cancel-button{background:#18191c;border:1px solid #38393d;color:#ddd}
-.history-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.history-title{font-size:22px;font-weight:900}.history-count{color:var(--yellow);font-weight:900}#history,#osList{display:flex;flex-direction:column;gap:9px}.empty{min-height:120px;display:grid;place-items:center;text-align:center;border:1px solid #292a2d;border-radius:17px;color:var(--muted);padding:20px}.record,.os-card{background:#151619;border:1px solid #2d2e32;border-radius:15px;padding:13px}.record-top,.os-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.record-type{font-weight:900;color:var(--yellow)}.record-date{color:#999;font-size:13px}.record-line{margin-top:7px;color:#ddd}.record-line b{color:white}
-.action{min-height:80px;border:0;border-radius:18px;color:white;cursor:pointer;font-weight:900;font-size:18px}.csv{background:linear-gradient(120deg,var(--red),var(--orange),var(--yellow))}.clear{background:#17181b;border:1px solid #35363a}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:14px;font-weight:900;color:var(--orange)}.field input,.field select,.field textarea{width:100%;background:#17181b;color:white;border:1px solid #3a3b40;border-radius:13px;padding:14px;font:inherit;outline:none}.field textarea{min-height:105px;resize:vertical}
-.os-number{font-size:21px;font-weight:900}.os-status{padding:7px 10px;border-radius:10px;background:#2b2250;color:#c9adff;font-size:12px;font-weight:900}.os-meta{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;color:#ccc;font-size:14px}.os-meta b{color:white}.os-days{margin-top:12px;padding:10px;border-radius:12px;background:#202126;font-weight:900;color:var(--yellow)}.os-actions,.sector-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.small-button,.sector-button{padding:11px;border-radius:12px;border:1px solid #3a3b40;background:#202126;color:white;font-weight:900;cursor:pointer}.small-button.advance{background:#45257a}.detail-line{padding:12px 0;border-bottom:1px solid #292a2d}.timeline{margin-top:15px}.timeline-item{padding:12px 14px;border-left:4px solid var(--purple);background:#17181b;margin-bottom:8px;border-radius:0 12px 12px 0}.timeline-item b{display:block}.timeline-item small{color:#999}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0);opacity:1}
-@media(max-width:700px){.app{padding:8px 10px 30px}.logo{width:90%;max-height:90px}.subtitle{font-size:13px;letter-spacing:3px}.card{padding:14px;border-radius:18px}.options-grid,.category-grid,.movement-choice,.main-menu-grid,.actions,.summary{grid-template-columns:1fr 1fr;gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.category-icon{font-size:31px}.movement-choice button{min-height:90px;font-size:18px}.summary-value{font-size:17px}.action{min-height:72px;font-size:15px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.os-meta{grid-template-columns:1fr}}@media(max-width:390px){.options-grid,.category-grid{grid-template-columns:1fr}}
+:root{
+  --bg:#08090b; --card:#111214; --card2:#151619; --line:#303136;
+  --white:#f7f7f7; --muted:#a9aaae; --red:#ff1726;
+  --orange:#ff6a00; --yellow:#ffd000; --green:#16d46b; --purple:#7b35e8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh}
+.app{width:min(1000px,100%);margin:0 auto;padding:14px 16px 40px}
+.header{text-align:center;padding:5px 0 12px}
+.logo{width:min(520px,90%);max-height:110px;object-fit:contain;display:block;margin:0 auto;filter:drop-shadow(0 4px 18px rgba(0,0,0,.45))}
+.subtitle{margin-top:4px;font-size:clamp(15px,2.5vw,22px);letter-spacing:4px;font-weight:800;color:#ddd}
+.brand-line{height:3px;width:90%;margin:12px auto 15px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));border-radius:10px}
+
+.screen{display:none}
+.screen.active{display:block}
+
+.page-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.page-title{font-size:clamp(21px,4vw,30px);font-weight:900}
+.back-button{border:1px solid #3b3c40;background:#17181b;color:#fff;padding:12px 18px;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer}
+.back-button:active,.main-button:active,.option:active,.category:active,.action:active,.confirm-button:active{transform:scale(.97)}
+
+.card{margin-top:14px;background:linear-gradient(145deg,#111214,#0d0e10);border:1px solid var(--line);border-radius:22px;padding:18px}
+.question{text-align:center;margin-bottom:20px}
+.question-label{color:var(--orange);font-size:15px;font-weight:900;letter-spacing:1px;margin-bottom:7px}
+.question-title{font-size:clamp(24px,5vw,34px);font-weight:900}
+
+.main-menu-grid,.movement-choice,.options-grid,.category-grid,.summary,.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.main-button{min-height:130px;border:1px solid #303136;border-radius:22px;background:#151619;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-size:20px;font-weight:900}
+.main-button .icon{font-size:48px}
+.main-button.almox{background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow))}
+.main-button.os{background:linear-gradient(135deg,#42208b,var(--purple))}
+
+.movement-choice button{min-height:105px;border:0;border-radius:20px;color:#fff;font-size:clamp(19px,4vw,26px);font-weight:900;cursor:pointer}
+.btn-retirada{background:linear-gradient(120deg,var(--red),var(--orange))}
+.btn-devolucao{background:linear-gradient(120deg,#079447,var(--green))}
+
+.option{min-height:78px;display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:17px;background:#151619;color:#fff;padding:13px 15px;cursor:pointer;text-align:left}
+.option-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow));font-size:26px}
+.option-name{font-size:clamp(17px,3vw,22px);font-weight:900}
+
+.category{min-height:105px;border:1px solid var(--line);border-radius:20px;background:#151619;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-weight:900;font-size:18px}
+.category-icon{font-size:38px}
+
+.summary{gap:12px;margin-bottom:14px}
+.summary-box{background:#151619;border:1px solid var(--line);border-radius:17px;padding:14px}
+.summary-label{color:var(--orange);font-size:13px;font-weight:900;margin-bottom:5px}
+.summary-value{font-size:20px;font-weight:900}
+
+.confirm-button,.cancel-button,.primary{width:100%;margin-top:10px;padding:17px;border:0;border-radius:18px;color:#fff;font-size:19px;font-weight:900;cursor:pointer}
+.confirm-button,.primary{background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow))}
+.cancel-button{background:#18191c;border:1px solid #38393d;color:#ddd}
+
+.history-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+.history-title{font-size:22px;font-weight:900}
+.history-count{color:var(--yellow);font-weight:900}
+#history,#osList{display:flex;flex-direction:column;gap:9px}
+.empty{min-height:120px;display:grid;place-items:center;text-align:center;border:1px solid #292a2d;border-radius:17px;color:var(--muted);padding:20px}
+.record,.os-card{background:#151619;border:1px solid #2d2e32;border-radius:15px;padding:13px}
+.record-top,.os-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.record-type{font-weight:900;color:var(--yellow)}
+.record-date{color:#999;font-size:13px}
+.record-line{margin-top:7px;color:#ddd}
+.record-line b{color:#fff}
+.action{min-height:80px;border:0;border-radius:18px;color:#fff;cursor:pointer;font-weight:900;font-size:18px}
+.csv{background:linear-gradient(120deg,var(--red),var(--orange),var(--yellow))}
+.clear{background:#17181b;border:1px solid #35363a}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:14px;font-weight:900;color:var(--orange)}
+.field input,.field select,.field textarea{width:100%;background:#17181b;color:#fff;border:1px solid #3a3b40;border-radius:13px;padding:14px;font:inherit;outline:none}
+.field textarea{min-height:105px;resize:vertical}
+
+.os-number{font-size:21px;font-weight:900}
+.os-status{padding:7px 10px;border-radius:10px;background:#2b2250;color:#c9adff;font-size:12px;font-weight:900}
+.os-meta{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;color:#ccc;font-size:14px}
+.os-meta b{color:#fff}
+.os-days{margin-top:12px;padding:10px;border-radius:12px;background:#202126;font-weight:900;color:var(--yellow)}
+.os-actions,.sector-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.small-button,.sector-button{padding:11px;border-radius:12px;border:1px solid #3a3b40;background:#202126;color:#fff;font-weight:900;cursor:pointer}
+.small-button.advance{background:#45257a}
+.detail-line{padding:12px 0;border-bottom:1px solid #292a2d}
+.timeline{margin-top:15px}
+.timeline-item{padding:12px 14px;border-left:4px solid var(--purple);background:#17181b;margin-bottom:8px;border-radius:0 12px 12px 0}
+.timeline-item b{display:block}
+.timeline-item small{color:#999}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}
+.toast.show{transform:translate(-50%,0);opacity:1}
+
+@media(max-width:700px){
+  .app{padding:8px 10px 30px}
+  .logo{width:90%;max-height:90px}
+  .subtitle{font-size:13px;letter-spacing:3px}
+  .card{padding:14px;border-radius:18px}
+  .options-grid,.category-grid,.movement-choice,.main-menu-grid,.actions,.summary{grid-template-columns:1fr 1fr;gap:9px}
+  .option{min-height:72px;padding:10px}
+  .option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}
+  .option-name{font-size:16px}
+  .category{min-height:92px;font-size:15px}
+  .category-icon{font-size:31px}
+  .movement-choice button{min-height:90px;font-size:18px}
+  .summary-value{font-size:17px}
+  .action{min-height:72px;font-size:15px}
+  .form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .os-meta{grid-template-columns:1fr}
+}
+@media(max-width:390px){
+  .options-grid,.category-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
-<body><div class="app">
 
-<header class="header"><img src="Logo.png" class="logo" alt="Arasigns"><div class="subtitle">CONTROLE DE ALMOXARIFADO</div><div class="brand-line"></div></header>
+<body>
+<div class="app">
 
-<!-- MENU -->
-<section class="screen active" id="home"><div class="page-top"><div class="page-title">SISTEMA ARASIGNS</div></div><div class="card"><div class="question"><div class="question-label">MENU PRINCIPAL</div><div class="question-title">O QUE VOCÊ DESEJA ACESSAR?</div></div><div class="main-menu-grid"><button class="main-button almox" onclick="almoxStart()"><div class="icon">📦</div>ALMOXARIFADO</button><button class="main-button os" onclick="show('osHome')"><div class="icon">🧾</div>ORDEM DE SERVIÇO</button></div></div></section>
+<header class="header">
+  <img src="Logo.png" class="logo" alt="Arasigns">
+  <div class="subtitle">CONTROLE DE ALMOXARIFADO</div>
+  <div class="brand-line"></div>
+</header>
 
-<!-- ALMOX -->
-<section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="show('home')">← MENU</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="moveType('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="moveType('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div></section>
-<section class="screen" id="employee"><div class="page-top"><button class="back-button" onclick="backAlmox('movement')">← VOLTAR</button><div class="page-title">COLABORADOR</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUEM ESTÁ FAZENDO?</div><div class="question-title">SELECIONE O COLABORADOR</div></div><div class="options-grid" id="employees"></div></div></section>
-<section class="screen" id="category"><div class="page-top"><button class="back-button" onclick="backAlmox('employee')">← VOLTAR</button><div class="page-title">CATEGORIA</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRÓXIMO PASSO</div><div class="question-title">ESCOLHA A CATEGORIA</div></div><div class="category-grid" id="categories"></div></div></section>
-<section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="backAlmox('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="catTitle">ITEM</div></div><div class="options-grid" id="items"></div></div></section>
-<section class="screen" id="confirm"><div class="page-top"><button class="back-button" onclick="backAlmox('item')">← VOLTAR</button><div class="page-title">CONFIRMAR</div><div></div></div><div class="card"><div class="question"><div class="question-label">CONFIRME A MOVIMENTAÇÃO</div><div class="question-title">TUDO CERTO?</div></div><div class="summary"><div class="summary-box"><div class="summary-label">MOVIMENTO</div><div class="summary-value" id="sm">—</div></div><div class="summary-box"><div class="summary-label">COLABORADOR</div><div class="summary-value" id="se">—</div></div><div class="summary-box"><div class="summary-label">CATEGORIA</div><div class="summary-value" id="sc">—</div></div><div class="summary-box"><div class="summary-label">ITEM</div><div class="summary-value" id="si">—</div></div></div><button class="confirm-button" onclick="confirmMove()">✅ CONFIRMAR MOVIMENTAÇÃO</button><button class="cancel-button" onclick="resetAlmox()">❌ CANCELAR</button></div></section>
-<section class="screen" id="almoxHistory"><div class="page-top"><button class="back-button" onclick="show('home')">← MENU</button><div class="page-title">ALMOXARIFADO</div><div></div></div><div class="card"><div class="history-header"><div class="history-title">MOVIMENTAÇÕES</div><div class="history-count" id="hcount">0 REGISTROS</div></div><div id="history"></div></div><div class="card actions"><button class="action csv" onclick="csvAlmox()">📄 GERAR CSV</button><button class="action clear" onclick="clearAlmox()">🗑️ LIMPAR</button></div><div class="card"><button class="primary" onclick="almoxStart()">➕ NOVA MOVIMENTAÇÃO</button></div></section>
+<section class="screen active" id="home">
+  <div class="page-top">
+    <div class="page-title">SISTEMA ARASIGNS</div>
+  </div>
 
-<!-- OS -->
-<section class="screen" id="osHome"><div class="page-top"><button class="back-button" onclick="show('home')">← MENU</button><div class="page-title">ORDEM DE SERVIÇO</div><div></div></div><div class="card"><div class="question"><div class="question-label">GESTÃO DE PRODUÇÃO</div><div class="question-title">O QUE VOCÊ DESEJA FAZER?</div></div><div class="main-menu-grid"><button class="main-button os" onclick="show('osRegister')"><div class="icon">➕</div>CADASTRAR OS</button><button class="main-button" onclick="osList();show('osView')"><div class="icon">📋</div>VISUALIZAR OS</button></div></div></section>
+  <div class="card">
+    <div class="question">
+      <div class="question-label">MENU PRINCIPAL</div>
+      <div class="question-title">O QUE VOCÊ DESEJA ACESSAR?</div>
+    </div>
 
-<section class="screen" id="osRegister"><div class="page-top"><button class="back-button" onclick="show('osHome')">← VOLTAR</button><div class="page-title">CADASTRAR OS</div><div></div></div><div class="card"><div class="question"><div class="question-label">NOVA ORDEM DE SERVIÇO</div><div class="question-title">PREENCHA OS DADOS</div></div><div class="form-grid"><div class="field"><label>NÚMERO DA OS *</label><input id="on" placeholder="OS-001"></div><div class="field"><label>CLIENTE *</label><input id="oc" placeholder="Cliente"></div><div class="field full"><label>SERVIÇO / DESCRIÇÃO *</label><textarea id="od" placeholder="Descrição"></textarea></div><div class="field"><label>RESPONSÁVEL *</label><input id="or" placeholder="Responsável"></div><div class="field"><label>SETOR INICIAL *</label><select id="os"><option>ARTE</option><option>PRODUÇÃO</option><option>ALMOXARIFADO</option><option>MONTAGEM</option><option>FINALIZAÇÃO</option><option>EXPEDIÇÃO</option></select></div><div class="field"><label>DATA DE ABERTURA *</label><input id="oa" type="date"></div><div class="field"><label>STATUS</label><select id="ot"><option>EM ANDAMENTO</option><option>URGENTE</option><option>AGUARDANDO</option><option>FINALIZADA</option></select></div><div class="field full"><label>OBSERVAÇÃO</label><textarea id="ob"></textarea></div></div><button class="primary" onclick="addOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button></div></section>
+    <div class="main-menu-grid">
+      <button class="main-button almox" onclick="openAlmox()">
+        <div class="icon">📦</div>
+        ALMOXARIFADO
+      </button>
 
-<section class="screen" id="osView"><div class="page-top"><button class="back-button" onclick="show('osHome')">← VOLTAR</button><div class="page-title">VISUALIZAR OS</div><div></div></div><div class="card"><div class="field"><label>FILTRAR</label><select id="of" onchange="osList()"><option>TODAS</option><option>EM ANDAMENTO</option><option>URGENTE</option><option>AGUARDANDO</option><option>FINALIZADA</option></select></div></div><div class="card"><div id="osList"></div></div><div class="card actions"><button class="action csv" onclick="csvOS()">📄 CSV DAS OS</button><button class="action clear" onclick="clearOS()">🗑️ LIMPAR OS</button></div></section>
+      <button class="main-button os" onclick="showScreen('osHome')">
+        <div class="icon">🧾</div>
+        ORDEM DE SERVIÇO
+      </button>
+    </div>
+  </div>
+</section>
 
-<section class="screen" id="osDetail"><div class="page-top"><button class="back-button" onclick="show('osView')">← VOLTAR</button><div class="page-title">DETALHES DA OS</div><div></div></div><div class="card" id="detail"></div></section>
+<section class="screen" id="movement">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('home')">← MENU</button>
+    <div class="page-title">MOVIMENTAÇÃO</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">PRIMEIRO PASSO</div>
+      <div class="question-title">RETIRADA OU DEVOLUÇÃO?</div>
+    </div>
+
+    <div class="movement-choice">
+      <button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button>
+      <button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="employee">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('movement')">← VOLTAR</button>
+    <div class="page-title">COLABORADOR</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">QUEM ESTÁ FAZENDO?</div>
+      <div class="question-title">SELECIONE O COLABORADOR</div>
+    </div>
+    <div class="options-grid" id="employeeOptions"></div>
+  </div>
+</section>
+
+<section class="screen" id="category">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('employee')">← VOLTAR</button>
+    <div class="page-title">CATEGORIA</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">PRÓXIMO PASSO</div>
+      <div class="question-title">ESCOLHA A CATEGORIA</div>
+    </div>
+    <div class="category-grid" id="categoryOptions"></div>
+  </div>
+</section>
+
+<section class="screen" id="item">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('category')">← VOLTAR</button>
+    <div class="page-title">ITEM</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">ESCOLHA O MATERIAL</div>
+      <div class="question-title" id="categoryTitle">ITEM</div>
+    </div>
+    <div class="options-grid" id="itemOptions"></div>
+  </div>
+</section>
+
+<section class="screen" id="confirm">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('item')">← VOLTAR</button>
+    <div class="page-title">CONFIRMAR</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">CONFIRME A MOVIMENTAÇÃO</div>
+      <div class="question-title">TUDO CERTO?</div>
+    </div>
+
+    <div class="summary">
+      <div class="summary-box"><div class="summary-label">MOVIMENTO</div><div class="summary-value" id="summaryMovement">—</div></div>
+      <div class="summary-box"><div class="summary-label">COLABORADOR</div><div class="summary-value" id="summaryEmployee">—</div></div>
+      <div class="summary-box"><div class="summary-label">CATEGORIA</div><div class="summary-value" id="summaryCategory">—</div></div>
+      <div class="summary-box"><div class="summary-label">ITEM</div><div class="summary-value" id="summaryItem">—</div></div>
+    </div>
+
+    <button class="confirm-button" onclick="confirmMovement()">✅ CONFIRMAR MOVIMENTAÇÃO</button>
+    <button class="cancel-button" onclick="resetMovement()">❌ CANCELAR</button>
+  </div>
+</section>
+
+<section class="screen" id="almoxHistory">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('home')">← MENU</button>
+    <div class="page-title">ALMOXARIFADO</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="history-header">
+      <div class="history-title">MOVIMENTAÇÕES</div>
+      <div class="history-count" id="historyCount">0 REGISTROS</div>
+    </div>
+    <div id="history"></div>
+  </div>
+
+  <div class="card actions">
+    <button class="action csv" onclick="exportAlmoxCSV()">📄 GERAR CSV</button>
+    <button class="action clear" onclick="clearAlmox()">🗑️ LIMPAR</button>
+  </div>
+
+  <div class="card">
+    <button class="primary" onclick="startMovement()">➕ NOVA MOVIMENTAÇÃO</button>
+  </div>
+</section>
+
+<section class="screen" id="osHome">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('home')">← MENU</button>
+    <div class="page-title">ORDEM DE SERVIÇO</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">GESTÃO DE PRODUÇÃO</div>
+      <div class="question-title">O QUE VOCÊ DESEJA FAZER?</div>
+    </div>
+
+    <div class="main-menu-grid">
+      <button class="main-button os" onclick="showScreen('osRegister')">
+        <div class="icon">➕</div>
+        CADASTRAR OS
+      </button>
+
+      <button class="main-button" onclick="openOSList()">
+        <div class="icon">📋</div>
+        VISUALIZAR OS
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="osRegister">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('osHome')">← VOLTAR</button>
+    <div class="page-title">CADASTRAR OS</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="question">
+      <div class="question-label">NOVA ORDEM DE SERVIÇO</div>
+      <div class="question-title">PREENCHA OS DADOS</div>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label>NÚMERO DA OS *</label>
+        <input id="osNumero" placeholder="OS-001">
+      </div>
+
+      <div class="field">
+        <label>CLIENTE *</label>
+        <input id="osCliente" placeholder="Cliente">
+      </div>
+
+      <div class="field full">
+        <label>SERVIÇO / DESCRIÇÃO *</label>
+        <textarea id="osDescricao" placeholder="Descrição do serviço"></textarea>
+      </div>
+
+      <div class="field">
+        <label>RESPONSÁVEL *</label>
+        <input id="osResponsavel" placeholder="Responsável">
+      </div>
+
+      <div class="field">
+        <label>SETOR INICIAL *</label>
+        <select id="osSetor">
+          <option>ARTE</option>
+          <option>PRODUÇÃO</option>
+          <option>ALMOXARIFADO</option>
+          <option>MONTAGEM</option>
+          <option>FINALIZAÇÃO</option>
+          <option>EXPEDIÇÃO</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>DATA DE ABERTURA *</label>
+        <input id="osData" type="date">
+      </div>
+
+      <div class="field">
+        <label>STATUS</label>
+        <select id="osStatus">
+          <option>EM ANDAMENTO</option>
+          <option>URGENTE</option>
+          <option>AGUARDANDO</option>
+          <option>FINALIZADA</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>OBSERVAÇÃO</label>
+        <textarea id="osObs"></textarea>
+      </div>
+    </div>
+
+    <button class="primary" onclick="registerOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button>
+  </div>
+</section>
+
+<section class="screen" id="osView">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('osHome')">← VOLTAR</button>
+    <div class="page-title">VISUALIZAR OS</div>
+    <div></div>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label>FILTRAR POR STATUS</label>
+      <select id="osFilter" onchange="renderOSList()">
+        <option>TODAS</option>
+        <option>EM ANDAMENTO</option>
+        <option>URGENTE</option>
+        <option>AGUARDANDO</option>
+        <option>FINALIZADA</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div id="osList"></div>
+  </div>
+
+  <div class="card actions">
+    <button class="action csv" onclick="exportOSCSV()">📄 CSV DAS OS</button>
+    <button class="action clear" onclick="clearOS()">🗑️ LIMPAR OS</button>
+  </div>
+</section>
+
+<section class="screen" id="osDetail">
+  <div class="page-top">
+    <button class="back-button" onclick="showScreen('osView')">← VOLTAR</button>
+    <div class="page-title">DETALHES DA OS</div>
+    <div></div>
+  </div>
+
+  <div class="card" id="osDetailContent"></div>
+</section>
 
 <div class="toast" id="toast"></div>
 </div>
 
 <script>
-const COLABS=["TOCO","RAMALHO","LUAN","THAMI","DIEGO","WELTON","GILDO","WESLEY","DENIS","BELLA","JU","MARI","CAMINHÃO","SAVEIRO"];
-const CICON={"THAMI":"👩","BELLA":"👩","JU":"👩","MARI":"👩","CAMINHÃO":"🚚","SAVEIRO":"🚗"};
-const CAT={
-"FERRAMENTAS":["ALICATE DECAPADOR","ALICATE DE CORTE","TUPIA","LIXADEIRA PLANA","SERRA TICO TICO","FERRO DE SOLDA PISTOLA","FERRO DE SOLDA","VENTOSA"],
-"FONTES":["FONTE 30A","FONTE 50A"],"MÓDULOS DE LED":["MÓDULO DE LED BRANCO QUENTE","MÓDULO DE LED BRANCO FRIO"],
-"FITAS DE LED":["FITA DE LED BRANCO QUENTE","FITA DE LED BRANCO FRIO"],"CONSUMÍVEIS":["DISCO DE CORTE","DISCO FLAP","LÂMINA PEQUENA","LÂMINA GRANDE","BANANINHA","BASTÃO DE MADEIRA","AGULHA P","AGULHA G"],
-"COLAS/FITAS":["COLA","FITA ISOLANTE","FITA DUPLA FACE AMARELA","FITA CREPE VERDE","FITA SILICONE TRANSPARENTE","FITA SILICONE BRANCA","VEDA CALHA","PU"],
-"HIGIENE":["SACO DE LIXO","LUVAS LATEX","BUFALO"]};
-const CICON={"FERRAMENTAS":"🛠️","FONTES":"⚡","MÓDULOS DE LED":"💡","FITAS DE LED":"🔆","CONSUMÍVEIS":"⚙️","COLAS/FITAS":"🧴","HIGIENE":"🧼"};
-const IICON={};["ALICATE DECAPADOR","ALICATE DE CORTE"].forEach(x=>IICON[x]="🗜️");IICON["ALICATE DE CORTE"]="✂️";IICON["TUPIA"]="🛠️";IICON["LIXADEIRA PLANA"]="⚙️";IICON["SERRA TICO TICO"]="🪚";IICON["FERRO DE SOLDA PISTOLA"]="🔧";IICON["FERRO DE SOLDA"]="🔧";IICON["VENTOSA"]="🔵";["FONTE 30A","FONTE 50A"].forEach(x=>IICON[x]="⚡");["MÓDULO DE LED BRANCO QUENTE","MÓDULO DE LED BRANCO FRIO"].forEach(x=>IICON[x]="💡");["FITA DE LED BRANCO QUENTE","FITA DE LED BRANCO FRIO"].forEach(x=>IICON[x]="🔆");["DISCO DE CORTE","DISCO FLAP"].forEach(x=>IICON[x]="⚙️");["LÂMINA PEQUENA","LÂMINA GRANDE"].forEach(x=>IICON[x]="🔪");IICON["BANANINHA"]="🔩";IICON["BASTÃO DE MADEIRA"]="🪵";["AGULHA P","AGULHA G"].forEach(x=>IICON[x]="📍");IICON["COLA"]="🧴";IICON["FITA ISOLANTE"]="🖤";IICON["FITA DUPLA FACE AMARELA"]="🟨";IICON["FITA CREPE VERDE"]="🟩";IICON["FITA SILICONE TRANSPARENTE"]="🔘";IICON["FITA SILICONE BRANCA"]="⚪";IICON["VEDA CALHA"]="🧴";IICON["PU"]="🧴";IICON["SACO DE LIXO"]="🗑️";IICON["LUVAS LATEX"]="🧤";IICON["BUFALO"]="🧽";
+  const COLABORADORES = [
+  "TOCO","RAMALHO","LUAN","THAMI","DIEGO","WELTON","GILDO",
+  "WESLEY","DENIS","BELLA","JU","MARI","CAMINHÃO","SAVEIRO"
+];
 
-const AK="arasigns_movimentacoes_botoes_v1",OK="arasigns_ordens_servico_v1";
-let rec=JSON.parse(localStorage.getItem(AK)||"[]"),os=JSON.parse(localStorage.getItem(OK)||"[]"),curOS=null,mv=null,emp=null,cat=null,it=null;
-const $=id=>document.getElementById(id),toastEl=$("toast");
-function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");scrollTo(0,0)}
-function toast(x){toastEl.textContent=x;toastEl.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>toastEl.classList.remove("show"),2300)}
-function esc(x){return String(x??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function almoxStart(){show("movement")}
-function moveType(x){mv=x;show("employee")}
-function backAlmox(x){show(x)}
-function resetAlmox(){mv=emp=cat=it=null;show("movement")}
-function renderEmp(){let b=$("employees");b.innerHTML="";COLABS.forEach(n=>{let x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${CICON[n]||"👤"}</div><div class="option-name">${n}</div>`;x.onclick=()=>{emp=n;show("category")};b.appendChild(x)})}
-function renderCat(){let b=$("categories");b.innerHTML="";Object.keys(CAT).forEach(n=>{let x=document.createElement("button");x.className="category";x.innerHTML=`<div class="category-icon">${CICON[n]}</div><div>${n}</div>`;x.onclick=()=>renderItems(n);b.appendChild(x)})}
-function renderItems(n){cat=n;$("catTitle").textContent=n;let b=$("items");b.innerHTML="";CAT[n].forEach(v=>{let x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${IICON[v]||"📦"}</div><div class="option-name">${v}</div>`;x.onclick=()=>{it=v;$("sm").textContent=mv;$("se").textContent=emp;$("sc").textContent=cat;$("si").textContent=it;show("confirm")};b.appendChild(x)});show("item")}
-function confirmMove(){if(!mv||!emp||!cat||!it)return;rec.push({id:Date.now(),data:new Date().toLocaleString("pt-BR"),movimento:mv,colaborador:emp,categoria:cat,item:it});saveRec();toast("Movimentação registrada!");setTimeout(resetAlmox,600)}
-function saveRec(){localStorage.setItem(AK,JSON.stringify(rec));renderHistory()}
-function renderHistory(){let b=$("history");$("hcount").textContent=rec.length+(rec.length===1?" REGISTRO":" REGISTROS");if(!rec.length){b.innerHTML='<div class="empty">📋<br><br>Nenhuma movimentação registrada.</div>';return}b.innerHTML=rec.slice().reverse().slice(0,100).map(r=>`<div class="record"><div class="record-top"><div class="record-type">${r.movimento==="RETIRADA"?"⬆️":"⬇️"} ${esc(r.movimento)}</div><div class="record-date">${esc(r.data)}</div></div><div class="record-line">👤 <b>Colaborador:</b> ${esc(r.colaborador)}</div><div class="record-line">📂 <b>Categoria:</b> ${esc(r.categoria)}</div><div class="record-line">📦 <b>Item:</b> ${esc(r.item)}</div></div>`).join("")}
-function clearAlmox(){if(!confirm("Apagar TODAS as movimentações?"))return;rec=[];localStorage.removeItem(AK);renderHistory();toast("Registros apagados.")}
-function dl(rows,name){let c="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n"),u=URL.createObjectURL(new Blob([c],{type:"text/csv;charset=utf-8;"})),a=document.createElement("a");a.href=u;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";a.click();URL.revokeObjectURL(u)}
-function csvAlmox(){if(!rec.length)return toast("Não existem movimentações.");dl([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM"],...rec.map(r=>[r.data,r.movimento,r.colaborador,r.categoria,r.item])],"arasigns_movimentacoes")}
+const COLABORADOR_ICONS = {
+  THAMI:"👩",
+  BELLA:"👩",
+  JU:"👩",
+  MARI:"👩",
+  CAMINHÃO:"🚚",
+  SAVEIRO:"🚗"
+};
 
-function addOS(){let n=$("on").value.trim(),c=$("oc").value.trim(),d=$("od").value.trim(),r=$("or").value.trim(),s=$("os").value,a=$("oa").value,t=$("ot").value,b=$("ob").value.trim();if(!n||!c||!d||!r||!a)return toast("Preencha os campos obrigatórios.");if(os.some(x=>x.numero.toLowerCase()===n.toLowerCase()))return toast("Esse número de OS já existe.");let now=new Date().toISOString();os.push({id:Date.now(),numero:n,cliente:c,descricao:d,responsavel:r,setor:s,dataAbertura:a,status:t,obs:b,atualizada:now,historico:[{setor:s,dataHora:now,obs:"OS cadastrada"}]});saveOS();["on","oc","od","or","ob"].forEach(x=>$(x).value="");$("oa").value=new Date().toISOString().slice(0,10);toast("OS cadastrada!");setTimeout(()=>{osList();show("osView")},500)}
-function saveOS(){localStorage.setItem(OK,JSON.stringify(os))}
-function sectorDays(o){let h=o.historico?.at(-1),d=h?new Date(h.dataHora):new Date(o.atualizada);return Math.floor(Math.max(0,Date.now()-d)/86400000)}
-function totalDays(o){return Math.floor(Math.max(0,Date.now()-new Date(o.dataAbertura+"T00:00:00"))/86400000)}
-function osList(){let f=$("of")?.value||"TODAS",a=f==="TODAS"?os:os.filter(x=>x.status===f),b=$("osList");if(!a.length){b.innerHTML='<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';return}b.innerHTML=a.slice().reverse().map(o=>`<div class="os-card"><div class="os-top"><div class="os-number">🧾 ${esc(o.numero)}</div><div class="os-status">${esc(o.status)}</div></div><div class="os-meta"><div>👤 <b>Cliente:</b> ${esc(o.cliente)}</div><div>🧑‍🔧 <b>Responsável:</b> ${esc(o.responsavel)}</div><div>🏭 <b>Setor:</b> ${esc(o.setor)}</div><div>📅 <b>Abertura:</b> ${esc(o.dataAbertura)}</div></div><div class="record-line">📝 <b>Serviço:</b> ${esc(o.descricao)}</div><div class="os-days">⏱️ ${sectorDays(o)} dias no setor atual • ${totalDays(o)} dias desde a abertura</div><div class="os-actions"><button class="small-button" onclick="detailOS(${o.id})">👁️ ABRIR OS</button><button class="small-button advance" onclick="detailOS(${o.id})">🔄 TRANSFERIR</button></div></div>`).join("")}
-function detailOS(id){curOS=os.find(x=>x.id===id);if(!curOS)return;drawDetail();show("osDetail")}
-function drawDetail(){let o=curOS;$("detail").innerHTML=`<div class="os-top"><div class="os-number">🧾 ${esc(o.numero)}</div><div class="os-status">${esc(o.status)}</div></div><div class="detail-line">👤 <b>Cliente:</b> ${esc(o.cliente)}</div><div class="detail-line">🧑‍🔧 <b>Responsável:</b> ${esc(o.responsavel)}</div><div class="detail-line">📝 <b>Serviço:</b> ${esc(o.descricao)}</div><div class="detail-line">📅 <b>Abertura:</b> ${esc(o.dataAbertura)}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${esc(o.setor)}</div><div class="os-days">⏱️ Está há ${sectorDays(o)} dias no setor ${esc(o.setor)}.</div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${esc(o.obs)}</div>`:""}<div class="question" style="margin-top:20px;margin-bottom:8px"><div class="question-label">TRANSFERIR OS</div><div class="question-title" style="font-size:22px">PRÓXIMO SETOR</div></div><div class="sector-buttons">${["ARTE","PRODUÇÃO","ALMOXARIFADO","MONTAGEM","FINALIZAÇÃO","EXPEDIÇÃO"].map(s=>`<button class="sector-button" onclick="transferOS('${s}')">${s===o.setor?"📍 ":""}${s}</button>`).join("")}</div><button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button><div class="timeline"><div class="question-label">HISTÓRICO</div>${(o.historico||[]).slice().reverse().map(h=>`<div class="timeline-item"><b>🏭 ${esc(h.setor)}</b><small>${new Date(h.dataHora).toLocaleString("pt-BR")}</small><div>${esc(h.obs)}</div></div>`).join("")}</div>`}
-function transferOS(s){if(s===curOS.setor)return toast("A OS já está nesse setor.");let now=new Date().toISOString();curOS.setor=s;curOS.atualizada=now;curOS.historico.push({setor:s,dataHora:now,obs:"OS transferida para "+s});if(curOS.status==="FINALIZADA")curOS.status="EM ANDAMENTO";saveOS();drawDetail();toast("OS transferida para "+s)}
-function finishOS(){if(!confirm("Marcar esta OS como FINALIZADA?"))return;let now=new Date().toISOString();curOS.status="FINALIZADA";curOS.atualizada=now;curOS.historico.push({setor:curOS.setor,dataHora:now,obs:"OS finalizada"});saveOS();drawDetail();toast("OS finalizada!")}
-function clearOS(){if(!os.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;os=[];localStorage.removeItem(OK);osList();toast("OS apagadas.")}
-function csvOS(){if(!os.length)return toast("Não existem OS.");dl([["OS","CLIENTE","SERVIÇO","RESPONSÁVEL","SETOR","DATA","STATUS","DIAS NO SETOR","DIAS TOTAL"],...os.map(o=>[o.numero,o.cliente,o.descricao,o.responsavel,o.setor,o.dataAbertura,o.status,sectorDays(o),totalDays(o)])],"arasigns_OS")}
+const CATEGORIAS = {
+  "FERRAMENTAS":{
+    icon:"🛠️",
+    itens:[
+      "ALICATE DECAPADOR","ALICATE DE CORTE","TUPIA","LIXADEIRA PLANA",
+      "SERRA TICO TICO","FERRO DE SOLDA PISTOLA","FERRO DE SOLDA","VENTOSA"
+    ]
+  },
+  "FONTES":{
+    icon:"⚡",
+    itens:["FONTE 30A","FONTE 50A"]
+  },
+  "MÓDULOS DE LED":{
+    icon:"💡",
+    itens:["MÓDULO DE LED BRANCO QUENTE","MÓDULO DE LED BRANCO FRIO"]
+  },
+  "FITAS DE LED":{
+    icon:"🔆",
+    itens:["FITA DE LED BRANCO QUENTE","FITA DE LED BRANCO FRIO"]
+  },
+  "CONSUMÍVEIS":{
+    icon:"⚙️",
+    itens:[
+      "DISCO DE CORTE","DISCO FLAP","LÂMINA PEQUENA","LÂMINA GRANDE",
+      "BANANINHA","BASTÃO DE MADEIRA","AGULHA P","AGULHA G"
+    ]
+  },
+  "COLAS/FITAS":{
+    icon:"🧴",
+    itens:[
+      "COLA","FITA ISOLANTE","FITA DUPLA FACE AMARELA","FITA CREPE VERDE",
+      "FITA SILICONE TRANSPARENTE","FITA SILICONE BRANCA","VEDA CALHA","PU"
+    ]
+  },
+  "HIGIENE":{
+    icon:"🧼",
+    itens:["SACO DE LIXO","LUVAS LATEX","BUFALO"]
+  }
+};
 
-$("oa").value=new Date().toISOString().slice(0,10);renderEmp();renderCat();renderHistory();
+const ITEM_ICONS = {
+  "ALICATE DECAPADOR":"🗜️",
+  "ALICATE DE CORTE":"✂️",
+  "TUPIA":"🛠️",
+  "LIXADEIRA PLANA":"⚙️",
+  "SERRA TICO TICO":"🪚",
+  "FERRO DE SOLDA PISTOLA":"🔧",
+  "FERRO DE SOLDA":"🔧",
+  "VENTOSA":"🔵",
+  "FONTE 30A":"⚡",
+  "FONTE 50A":"⚡",
+  "MÓDULO DE LED BRANCO QUENTE":"💡",
+  "MÓDULO DE LED BRANCO FRIO":"💡",
+  "FITA DE LED BRANCO QUENTE":"🔆",
+  "FITA DE LED BRANCO FRIO":"🔆",
+  "DISCO DE CORTE":"⚙️",
+  "DISCO FLAP":"⚙️",
+  "LÂMINA PEQUENA":"🔪",
+  "LÂMINA GRANDE":"🔪",
+  "BANANINHA":"🔩",
+  "BASTÃO DE MADEIRA":"🪵",
+  "AGULHA P":"📍",
+  "AGULHA G":"📍",
+  "COLA":"🧴",
+  "FITA ISOLANTE":"🖤",
+  "FITA DUPLA FACE AMARELA":"🟨",
+  "FITA CREPE VERDE":"🟩",
+  "FITA SILICONE TRANSPARENTE":"🔘",
+  "FITA SILICONE BRANCA":"⚪",
+  "VEDA CALHA":"🧴",
+  "PU":"🧴",
+  "SACO DE LIXO":"🗑️",
+  "LUVAS LATEX":"🧤",
+  "BUFALO":"🧽"
+};
+
+const ALMOX_STORAGE = "arasigns_movimentacoes_botoes_v1";
+const OS_STORAGE = "arasigns_ordens_servico_v2";
+
+let movimentacoes = JSON.parse(localStorage.getItem(ALMOX_STORAGE) || "[]");
+let ordens = JSON.parse(localStorage.getItem(OS_STORAGE) || "[]");
+
+let selectedMovement = null;
+let selectedEmployee = null;
+let selectedCategory = null;
+let selectedItem = null;
+let selectedOS = null;
+
+function $(id){
+  return document.getElementById(id);
+}
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(screen){
+    screen.classList.remove("active");
+  });
+
+  const target = $(id);
+
+  if(!target){
+    console.error("Tela não encontrada:", id);
+    return;
+  }
+
+  target.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function toast(message){
+  const el = $("toast");
+  el.textContent = message;
+  el.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(function(){
+    el.classList.remove("show");
+  },2300);
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function openAlmox(){
+  startMovement();
+}
+
+function startMovement(){
+  resetMovementData();
+  showScreen("movement");
+}
+
+function resetMovementData(){
+  selectedMovement = null;
+  selectedEmployee = null;
+  selectedCategory = null;
+  selectedItem = null;
+}
+
+function selectMovement(type){
+  selectedMovement = type;
+  showScreen("employee");
+}
+
+function renderEmployees(){
+  const box = $("employeeOptions");
+  box.innerHTML = "";
+
+  COLABORADORES.forEach(function(name){
+    const button = document.createElement("button");
+    button.className = "option";
+
+    const icon = COLABORADOR_ICONS[name] || "👤";
+
+    button.innerHTML =
+      '<div class="option-icon">' + icon + '</div>' +
+      '<div class="option-name">' + escapeHtml(name) + '</div>';
+
+    button.onclick = function(){
+      selectedEmployee = name;
+      showScreen("category");
+    };
+
+    box.appendChild(button);
+  });
+}
+
+function renderCategories(){
+  const box = $("categoryOptions");
+  box.innerHTML = "";
+
+  Object.entries(CATEGORIAS).forEach(function(entry){
+    const name = entry[0];
+    const data = entry[1];
+
+    const button = document.createElement("button");
+    button.className = "category";
+
+    button.innerHTML =
+      '<div class="category-icon">' + data.icon + '</div>' +
+      '<div>' + escapeHtml(name) + '</div>';
+
+    button.onclick = function(){
+      selectCategory(name);
+    };
+
+    box.appendChild(button);
+  });
+}
+
+function selectCategory(name){
+  selectedCategory = name;
+  $("categoryTitle").textContent = name;
+  renderItems(name);
+  showScreen("item");
+}
+
+function renderItems(category){
+  const box = $("itemOptions");
+  box.innerHTML = "";
+
+  CATEGORIAS[category].itens.forEach(function(name){
+    const button = document.createElement("button");
+    button.className = "option";
+
+    button.innerHTML =
+      '<div class="option-icon">' + (ITEM_ICONS[name] || "📦") + '</div>' +
+      '<div class="option-name">' + escapeHtml(name) + '</div>';
+
+    button.onclick = function(){
+      selectItem(name);
+    };
+
+    box.appendChild(button);
+  });
+}
+
+function selectItem(name){
+  selectedItem = name;
+
+  $("summaryMovement").textContent = selectedMovement;
+  $("summaryEmployee").textContent = selectedEmployee;
+  $("summaryCategory").textContent = selectedCategory;
+  $("summaryItem").textContent = selectedItem;
+
+  showScreen("confirm");
+}
+
+function confirmMovement(){
+  if(!selectedMovement || !selectedEmployee || !selectedCategory || !selectedItem){
+    toast("Complete todas as etapas.");
+    return;
+  }
+
+  movimentacoes.push({
+    id:Date.now(),
+    dataHora:new Date().toLocaleString("pt-BR"),
+    movimento:selectedMovement,
+    colaborador:selectedEmployee,
+    categoria:selectedCategory,
+    item:selectedItem
+  });
+
+  saveMovements();
+
+  toast("Movimentação registrada!");
+
+  setTimeout(function(){
+    resetMovement();
+  },600);
+}
+
+function resetMovement(){
+  resetMovementData();
+  showScreen("movement");
+}
+
+function saveMovements(){
+  localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
+  renderHistory();
+}
+
+function renderHistory(){
+  const box = $("history");
+  const count = $("historyCount");
+
+  count.textContent =
+    movimentacoes.length +
+    (movimentacoes.length === 1 ? " REGISTRO" : " REGISTROS");
+
+  if(!movimentacoes.length){
+    box.innerHTML =
+      '<div class="empty">📋<br><br>Nenhuma movimentação registrada.</div>';
+    return;
+  }
+
+  box.innerHTML = "";
+
+  movimentacoes.slice().reverse().slice(0,100).forEach(function(record){
+    const div = document.createElement("div");
+    div.className = "record";
+
+    const icon = record.movimento === "RETIRADA" ? "⬆️" : "⬇️";
+
+    div.innerHTML =
+      '<div class="record-top">' +
+        '<div class="record-type">' + icon + ' ' + escapeHtml(record.movimento) + '</div>' +
+        '<div class="record-date">' + escapeHtml(record.dataHora) + '</div>' +
+      '</div>' +
+      '<div class="record-line">👤 <b>Colaborador:</b> ' + escapeHtml(record.colaborador) + '</div>' +
+      '<div class="record-line">📂 <b>Categoria:</b> ' + escapeHtml(record.categoria) + '</div>' +
+      '<div class="record-line">📦 <b>Item:</b> ' + escapeHtml(record.item) + '</div>';
+
+    box.appendChild(div);
+  });
+}
+
+function clearAlmox(){
+  if(!movimentacoes.length){
+    toast("Não existem registros.");
+    return;
+  }
+
+  if(!confirm("Tem certeza que deseja apagar TODAS as movimentações?")){
+    return;
+  }
+
+  movimentacoes = [];
+  localStorage.removeItem(ALMOX_STORAGE);
+  renderHistory();
+  toast("Registros apagados.");
+}
+
+function exportCSV(rows,filename){
+  const csv =
+    "\uFEFF" +
+    rows.map(function(row){
+      return row.map(function(value){
+        return '"' + String(value ?? "").replaceAll('"','""') + '"';
+      }).join(";");
+    }).join("\r\n");
+
+  const blob = new Blob([csv],{
+    type:"text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = filename + "_" + new Date().toISOString().slice(0,10) + ".csv";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+}
+
+function exportAlmoxCSV(){
+  if(!movimentacoes.length){
+    toast("Não existem movimentações para exportar.");
+    return;
+  }
+
+  exportCSV([
+    ["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM"],
+    ...movimentacoes.map(function(r){
+      return [r.dataHora,r.movimento,r.colaborador,r.categoria,r.item];
+    })
+  ],"arasigns_movimentacoes");
+
+  toast("CSV gerado com sucesso!");
+}
+  function openOSList(){
+  renderOSList();
+  showScreen("osView");
+}
+
+function registerOS(){
+  const numero = $("osNumero").value.trim();
+  const cliente = $("osCliente").value.trim();
+  const descricao = $("osDescricao").value.trim();
+  const responsavel = $("osResponsavel").value.trim();
+  const setor = $("osSetor").value;
+  const dataAbertura = $("osData").value;
+  const status = $("osStatus").value;
+  const obs = $("osObs").value.trim();
+
+  if(!numero || !cliente || !descricao || !responsavel || !dataAbertura){
+    toast("Preencha os campos obrigatórios.");
+    return;
+  }
+
+  const duplicada = ordens.some(function(os){
+    return os.numero.toLowerCase() === numero.toLowerCase();
+  });
+
+  if(duplicada){
+    toast("Esse número de OS já existe.");
+    return;
+  }
+
+  const agora = new Date().toISOString();
+
+  const novaOS = {
+    id:Date.now(),
+    numero:numero,
+    cliente:cliente,
+    descricao:descricao,
+    responsavel:responsavel,
+    setor:setor,
+    dataAbertura:dataAbertura,
+    status:status,
+    obs:obs,
+    atualizada:agora,
+    historico:[
+      {
+        setor:setor,
+        dataHora:agora,
+        obs:"OS cadastrada"
+      }
+    ]
+  };
+
+  ordens.push(novaOS);
+  saveOS();
+
+  $("osNumero").value = "";
+  $("osCliente").value = "";
+  $("osDescricao").value = "";
+  $("osResponsavel").value = "";
+  $("osObs").value = "";
+
+  toast("OS cadastrada com sucesso!");
+
+  setTimeout(function(){
+    openOSList();
+  },600);
+}
+
+function saveOS(){
+  localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
+}
+
+function daysSince(date){
+  const start = new Date(date);
+
+  if(Number.isNaN(start.getTime())){
+    return 0;
+  }
+
+  return Math.floor(
+    Math.max(0,Date.now() - start.getTime()) / 86400000
+  );
+}
+
+function sectorDays(os){
+  if(!os.historico || !os.historico.length){
+    return 0;
+  }
+
+  const ultimo = os.historico[os.historico.length - 1];
+
+  return daysSince(ultimo.dataHora);
+}
+
+function totalDays(os){
+  return daysSince(os.dataAbertura + "T00:00:00");
+}
+
+function renderOSList(){
+  const box = $("osList");
+  const filter = $("osFilter").value;
+
+  const lista =
+    filter === "TODAS"
+      ? ordens
+      : ordens.filter(function(os){
+          return os.status === filter;
+        });
+
+  if(!lista.length){
+    box.innerHTML =
+      '<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';
+    return;
+  }
+
+  box.innerHTML = "";
+
+  lista.slice().reverse().forEach(function(os){
+    const div = document.createElement("div");
+    div.className = "os-card";
+
+    div.innerHTML =
+      '<div class="os-top">' +
+        '<div class="os-number">🧾 ' + escapeHtml(os.numero) + '</div>' +
+        '<div class="os-status">' + escapeHtml(os.status) + '</div>' +
+      '</div>' +
+
+      '<div class="os-meta">' +
+        '<div>👤 <b>Cliente:</b> ' + escapeHtml(os.cliente) + '</div>' +
+        '<div>🧑‍🔧 <b>Responsável:</b> ' + escapeHtml(os.responsavel) + '</div>' +
+        '<div>🏭 <b>Setor:</b> ' + escapeHtml(os.setor) + '</div>' +
+        '<div>📅 <b>Abertura:</b> ' + escapeHtml(os.dataAbertura) + '</div>' +
+      '</div>' +
+
+      '<div class="record-line">📝 <b>Serviço:</b> ' + escapeHtml(os.descricao) + '</div>' +
+
+      '<div class="os-days">' +
+        '⏱️ ' + sectorDays(os) + ' dias no setor atual • ' +
+        totalDays(os) + ' dias desde a abertura' +
+      '</div>' +
+
+      '<div class="os-actions">' +
+        '<button class="small-button" onclick="openOSDetail(' + os.id + ')">👁️ ABRIR OS</button>' +
+        '<button class="small-button advance" onclick="openOSDetail(' + os.id + ')">🔄 TRANSFERIR</button>' +
+      '</div>';
+
+    box.appendChild(div);
+  });
+}
+
+function openOSDetail(id){
+  selectedOS = ordens.find(function(os){
+    return os.id === id;
+  });
+
+  if(!selectedOS){
+    toast("OS não encontrada.");
+    return;
+  }
+
+  renderOSDetail();
+  showScreen("osDetail");
+}
+
+function renderOSDetail(){
+  const os = selectedOS;
+  const history = os.historico || [];
+
+  let html =
+    '<div class="os-top">' +
+      '<div class="os-number">🧾 ' + escapeHtml(os.numero) + '</div>' +
+      '<div class="os-status">' + escapeHtml(os.status) + '</div>' +
+    '</div>' +
+
+    '<div class="detail-line">👤 <b>Cliente:</b> ' + escapeHtml(os.cliente) + '</div>' +
+    '<div class="detail-line">🧑‍🔧 <b>Responsável:</b> ' + escapeHtml(os.responsavel) + '</div>' +
+    '<div class="detail-line">📝 <b>Serviço:</b> ' + escapeHtml(os.descricao) + '</div>' +
+    '<div class="detail-line">📅 <b>Abertura:</b> ' + escapeHtml(os.dataAbertura) + '</div>' +
+    '<div class="detail-line">🏭 <b>Setor atual:</b> ' + escapeHtml(os.setor) + '</div>' +
+
+    '<div class="os-days">' +
+      '⏱️ Está há ' + sectorDays(os) +
+      ' dias no setor ' + escapeHtml(os.setor) + '.' +
+    '</div>';
+
+  if(os.obs){
+    html +=
+      '<div class="detail-line">💬 <b>Observação:</b> ' +
+      escapeHtml(os.obs) +
+      '</div>';
+  }
+
+  html +=
+    '<div class="question" style="margin-top:20px;margin-bottom:8px">' +
+      '<div class="question-label">TRANSFERIR OS</div>' +
+      '<div class="question-title" style="font-size:22px">PRÓXIMO SETOR</div>' +
+    '</div>' +
+
+    '<div class="sector-buttons">' +
+      ["ARTE","PRODUÇÃO","ALMOXARIFADO","MONTAGEM","FINALIZAÇÃO","EXPEDIÇÃO"]
+      .map(function(setor){
+        return '<button class="sector-button" onclick="transferOS(' +
+          JSON.stringify(setor) + ')">' +
+          (setor === os.setor ? "📍 " : "") +
+          setor +
+          '</button>';
+      }).join("") +
+    '</div>' +
+
+    '<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>' +
+
+    '<div class="timeline">' +
+      '<div class="question-label">HISTÓRICO DA OS</div>' +
+      history.slice().reverse().map(function(h){
+        return (
+          '<div class="timeline-item">' +
+            '<b>🏭 ' + escapeHtml(h.setor) + '</b>' +
+            '<small>' + new Date(h.dataHora).toLocaleString("pt-BR") + '</small>' +
+            '<div>' + escapeHtml(h.obs) + '</div>' +
+          '</div>'
+        );
+      }).join("") +
+    '</div>';
+
+  $("osDetailContent").innerHTML = html;
+}
+
+function transferOS(novoSetor){
+  if(!selectedOS){
+    return;
+  }
+
+  if(novoSetor === selectedOS.setor){
+    toast("A OS já está nesse setor.");
+    return;
+  }
+
+  const agora = new Date().toISOString();
+
+  selectedOS.setor = novoSetor;
+  selectedOS.atualizada = agora;
+
+  if(selectedOS.status === "FINALIZADA"){
+    selectedOS.status = "EM ANDAMENTO";
+  }
+
+  selectedOS.historico.push({
+    setor:novoSetor,
+    dataHora:agora,
+    obs:"OS transferida para " + novoSetor
+  });
+
+  saveOS();
+  renderOSDetail();
+
+  toast("OS transferida para " + novoSetor);
+}
+
+function finishOS(){
+  if(!selectedOS){
+    return;
+  }
+
+  if(!confirm("Marcar esta OS como FINALIZADA?")){
+    return;
+  }
+
+  const agora = new Date().toISOString();
+
+  selectedOS.status = "FINALIZADA";
+  selectedOS.atualizada = agora;
+
+  selectedOS.historico.push({
+    setor:selectedOS.setor,
+    dataHora:agora,
+    obs:"OS finalizada"
+  });
+
+  saveOS();
+  renderOSDetail();
+
+  toast("OS finalizada!");
+}
+
+function clearOS(){
+  if(!ordens.length){
+    toast("Não existem OS.");
+    return;
+  }
+
+  if(!confirm("Tem certeza que deseja apagar TODAS as OS?")){
+    return;
+  }
+
+  ordens = [];
+
+  localStorage.removeItem(OS_STORAGE);
+
+  renderOSList();
+
+  toast("Todas as OS foram apagadas.");
+}
+
+function exportOSCSV(){
+  if(!ordens.length){
+    toast("Não existem OS para exportar.");
+    return;
+  }
+
+  exportCSV([
+    [
+      "OS",
+      "CLIENTE",
+      "SERVIÇO",
+      "RESPONSÁVEL",
+      "SETOR",
+      "DATA DE ABERTURA",
+      "STATUS",
+      "DIAS NO SETOR",
+      "DIAS TOTAL"
+    ],
+    ...ordens.map(function(os){
+      return [
+        os.numero,
+        os.cliente,
+        os.descricao,
+        os.responsavel,
+        os.setor,
+        os.dataAbertura,
+        os.status,
+        sectorDays(os),
+        totalDays(os)
+      ];
+    })
+  ],"arasigns_ordens_servico");
+
+  toast("CSV das OS gerado!");
+}
+
+function initialize(){
+  renderEmployees();
+  renderCategories();
+  renderHistory();
+
+  if(!$("osData").value){
+    $("osData").value =
+      new Date().toISOString().slice(0,10);
+  }
+
+  console.log("Arasigns carregado corretamente.");
+}
+
+initialize();
+
 </script>
+
 </body>
 </html>
