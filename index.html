@@ -420,9 +420,66 @@ function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[
 <button class="sector-button ${o.setor==="PRODUÇÃO"?"current-sector":""}" ${o.setor==="PRODUÇÃO"?"disabled":""} onclick="transferOS('PRODUÇÃO')">PRODUÇÃO</button>
 <button class="sector-button ${o.setor==="MONTAGEM"?"current-sector":""}" ${o.setor==="MONTAGEM"?"disabled":""} onclick="transferOS('MONTAGEM')">MONTAGEM</button>
 <button class="sector-button ${o.setor==="INSTALAÇÃO / BALCÃO"?"current-sector":""}" ${o.setor==="INSTALAÇÃO / BALCÃO"?"disabled":""} onclick="transferOS('INSTALAÇÃO / BALCÃO')">INSTALAÇÃO / BALCÃO</button>
-</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline"><div class="question-label">HISTÓRICO DA OS</div>${(o.historico||[]).map((x,i)=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>⏳ <b>Tempo de Execução:</b> ${historyExecutionTime(o,i)}</div><div>${escapeHtml(x.obs||"")}</div></div>`).reverse().join("")}</div>`}
+</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
+  <div class="question-label" style="margin:0">HISTÓRICO DA OS</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+  <button onclick="clearOSHistory()" style="border:1px solid #ff4d4d;background:#2a1212;color:#ff7777;padding:8px 12px;border-radius:10px;font-weight:900;cursor:pointer">🗑 LIMPAR HISTÓRICO</button>
+  <button onclick="deleteCurrentOS()" style="border:1px solid #ff3030;background:#4a1010;color:#fff;padding:8px 12px;border-radius:10px;font-weight:900;cursor:pointer">⚠️ EXCLUIR OS</button>
+</div>
+</div>
+${(o.historico||[]).length
+  ? (o.historico||[]).map((x,i)=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>⏳ <b>Tempo de Execução:</b> ${historyExecutionTime(o,i)}</div><div>${escapeHtml(x.obs||"")}</div></div>`).reverse().join("")
+  : '<div class="timeline-item">Nenhum histórico registrado.</div>'}
+</div>`}
 function transferOS(s){if(!selectedOS)return;if(s===selectedOS.setor)return toast("A OS já está nesse setor.");const now=new Date().toISOString();selectedOS.setor=s;selectedOS.atualizada=now;if(selectedOS.status==="FINALIZADA")selectedOS.status="EM ANDAMENTO";selectedOS.historico.push({setor:s,dataHora:now,obs:"OS transferida para "+s});saveOS();renderOSDetail();toast("OS transferida para "+s)}
 function finishOS(){if(!selectedOS)return;if(!confirm("Marcar esta OS como FINALIZADA?"))return;const now=new Date().toISOString();selectedOS.status="FINALIZADA";selectedOS.atualizada=now;selectedOS.historico.push({setor:selectedOS.setor,dataHora:now,obs:"OS finalizada"});saveOS();renderOSDetail();toast("OS finalizada!")}
+function deleteCurrentOS(){
+  if(!selectedOS)return;
+
+  const senha=prompt("Digite a senha para EXCLUIR a OS #"+selectedOS.numero+":");
+  if(senha===null)return;
+
+  if(senha!=="007"){
+    toast("Senha incorreta.");
+    return;
+  }
+
+  if(!confirm("ATENÇÃO: excluir permanentemente a OS #"+selectedOS.numero+" e todo o histórico?"))return;
+
+  const idExcluida=selectedOS.id;
+  ordens=ordens.filter(o=>String(o.id)!==String(idExcluida));
+  selectedOS=null;
+
+  saveOS();
+  renderOSList();
+  showScreen("osList");
+  toast("OS excluída com sucesso. Voltando para a lista...");
+}
+
+function clearOSHistory(){
+  if(!selectedOS)return;
+
+  const senha=prompt("Digite a senha para limpar o histórico desta OS:");
+  if(senha===null)return;
+
+  if(senha!=="007"){
+    toast("Senha incorreta.");
+    return;
+  }
+
+  if(!confirm("Tem certeza que deseja apagar TODO o histórico da OS #"+selectedOS.numero+"?"))return;
+
+  selectedOS.historico=[];
+  selectedOS.atualizada=new Date().toISOString();
+
+  const index=ordens.findIndex(o=>String(o.id)===String(selectedOS.id));
+  if(index!==-1)ordens[index]=selectedOS;
+
+  saveOS();
+  renderOSDetail();
+  toast("Histórico da OS limpo com sucesso.");
+}
 function clearOS(){if(!ordens.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;ordens=[];localStorage.removeItem(OS_STORAGE);renderOSList();toast("Todas as OS foram apagadas.")}
 function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","TEMPO NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorElapsed(o).text,deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
 renderEmployees();renderCategories();renderHistory();
