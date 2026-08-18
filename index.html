@@ -208,6 +208,7 @@ const firebaseConfig={
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 const ordensRef=db.ref("ordens");
+const movimentacoesRef=db.ref("movimentacoes");
 
 const SETORES=["COMERCIAL","ARTE FINAL","PRODUÇÃO","MONTAGEM","INSTALAÇÃO / BALCÃO"];
 const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3";
@@ -222,6 +223,28 @@ function loadMovements(){
 }
 let movimentacoes=loadMovements(),ordens=JSON.parse(localStorage.getItem(OS_STORAGE)||"[]");
 let firebaseReady=false;
+let firstFirebaseLoad=true;
+let firstMovFirebaseLoad=true;
+
+// Escuta o histórico do almoxarifado em TEMPO REAL.
+movimentacoesRef.on("value",snapshot=>{
+  const dados=snapshot.val();
+
+  if(dados===null && firstMovFirebaseLoad && movimentacoes.length){
+    // Migra automaticamente o histórico que já existia neste computador.
+    movimentacoesRef.set(movimentacoes);
+  }else{
+    movimentacoes=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
+    localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
+    renderHistory();
+  }
+
+  firstMovFirebaseLoad=false;
+},error=>{
+  console.error("Erro ao sincronizar movimentações:",error);
+  toast("Erro ao sincronizar o histórico do almoxarifado.");
+});
+
 let firstFirebaseLoad=true;
 
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
@@ -298,7 +321,14 @@ toast(selectedMovement==="RETIRADA"?"Retirada registrada no histórico!":"Devolu
 setTimeout(()=>{showScreen("almox");renderHistory();startMovement()},700)
 }
 function resetMovement(){startMovement()}
-function saveMovements(){localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));renderHistory()}
+function saveMovements(){
+  localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
+  movimentacoesRef.set(movimentacoes).catch(error=>{
+    console.error("Erro ao salvar movimentações:",error);
+    toast("Erro ao salvar no servidor.");
+  });
+  renderHistory();
+}
 function renderHistory(){
 const b=$("history"),c=$("historyCount");
 if(!b||!c)return;
@@ -336,14 +366,37 @@ function deleteMovement(index){
     return;
   }
   const registro=movimentacoes[index];
+
+  const senha=prompt("Digite a senha para excluir esta movimentação:");
+  if(senha===null)return;
+  if(senha!=="007"){
+    toast("Senha incorreta.");
+    return;
+  }
+
   const ok=confirm("Excluir somente esta movimentação?\n\n"+registro.movimento+"\n"+registro.colaborador+" — "+registro.item+"\nQuantidade: "+(registro.quantidade??1));
   if(!ok)return;
   movimentacoes.splice(index,1);
-  localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
-  renderHistory();
+  saveMovements();
   toast("Movimentação excluída com sucesso.");
 }
-function clearAlmox(){if(!movimentacoes.length)return toast("Não existem registros.");if(!confirm("Apagar TODAS as movimentações?"))return;movimentacoes=[];localStorage.removeItem(ALMOX_STORAGE);renderHistory();toast("Registros apagados.")}
+function clearAlmox(){
+  if(!movimentacoes.length)return toast("Não existem registros.");
+
+  const senha=prompt("Digite a senha para LIMPAR TODO o histórico de movimentações:");
+  if(senha===null)return;
+
+  if(senha!=="007"){
+    toast("Senha incorreta.");
+    return;
+  }
+
+  if(!confirm("ATENÇÃO: Apagar TODAS as movimentações do histórico?"))return;
+
+  movimentacoes=[];
+  saveMovements();
+  toast("Histórico de movimentações apagado.");
+}
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
