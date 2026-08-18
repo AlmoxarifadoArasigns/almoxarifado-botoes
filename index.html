@@ -80,6 +80,53 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 .record-delete:active{transform:scale(.94)}
 .clear-history-button{width:100%;margin-top:14px;min-height:62px;border:1px solid #6a3034;border-radius:17px;background:#241416;color:#ffb2b7;font-size:18px;font-weight:900;cursor:pointer}
 .clear-history-button:active{transform:scale(.98)}
+
+/* STATUS DO SERVIDOR */
+.server-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  margin:12px auto 0;
+  width:max-content;
+  max-width:calc(100% - 30px);
+  padding:9px 16px;
+  border:1px solid #343941;
+  border-radius:999px;
+  background:#15171b;
+  color:#bfc4cc;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.5px;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.server-dot{
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#f59e0b;
+  box-shadow:0 0 0 4px rgba(245,158,11,.12);
+  flex:0 0 auto;
+}
+.server-status.connected .server-dot{
+  background:#22c55e;
+  box-shadow:0 0 0 4px rgba(34,197,94,.12),0 0 14px rgba(34,197,94,.65);
+}
+.server-status.connecting .server-dot{
+  background:#f59e0b;
+  animation:serverPulse 1s infinite;
+}
+.server-status.offline .server-dot{
+  background:#ef4444;
+  box-shadow:0 0 0 4px rgba(239,68,68,.12);
+}
+@keyframes serverPulse{
+  50%{transform:scale(1.45);opacity:.55}
+}
+@media(max-width:600px){
+  .server-status{font-size:10px;padding:8px 12px}
+}
+
 </style>
 </head>
 <body>
@@ -87,6 +134,10 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <header class="header">
 <img src="Logo.png" class="logo" alt="Arasigns" onerror="this.style.display='none'">
 <div class="brand">CONTROLE DE PRODUÇÃO E ALMOXARIFADO</div><div class="brand-line"></div>
+<div id="serverStatus" class="server-status connecting">
+  <span class="server-dot"></span>
+  <span id="serverStatusText">CONECTANDO AO SERVIDOR...</span>
+</div>
 </header>
 
 <section class="screen active" id="home">
@@ -195,10 +246,40 @@ ordensRef.on("value",snapshot=>{
   firstFirebaseLoad=false;
 },error=>{
   console.error("Erro ao conectar no Firebase:",error);
+  setServerStatus("offline");
   toast("Erro ao conectar no Firebase.");
 });
 let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null;
 const $=id=>document.getElementById(id);
+
+function setServerStatus(status){
+  const box=$("serverStatus");
+  const text=$("serverStatusText");
+  if(!box||!text)return;
+
+  box.className="server-status "+status;
+
+  if(status==="connected"){
+    text.textContent="SERVIDOR CONECTADO • TEMPO REAL";
+  }else if(status==="offline"){
+    text.textContent="SEM CONEXÃO • RECONECTANDO...";
+  }else{
+    text.textContent="CONECTANDO AO SERVIDOR...";
+  }
+}
+
+// Status real da conexão com o Firebase.
+db.ref(".info/connected").on("value",snap=>{
+  setServerStatus(snap.val()===true ? "connected" : "offline");
+});
+
+window.addEventListener("online",()=>{
+  setServerStatus("connecting");
+});
+window.addEventListener("offline",()=>{
+  setServerStatus("offline");
+});
+
 function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const t=$(id);if(t)t.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
 function toast(m){const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
 function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
