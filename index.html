@@ -131,6 +131,8 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <section class="screen" id="osDetail"><div class="page-top"><button class="back-button" onclick="openOSList()">← LISTA</button><div class="page-title">DETALHES DA OS</div><div></div></div><div class="card" id="osDetailContent"></div></section>
 </div><div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script>
 const COLABORADORES=["TOCO","RAMALHO","LUAN","THAMI","DIEGO","WELTON","GILDO","WESLEY","DENIS","BELLA","JU","MARI","CAMINHÃO","SAVEIRO"];
 const COLABORADOR_ICONS={THAMI:"👩",BELLA:"👩",JU:"👩",MARI:"👩",CAMINHÃO:"🚚",SAVEIRO:"🚗"};
@@ -143,6 +145,19 @@ const CATEGORIAS={
 "COLAS/FITAS":{icon:"🧴",itens:["COLA","FITA ISOLANTE","FITA DUPLA FACE AMARELA","FITA CREPE VERDE","FITA SILICONE TRANSPARENTE","FITA SILICONE BRANCA","VEDA CALHA","PU"]},
 "HIGIENE":{icon:"🧼",itens:["SACO DE LIXO","LUVAS LATEX","BUFALO"]}};
 const ITEM_ICONS={"ALICATE DECAPADOR":"🗜️","ALICATE DE CORTE":"✂️","TUPIA":"🛠️","LIXADEIRA PLANA":"⚙️","SERRA TICO TICO":"🪚","FERRO DE SOLDA PISTOLA":"🔧","FERRO DE SOLDA":"🔧","VENTOSA":"🔵","SOPRADOR TÉRMICO":"🔥","FONTE 30A":"⚡","FONTE 50A":"⚡","MÓDULO DE LED BRANCO QUENTE":"💡","MÓDULO DE LED BRANCO FRIO":"💡","FITA DE LED BRANCO QUENTE":"🔆","FITA DE LED BRANCO FRIO":"🔆","DISCO DE CORTE":"⚙️","DISCO FLAP":"⚙️","LÂMINA PEQUENA":"🔪","LÂMINA GRANDE":"🔪","BANANINHA":"🔩","BASTÃO DE MADEIRA":"🪵","AGULHA P":"📍","AGULHA G":"📍","COLA":"🧴","FITA ISOLANTE":"🖤","FITA DUPLA FACE AMARELA":"🟨","FITA CREPE VERDE":"🟩","FITA SILICONE TRANSPARENTE":"🔘","FITA SILICONE BRANCA":"⚪","VEDA CALHA":"🧴","PU":"🧴","SACO DE LIXO":"🗑️","LUVAS LATEX":"🧤","BUFALO":"🧽"};
+const firebaseConfig={
+  apiKey:"AIzaSyC-TGj1tmHqZVGgsvQNYQcvs-WCqHhMoeQ",
+  authDomain:"erp-arasigns.firebaseapp.com",
+  databaseURL:"https://erp-arasigns-default-rtdb.firebaseio.com",
+  projectId:"erp-arasigns",
+  storageBucket:"erp-arasigns.firebasestorage.app",
+  messagingSenderId:"327360839805",
+  appId:"1:327360839805:web:575a6a4e9b62c792fef114"
+};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+const ordensRef=db.ref("ordens");
+
 const SETORES=["COMERCIAL","ARTE FINAL","PRODUÇÃO","MONTAGEM","INSTALAÇÃO / BALCÃO"];
 const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3";
 function loadMovements(){
@@ -155,6 +170,33 @@ function loadMovements(){
   return [];
 }
 let movimentacoes=loadMovements(),ordens=JSON.parse(localStorage.getItem(OS_STORAGE)||"[]");
+let firebaseReady=false;
+let firstFirebaseLoad=true;
+
+// Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
+ordensRef.on("value",snapshot=>{
+  const dados=snapshot.val();
+
+  if(dados===null && firstFirebaseLoad && ordens.length){
+    // Migra automaticamente as OS que já existiam no navegador.
+    ordensRef.set(ordens);
+  }else{
+    ordens=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
+    localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
+    if(selectedOS){
+      const atualizada=ordens.find(o=>String(o.id)===String(selectedOS.id));
+      selectedOS=atualizada||null;
+      if(atualizada && $("osDetail").classList.contains("active"))renderOSDetail();
+    }
+    if($("osDashboard").classList.contains("active"))renderOSDashboard();
+  }
+
+  firebaseReady=true;
+  firstFirebaseLoad=false;
+},error=>{
+  console.error("Erro ao conectar no Firebase:",error);
+  toast("Erro ao conectar no Firebase.");
+});
 let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null;
 const $=id=>document.getElementById(id);
 function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const t=$(id);if(t)t.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
@@ -226,7 +268,17 @@ function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem mo
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
 function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");$("osData").value=new Date().toISOString().slice(0,10);$("osPrazo").value="";showScreen("osRegister")}
 function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=$("osData").value,status=$("osStatus").value,obs=$("osObs").value.trim();if(!numero||!cliente||!descricao||!prazo)return toast("Preencha OS, cliente, serviço e prazo.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now(),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
-function saveOS(){localStorage.setItem(OS_STORAGE,JSON.stringify(ordens))}
+function saveOS(){
+  localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
+  if(!firebaseReady){
+    toast("Conectando ao Firebase...");
+    return;
+  }
+  ordensRef.set(ordens).catch(error=>{
+    console.error("Erro ao salvar no Firebase:",error);
+    toast("Erro ao salvar no Firebase.");
+  });
+}
 function parseDate(s){return new Date(s+"T00:00:00")}
 function daysDiffFromToday(date){const d=parseDate(date);const today=new Date();today.setHours(0,0,0,0);return Math.round((d-today)/86400000)}
 function sectorElapsed(o){
@@ -239,6 +291,33 @@ function sectorElapsed(o){
   const minutes=Math.floor(diff/60000);
   return {days,hours,minutes,text:`${days} Dia${days!==1?"s":""} ${hours} Hora${hours!==1?"s":""} e ${minutes} Minuto${minutes!==1?"s":""}`};
 }
+function executionTime(o){
+  const h=o.historico||[];
+  if(!h.length)return "00:00:00";
+  const start=new Date(h[h.length-1].dataHora).getTime();
+  let diff=Math.max(0,Date.now()-start);
+  const hours=Math.floor(diff/3600000);
+  diff%=3600000;
+  const minutes=Math.floor(diff/60000);
+  diff%=60000;
+  const seconds=Math.floor(diff/1000);
+  return [hours,minutes,seconds].map(v=>String(v).padStart(2,"0")).join(":");
+}
+function historyExecutionTime(o,index){
+  const h=o.historico||[];
+  if(!h[index])return "00:00:00";
+  const start=new Date(h[index].dataHora).getTime();
+  const end=index<h.length-1
+    ? new Date(h[index+1].dataHora).getTime()
+    : (o.status==="FINALIZADA" && o.atualizada ? new Date(o.atualizada).getTime() : Date.now());
+  let diff=Math.max(0,end-start);
+  const hours=Math.floor(diff/3600000);
+  diff%=3600000;
+  const minutes=Math.floor(diff/60000);
+  diff%=60000;
+  const seconds=Math.floor(diff/1000);
+  return [hours,minutes,seconds].map(v=>String(v).padStart(2,"0")).join(":");
+}
 function sectorDays(o){return sectorElapsed(o).days}
 function totalDays(o){const d=parseDate(o.dataAbertura||o.prazo);return Math.max(0,Math.floor((Date.now()-d.getTime())/86400000))}
 function deadlineInfo(o){if(o.status==="FINALIZADA")return {text:"FINALIZADA",cls:"finished",days:999999};const n=daysDiffFromToday(o.prazo);if(n<0)return {text:`ATRASADA HÁ ${Math.abs(n)} DIA${Math.abs(n)!==1?"S":""}`,cls:"overdue",days:n};if(n===0)return {text:"VENCE HOJE",cls:"today",days:n};if(n===1)return {text:"FALTA 1 DIA",cls:"urgent",days:n};if(n<=3)return {text:`FALTAM ${n} DIAS`,cls:"urgent",days:n};return {text:`FALTAM ${n} DIAS`,cls:"safe",days:n}}
@@ -250,7 +329,7 @@ function renderSectorChart(){const b=$("sectorChart"),counts={};SETORES.forEach(
 function openOSList(){renderOSList();showScreen("osView")}
 function renderOSList(){const filter=$("osFilter").value;let lista=filter==="TODAS"?[...ordens]:ordens.filter(o=>o.status===filter);lista.sort((a,b)=>{if(a.status==="FINALIZADA"&&b.status!=="FINALIZADA")return 1;if(b.status==="FINALIZADA"&&a.status!=="FINALIZADA")return -1;return parseDate(a.prazo)-parseDate(b.prazo)});const b=$("osList");if(!lista.length){b.innerHTML='<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';return}b.innerHTML="";lista.forEach(o=>{const d=deadlineInfo(o),x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="record-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)} • ⏱️ ${sectorElapsed(o).text} no setor</div><div class="record-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div>`;b.appendChild(x)})}
 function openOSDetail(id){selectedOS=ordens.find(o=>o.id===id);if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
-function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há <span id="sectorElapsed">${sectorElapsed(o).text}</span> neste setor.</div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px">
+function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há <span id="sectorElapsed">${sectorElapsed(o).text}</span> neste setor. &nbsp;•&nbsp; ⏳ <b>Tempo de Execução:</b> <span id="executionTime">${executionTime(o)}</span></div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px">
 <div class="question-label">ATUALIZAR SETOR</div>
 <div class="question-title" style="font-size:22px">SELECIONE O SETOR</div>
 </div>
@@ -260,12 +339,18 @@ function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[
 <button class="sector-button ${o.setor==="PRODUÇÃO"?"current-sector":""}" ${o.setor==="PRODUÇÃO"?"disabled":""} onclick="transferOS('PRODUÇÃO')">PRODUÇÃO</button>
 <button class="sector-button ${o.setor==="MONTAGEM"?"current-sector":""}" ${o.setor==="MONTAGEM"?"disabled":""} onclick="transferOS('MONTAGEM')">MONTAGEM</button>
 <button class="sector-button ${o.setor==="INSTALAÇÃO / BALCÃO"?"current-sector":""}" ${o.setor==="INSTALAÇÃO / BALCÃO"?"disabled":""} onclick="transferOS('INSTALAÇÃO / BALCÃO')">INSTALAÇÃO / BALCÃO</button>
-</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline"><div class="question-label">HISTÓRICO DA OS</div>${h.map(x=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>${escapeHtml(x.obs||"")}</div></div>`).join("")}</div>`}
+</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline"><div class="question-label">HISTÓRICO DA OS</div>${(o.historico||[]).map((x,i)=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>⏳ <b>Tempo de Execução:</b> ${historyExecutionTime(o,i)}</div><div>${escapeHtml(x.obs||"")}</div></div>`).reverse().join("")}</div>`}
 function transferOS(s){if(!selectedOS)return;if(s===selectedOS.setor)return toast("A OS já está nesse setor.");const now=new Date().toISOString();selectedOS.setor=s;selectedOS.atualizada=now;if(selectedOS.status==="FINALIZADA")selectedOS.status="EM ANDAMENTO";selectedOS.historico.push({setor:s,dataHora:now,obs:"OS transferida para "+s});saveOS();renderOSDetail();toast("OS transferida para "+s)}
 function finishOS(){if(!selectedOS)return;if(!confirm("Marcar esta OS como FINALIZADA?"))return;const now=new Date().toISOString();selectedOS.status="FINALIZADA";selectedOS.atualizada=now;selectedOS.historico.push({setor:selectedOS.setor,dataHora:now,obs:"OS finalizada"});saveOS();renderOSDetail();toast("OS finalizada!")}
 function clearOS(){if(!ordens.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;ordens=[];localStorage.removeItem(OS_STORAGE);renderOSList();toast("Todas as OS foram apagadas.")}
 function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","TEMPO NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorElapsed(o).text,deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
 renderEmployees();renderCategories();renderHistory();
-setInterval(()=>{const el=$("sectorElapsed");if(el&&selectedOS)el.textContent=sectorElapsed(selectedOS).text},30000);
+setInterval(()=>{
+  if(!selectedOS)return;
+  const sectorEl=$("sectorElapsed");
+  const executionEl=$("executionTime");
+  if(sectorEl)sectorEl.textContent=sectorElapsed(selectedOS).text;
+  if(executionEl)executionEl.textContent=executionTime(selectedOS);
+},1000);
 console.log("Arasigns pronto");
 </script></body></html>
