@@ -15,10 +15,64 @@
 .summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.summary-box,.dash-card{background:#151619;border:1px solid var(--line);border-radius:17px;padding:14px}.summary-label,.dash-label{color:var(--orange);font-size:13px;font-weight:900;margin-bottom:5px}.summary-value{font-size:20px;font-weight:900}.confirm-button{width:100%;margin-top:16px;padding:22px;border:0;border-radius:18px;background:linear-gradient(90deg,#079447,#16d46b);color:white;font-size:22px;font-weight:900;cursor:pointer}.primary{width:100%;margin-top:16px;padding:18px;border:0;border-radius:18px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));color:white;font-size:20px;font-weight:900;cursor:pointer}.quantity-input{width:100%;min-height:95px;border:2px solid #303136;border-radius:20px;background:#151619;color:white;text-align:center;font-size:42px;font-weight:900;padding:10px;margin-top:12px}.quantity-unit{color:var(--muted);text-align:center;font-size:16px;font-weight:800;margin-top:10px}.cancel-button{width:100%;margin-top:10px;padding:14px;border:1px solid #38393d;border-radius:15px;background:#18191c;color:#ddd;font-size:17px;font-weight:800;cursor:pointer}
 .history-header,.os-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.history-title{font-size:22px;font-weight:900}.history-count{color:var(--yellow);font-weight:900}#history,#osList{display:flex;flex-direction:column;gap:9px}.empty{min-height:120px;display:grid;place-items:center;text-align:center;border:1px solid #292a2d;border-radius:17px;color:var(--muted);padding:20px}.record,.os-card{background:#151619;border:1px solid #2d2e32;border-radius:15px;padding:13px}.record-top{display:flex;justify-content:space-between;gap:10px}.record-type,.os-number{font-weight:900;color:var(--yellow)}.record-date,.os-meta{color:#aaa;font-size:13px}.record-line{margin-top:7px;color:#ddd}.actions{margin-top:14px}.action{min-height:80px;border:0;border-radius:18px;color:white;cursor:pointer;font-weight:900;font-size:18px}.csv{background:linear-gradient(120deg,var(--red),var(--orange),var(--yellow))}.clear{background:#17181b;border:1px solid #35363a}
 input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;border-radius:13px;color:white;padding:14px;font-size:16px;font-family:inherit}textarea{min-height:105px;resize:vertical}.field label{display:block;font-weight:900;margin:0 0 7px}.full{grid-column:1/-1}.os-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}.os-nav button{min-height:95px;border:1px solid var(--line);border-radius:18px;color:white;font-size:18px;font-weight:900;cursor:pointer;background:#151619}.os-nav .register{background:linear-gradient(120deg,var(--red),var(--orange)}
-.dashboard-grid{grid-template-columns:repeat(5,1fr)}.dash-card{text-align:center}.dash-number{font-size:32px;font-weight:900}.dash-red{border-color:#7a2028}.dash-orange{border-color:#7a4a20}.dash-green{border-color:#1f6b42}.next-delivery{border:2px solid var(--yellow);background:linear-gradient(145deg,#1a1911,#111214)}.priority{font-size:14px;font-weight:900;border-radius:999px;padding:7px 11px;display:inline-block}.overdue{background:#55151b;color:#ff9aa1}.today{background:#6a3510;color:#ffd27a}.urgent{background:#604b08;color:#ffe584}.safe{background:#123b25;color:#8ff0b6}.finished{background:#333;color:#ddd}.os-status{font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px;background:#333}.os-card{cursor:pointer}.os-card:hover{border-color:#666}.queue-rank{font-size:22px;font-weight:900;min-width:45px}.queue-head{display:flex;align-items:center;gap:10px}.queue-main{flex:1}.queue-title{font-size:18px;font-weight:900}.os-days{margin-top:10px;padding:9px;border-radius:10px;background:#0d0e10;font-weight:900}.sector-table{display:flex;flex-direction:column;gap:10px}.sector-row{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;font-weight:900}.bar{height:16px;background:#222;border-radius:20px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:20px}.sector-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
-.sector-button{min-height:100px;padding:20px 16px;border-radius:18px;border:2px solid #3a3b40;background:linear-gradient(145deg,#1b1c20,#121316);color:white;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.25);line-height:1.15}
-.sector-button:active{transform:scale(.97)}
-.sector-button:hover{border-color:var(--orange);background:#202126}.detail-line{margin-top:10px;padding:12px;background:#151619;border:1px solid var(--line);border-radius:12px}.timeline{margin-top:20px}.timeline-item{padding:12px;border-left:3px solid var(--orange);margin:9px 0;background:#151619}.timeline-item small{display:block;color:#999;margin:5px 0}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0);opacity:1}
+.dashboard-grid{grid-template-columns:repeat(5,1fr)}.dash-card{text-align:center}.dash-number{font-size:32px;font-weight:900}.dash-red{border-color:#7a2028}.dash-orange{border-color:#7a4a20}.dash-green{border-color:#1f6b42}.next-delivery{border:2px solid var(--yellow);background:linear-gradient(145deg,#1a1911,#111214)}.priority{font-size:14px;font-weight:900;border-radius:999px;padding:7px 11px;display:inline-block}.overdue{background:#55151b;color:#ff9aa1}.today{background:#6a3510;color:#ffd27a}.urgent{background:#604b08;color:#ffe584}.safe{background:#123b25;color:#8ff0b6}.finished{background:#333;color:#ddd}.os-status{font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px;background:#333}.os-card{cursor:pointer}.os-card:hover{border-color:#666}.queue-rank{font-size:22px;font-weight:900;min-width:45px}.queue-head{display:flex;align-items:center;gap:10px}.queue-main{flex:1}.queue-title{font-size:18px;font-weight:900}.os-days{margin-top:10px;padding:9px;border-radius:10px;background:#0d0e10;font-weight:900}.sector-table{display:flex;flex-direction:column;gap:10px}.sector-row{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;font-weight:900}.bar{height:16px;background:#222;border-radius:20px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:20px}.sector-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+  margin-top:18px;
+}
+
+.sector-button{
+  min-width:150px;
+  min-height:54px;
+  padding:10px 22px;
+  border-radius:999px;
+  border:1px solid #3b3c42;
+  background:linear-gradient(145deg,#202126,#121316);
+  color:#fff;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  text-align:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.28);
+  transition:.18s transform,.18s border-color,.18s box-shadow;
+}
+
+.sector-button:hover{
+  border-color:var(--orange);
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(255,106,0,.16);
+}
+
+.sector-button:active{
+  transform:scale(.96);
+}
+
+.sector-button.current-sector{
+  background:linear-gradient(135deg,#087c3e,#16d46b);
+  border-color:#32ed82;
+  color:#07150d;
+  cursor:default;
+  box-shadow:0 8px 22px rgba(22,212,107,.20);
+}
+
+.sector-button small{
+  display:none;
+}
+
+@media(max-width:600px){
+  .sector-buttons{
+    gap:9px;
+  }
+
+  .sector-button{
+    min-width:calc(50% - 5px);
+    min-height:52px;
+    padding:9px 12px;
+    font-size:13px;
+  }
+}.detail-line{margin-top:10px;padding:12px;background:#151619;border:1px solid var(--line);border-radius:12px}.timeline{margin-top:20px}.timeline-item{padding:12px;border-left:3px solid var(--orange);margin:9px 0;background:#151619}.timeline-item small{display:block;color:#999;margin:5px 0}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0);opacity:1}
 @media(max-width:800px){.dashboard-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid .dash-card:last-child{grid-column:1/-1}.sector-row{grid-template-columns:100px 1fr 30px}}@media(max-width:600px){.app{padding:8px 10px 30px}.card{padding:14px;border-radius:18px}.home-grid,.movement-choice,.options-grid,.category-grid,.os-form-grid,.actions,.os-nav{gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.dashboard-grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr 1fr}.home-button{min-height:105px}.sector-row{grid-template-columns:90px 1fr 28px;font-size:13px}}@media(max-width:700px){.sector-buttons{grid-template-columns:1fr}.sector-button{min-height:82px;font-size:19px}}@media(max-width:390px){.options-grid,.category-grid,.home-grid{grid-template-columns:1fr}}
 #history{max-height:430px;overflow-y:auto;padding-right:3px}.history-title{font-size:clamp(17px,3vw,22px)}
 .record-top{align-items:flex-start}
@@ -175,7 +229,17 @@ function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osClien
 function saveOS(){localStorage.setItem(OS_STORAGE,JSON.stringify(ordens))}
 function parseDate(s){return new Date(s+"T00:00:00")}
 function daysDiffFromToday(date){const d=parseDate(date);const today=new Date();today.setHours(0,0,0,0);return Math.round((d-today)/86400000)}
-function sectorDays(o){const h=o.historico||[];if(!h.length)return 0;const d=new Date(h[h.length-1].dataHora);return Math.max(0,Math.floor((Date.now()-d.getTime())/86400000))}
+function sectorElapsed(o){
+  const h=o.historico||[];
+  if(!h.length)return {days:0,hours:0,minutes:0,text:"0 Dias 0 Horas e 0 Minutos"};
+  const d=new Date(h[h.length-1].dataHora).getTime();
+  let diff=Math.max(0,Date.now()-d);
+  const days=Math.floor(diff/86400000); diff%=86400000;
+  const hours=Math.floor(diff/3600000); diff%=3600000;
+  const minutes=Math.floor(diff/60000);
+  return {days,hours,minutes,text:`${days} Dia${days!==1?"s":""} ${hours} Hora${hours!==1?"s":""} e ${minutes} Minuto${minutes!==1?"s":""}`};
+}
+function sectorDays(o){return sectorElapsed(o).days}
 function totalDays(o){const d=parseDate(o.dataAbertura||o.prazo);return Math.max(0,Math.floor((Date.now()-d.getTime())/86400000))}
 function deadlineInfo(o){if(o.status==="FINALIZADA")return {text:"FINALIZADA",cls:"finished",days:999999};const n=daysDiffFromToday(o.prazo);if(n<0)return {text:`ATRASADA HÁ ${Math.abs(n)} DIA${Math.abs(n)!==1?"S":""}`,cls:"overdue",days:n};if(n===0)return {text:"VENCE HOJE",cls:"today",days:n};if(n===1)return {text:"FALTA 1 DIA",cls:"urgent",days:n};if(n<=3)return {text:`FALTAM ${n} DIAS`,cls:"urgent",days:n};return {text:`FALTAM ${n} DIAS`,cls:"safe",days:n}}
 function activeOrders(){return ordens.filter(o=>o.status!=="FINALIZADA").sort((a,b)=>parseDate(a.prazo)-parseDate(b.prazo))}
@@ -184,12 +248,24 @@ function renderNextDelivery(){const o=activeOrders()[0],b=$("nextDelivery");if(!
 function renderQueue(){const b=$("queueList"),lista=activeOrders();if(!lista.length){b.innerHTML='<div class="empty">🎉 Fila vazia. Todas as OS foram finalizadas.</div>';return}b.innerHTML="";lista.forEach((o,i)=>{const d=deadlineInfo(o),rank=i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`;const x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="queue-head"><div class="queue-rank">${rank}</div><div class="queue-main"><div class="queue-title">OS #${escapeHtml(o.numero)} — ${escapeHtml(o.cliente)}</div><div class="os-meta">📍 ${escapeHtml(o.setor)} • ⏱️ ${sectorDays(o)} dia${sectorDays(o)!==1?"s":""} no setor</div></div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")} • 📝 ${escapeHtml(o.descricao)}</div>`;b.appendChild(x)})}
 function renderSectorChart(){const b=$("sectorChart"),counts={};SETORES.forEach(s=>counts[s]=0);ordens.filter(o=>o.status!=="FINALIZADA").forEach(o=>{counts[o.setor]=(counts[o.setor]||0)+1});const max=Math.max(1,...Object.values(counts));b.innerHTML=Object.entries(counts).map(([s,n])=>`<div class="sector-row"><div>${s}</div><div class="bar"><div style="width:${(n/max)*100}%"></div></div><div>${n}</div></div>`).join("")}
 function openOSList(){renderOSList();showScreen("osView")}
-function renderOSList(){const filter=$("osFilter").value;let lista=filter==="TODAS"?[...ordens]:ordens.filter(o=>o.status===filter);lista.sort((a,b)=>{if(a.status==="FINALIZADA"&&b.status!=="FINALIZADA")return 1;if(b.status==="FINALIZADA"&&a.status!=="FINALIZADA")return -1;return parseDate(a.prazo)-parseDate(b.prazo)});const b=$("osList");if(!lista.length){b.innerHTML='<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';return}b.innerHTML="";lista.forEach(o=>{const d=deadlineInfo(o),x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="record-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)} • ⏱️ ${sectorDays(o)} dias no setor</div><div class="record-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div>`;b.appendChild(x)})}
+function renderOSList(){const filter=$("osFilter").value;let lista=filter==="TODAS"?[...ordens]:ordens.filter(o=>o.status===filter);lista.sort((a,b)=>{if(a.status==="FINALIZADA"&&b.status!=="FINALIZADA")return 1;if(b.status==="FINALIZADA"&&a.status!=="FINALIZADA")return -1;return parseDate(a.prazo)-parseDate(b.prazo)});const b=$("osList");if(!lista.length){b.innerHTML='<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';return}b.innerHTML="";lista.forEach(o=>{const d=deadlineInfo(o),x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="record-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)} • ⏱️ ${sectorElapsed(o).text} no setor</div><div class="record-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div>`;b.appendChild(x)})}
 function openOSDetail(id){selectedOS=ordens.find(o=>o.id===id);if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
-function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há ${sectorDays(o)} dia${sectorDays(o)!==1?"s":""} neste setor.</div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px"><div class="question-label">TRANSFERIR</div><div class="question-title" style="font-size:22px">PRÓXIMO SETOR</div></div><div class="sector-buttons">${SETORES.map(s=>`<button class="sector-button" onclick="transferOS('${s.replaceAll("'","\\'")}')">${s===o.setor?"📍 ":"➡️ "}${s}</button>`).join("")}</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline"><div class="question-label">HISTÓRICO DA OS</div>${h.map(x=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>${escapeHtml(x.obs||"")}</div></div>`).join("")}</div>`}
+function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${new Date(o.prazo+"T00:00:00").toLocaleDateString("pt-BR")}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há <span id="sectorElapsed">${sectorElapsed(o).text}</span> neste setor.</div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px">
+<div class="question-label">ATUALIZAR SETOR</div>
+<div class="question-title" style="font-size:22px">SELECIONE O SETOR</div>
+</div>
+<div class="sector-buttons">
+<button class="sector-button ${o.setor==="COMERCIAL"?"current-sector":""}" ${o.setor==="COMERCIAL"?"disabled":""} onclick="transferOS('COMERCIAL')">COMERCIAL</button>
+<button class="sector-button ${o.setor==="ARTE FINAL"?"current-sector":""}" ${o.setor==="ARTE FINAL"?"disabled":""} onclick="transferOS('ARTE FINAL')">ARTE FINAL</button>
+<button class="sector-button ${o.setor==="PRODUÇÃO"?"current-sector":""}" ${o.setor==="PRODUÇÃO"?"disabled":""} onclick="transferOS('PRODUÇÃO')">PRODUÇÃO</button>
+<button class="sector-button ${o.setor==="MONTAGEM"?"current-sector":""}" ${o.setor==="MONTAGEM"?"disabled":""} onclick="transferOS('MONTAGEM')">MONTAGEM</button>
+<button class="sector-button ${o.setor==="INSTALAÇÃO / BALCÃO"?"current-sector":""}" ${o.setor==="INSTALAÇÃO / BALCÃO"?"disabled":""} onclick="transferOS('INSTALAÇÃO / BALCÃO')">INSTALAÇÃO / BALCÃO</button>
+</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline"><div class="question-label">HISTÓRICO DA OS</div>${h.map(x=>`<div class="timeline-item"><b>🏭 ${escapeHtml(x.setor)}</b><small>${new Date(x.dataHora).toLocaleString("pt-BR")}</small><div>${escapeHtml(x.obs||"")}</div></div>`).join("")}</div>`}
 function transferOS(s){if(!selectedOS)return;if(s===selectedOS.setor)return toast("A OS já está nesse setor.");const now=new Date().toISOString();selectedOS.setor=s;selectedOS.atualizada=now;if(selectedOS.status==="FINALIZADA")selectedOS.status="EM ANDAMENTO";selectedOS.historico.push({setor:s,dataHora:now,obs:"OS transferida para "+s});saveOS();renderOSDetail();toast("OS transferida para "+s)}
 function finishOS(){if(!selectedOS)return;if(!confirm("Marcar esta OS como FINALIZADA?"))return;const now=new Date().toISOString();selectedOS.status="FINALIZADA";selectedOS.atualizada=now;selectedOS.historico.push({setor:selectedOS.setor,dataHora:now,obs:"OS finalizada"});saveOS();renderOSDetail();toast("OS finalizada!")}
 function clearOS(){if(!ordens.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;ordens=[];localStorage.removeItem(OS_STORAGE);renderOSList();toast("Todas as OS foram apagadas.")}
-function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","DIAS NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorDays(o),deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
-renderEmployees();renderCategories();renderHistory();console.log("Arasigns pronto");
+function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","TEMPO NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorElapsed(o).text,deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
+renderEmployees();renderCategories();renderHistory();
+setInterval(()=>{const el=$("sectorElapsed");if(el&&selectedOS)el.textContent=sectorElapsed(selectedOS).text},30000);
+console.log("Arasigns pronto");
 </script></body></html>
