@@ -171,9 +171,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="field"><label>CLIENTE *</label><input id="osCliente" placeholder="Nome do cliente"></div>
 <div class="field full"><label>DESCRIÇÃO DO SERVIÇO *</label><textarea id="osDescricao" placeholder="Descreva o serviço"></textarea></div>
 <div class="field"><label>SETOR INICIAL</label><select id="osSetor"></select></div>
-<div class="field"><label>PRAZO DE ENTREGA *</label><input id="osPrazo" type="date"></div>
-<div class="field"><label>DATA DE ABERTURA</label><input id="osData" type="date"></div>
-<div class="field"><label>STATUS</label><select id="osStatus"><option value="EM ANDAMENTO">EM ANDAMENTO</option><option value="AGUARDANDO">AGUARDANDO</option></select></div>
+<div class="field"><label>HORÁRIO DE ENTREGA / INSTALAÇÃO <span style="opacity:.55">(OPCIONAL)</span></label><input id="osPrazo" type="datetime-local"></div>
 <div class="field full"><label>OBSERVAÇÃO</label><textarea id="osObs" placeholder="Informações adicionais"></textarea></div>
 </div><button class="primary" onclick="registerOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button></div></section>
 
@@ -411,8 +409,8 @@ function clearAlmox(){
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
-function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");$("osData").value=new Date().toISOString().slice(0,10);$("osPrazo").value="";showScreen("osRegister")}
-function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=$("osData").value,status=$("osStatus").value,obs=$("osObs").value.trim();if(!numero||!cliente||!descricao||!prazo)return toast("Preencha OS, cliente, serviço e prazo.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now(),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
+function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");$("osPrazo").value="";showScreen("osRegister")}
+function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=new Date().toISOString().slice(0,10),status="EM ANDAMENTO",obs=$("osObs").value.trim();if(!numero||!cliente||!descricao)return toast("Preencha OS, cliente e serviço.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now(),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
 function saveOS(){
   localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
   if(!firebaseReady){
