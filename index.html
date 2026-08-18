@@ -147,7 +147,13 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
 </div></div></section>
 
-<section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header"><div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div><div class="history-count" id="historyCount">0 REGISTROS</div></div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div><button class="clear-history-button" onclick="clearAlmox()">🗑️ LIMPAR HISTÓRICO</button></div></section>
+<section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header">
+<div>
+  <div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div>
+  <div id="almoxSyncStatus" style="font-size:10px;font-weight:900;margin-top:5px;color:#f59e0b">🟠 CONECTANDO AO ALMOXARIFADO...</div>
+</div>
+<div class="history-count" id="historyCount">0 REGISTROS</div>
+</div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div><button class="clear-history-button" onclick="clearAlmox()">🗑️ LIMPAR HISTÓRICO</button></div></section>
 <section class="screen" id="employee"><div class="page-top"><button class="back-button" onclick="showScreen('movement')">← VOLTAR</button><div class="page-title">COLABORADOR</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUEM ESTÁ FAZENDO?</div><div class="question-title">SELECIONE</div></div><div class="options-grid" id="employeeOptions"></div></div></section>
 <section class="screen" id="category"><div class="page-top"><button class="back-button" onclick="showScreen('employee')">← VOLTAR</button><div class="page-title">CATEGORIA</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRÓXIMO PASSO</div><div class="question-title">ESCOLHA A CATEGORIA</div></div><div class="category-grid" id="categoryOptions"></div></div></section>
 <section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="showScreen('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="categoryTitle">ITEM</div></div><div class="options-grid" id="itemOptions"></div></div></section>
@@ -209,6 +215,8 @@ firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 const ordensRef=db.ref("ordens");
 const movimentacoesRef=db.ref("movimentacoes");
+let almoxFirebaseReady=false;
+let movimentosIniciaisCarregados=false;
 
 const SETORES=["COMERCIAL","ARTE FINAL","PRODUÇÃO","MONTAGEM","INSTALAÇÃO / BALCÃO"];
 const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3";
@@ -226,22 +234,36 @@ let firebaseReady=false;
 let firstFirebaseLoad=true;
 let firstMovFirebaseLoad=true;
 
-// Escuta o histórico do almoxarifado em TEMPO REAL.
+// ALMOXARIFADO — SINCRONIZAÇÃO REAL EM TEMPO REAL
+// Cada movimentação é um registro individual no Firebase.
+// Todos os aparelhos escutam o mesmo caminho /movimentacoes.
 movimentacoesRef.on("value",snapshot=>{
   const dados=snapshot.val();
 
-  if(dados===null && firstMovFirebaseLoad && movimentacoes.length){
-    // Migra automaticamente o histórico que já existia neste computador.
-    movimentacoesRef.set(movimentacoes);
+  if(dados===null && !movimentosIniciaisCarregados && movimentacoes.length){
+    // Migração única do histórico antigo deste navegador.
+    const antigas=[...movimentacoes];
+    movimentacoesRef.set({});
+    antigas.forEach(reg=>{
+      const chave=String(reg.id||Date.now()+"_"+Math.random());
+      movimentacoesRef.child(chave).set({...reg,_firebaseKey:chave});
+    });
   }else{
-    movimentacoes=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
+    const lista=Object.entries(dados||{}).map(([key,value])=>({
+      ...value,
+      _firebaseKey:key
+    }));
+    lista.sort((a,b)=>Number(a.timestamp||0)-Number(b.timestamp||0));
+    movimentacoes=lista;
     localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
     renderHistory();
   }
 
-  firstMovFirebaseLoad=false;
+  almoxFirebaseReady=true;
+  movimentosIniciaisCarregados=true;
 },error=>{
   console.error("Erro ao sincronizar movimentações:",error);
+  almoxFirebaseReady=false;
   toast("Erro ao sincronizar o histórico do almoxarifado.");
 });
 
@@ -314,22 +336,52 @@ function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].it
 function confirmQuantity(){const q=Number($("quantityInput").value);if(!Number.isFinite(q)||q<=0||!Number.isInteger(q))return toast("Informe uma quantidade válida.");selectedQuantity=q;$("summaryMovement").textContent=selectedMovement;$("summaryEmployee").textContent=selectedEmployee;$("summaryCategory").textContent=selectedCategory;$("summaryItem").textContent=selectedItem;$("summaryQuantity").textContent=selectedQuantity;showScreen("confirm")}
 function confirmMovement(){
 if(!selectedMovement||!selectedEmployee||!selectedCategory||!selectedItem||!selectedQuantity)return toast("Complete todas as etapas.");
-const registro={id:Date.now(),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
-movimentacoes.push(registro);
-saveMovements();
+const registro={
+  id:Date.now(),
+  timestamp:Date.now(),
+  dataHora:new Date().toLocaleString("pt-BR"),
+  movimento:selectedMovement,
+  colaborador:selectedEmployee,
+  categoria:selectedCategory,
+  item:selectedItem,
+  quantidade:Number(selectedQuantity)
+};
+saveMovements(registro);
 toast(selectedMovement==="RETIRADA"?"Retirada registrada no histórico!":"Devolução registrada no histórico!");
 setTimeout(()=>{showScreen("almox");renderHistory();startMovement()},700)
 }
 function resetMovement(){startMovement()}
-function saveMovements(){
+function saveMovements(registroNovo=null){
+  // Nova movimentação: envia somente ela, sem sobrescrever o histórico dos outros aparelhos.
+  if(registroNovo){
+    const key=String(registroNovo.id||Date.now())+"_"+Math.random().toString(36).slice(2,8);
+    const registroFirebase={
+      ...registroNovo,
+      id:registroNovo.id||Date.now(),
+      timestamp:registroNovo.timestamp||Date.now(),
+      _firebaseKey:key
+    };
+    movimentacoesRef.child(key).set(registroFirebase).catch(error=>{
+      console.error("Erro ao salvar movimentação:",error);
+      toast("Erro ao salvar no servidor.");
+    });
+    return;
+  }
+
   localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
-  movimentacoesRef.set(movimentacoes).catch(error=>{
-    console.error("Erro ao salvar movimentações:",error);
-    toast("Erro ao salvar no servidor.");
-  });
   renderHistory();
 }
 function renderHistory(){
+const sync=$("almoxSyncStatus");
+if(sync){
+  if(almoxFirebaseReady){
+    sync.textContent="🟢 ALMOXARIFADO SINCRONIZADO • TEMPO REAL";
+    sync.style.color="#22c55e";
+  }else{
+    sync.textContent="🟠 CONECTANDO AO ALMOXARIFADO...";
+    sync.style.color="#f59e0b";
+  }
+}
 const b=$("history"),c=$("historyCount");
 if(!b||!c)return;
 const registros=Array.isArray(movimentacoes)?movimentacoes:[];
@@ -376,9 +428,20 @@ function deleteMovement(index){
 
   const ok=confirm("Excluir somente esta movimentação?\n\n"+registro.movimento+"\n"+registro.colaborador+" — "+registro.item+"\nQuantidade: "+(registro.quantidade??1));
   if(!ok)return;
-  movimentacoes.splice(index,1);
-  saveMovements();
-  toast("Movimentação excluída com sucesso.");
+  const chave=registro._firebaseKey;
+  if(chave){
+    movimentacoesRef.child(chave).remove().then(()=>{
+      toast("Movimentação excluída com sucesso.");
+    }).catch(error=>{
+      console.error(error);
+      toast("Erro ao excluir no servidor.");
+    });
+  }else{
+    movimentacoes.splice(index,1);
+    localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
+    renderHistory();
+    toast("Movimentação excluída localmente.");
+  }
 }
 function clearAlmox(){
   if(!movimentacoes.length)return toast("Não existem registros.");
@@ -393,9 +456,15 @@ function clearAlmox(){
 
   if(!confirm("ATENÇÃO: Apagar TODAS as movimentações do histórico?"))return;
 
-  movimentacoes=[];
-  saveMovements();
-  toast("Histórico de movimentações apagado.");
+  movimentacoesRef.remove().then(()=>{
+    movimentacoes=[];
+    localStorage.removeItem(ALMOX_STORAGE);
+    renderHistory();
+    toast("Histórico de movimentações apagado em todos os dispositivos.");
+  }).catch(error=>{
+    console.error(error);
+    toast("Erro ao limpar o histórico no servidor.");
+  });
 }
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
