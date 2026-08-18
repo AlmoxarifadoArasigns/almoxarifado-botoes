@@ -127,6 +127,28 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   .server-status{font-size:10px;padding:8px 12px}
 }
 
+
+/* NOTIFICAÇÕES */
+.notification-btn{
+  border:1px solid #3f4650;
+  background:#15171b;
+  color:#f5f7fa;
+  padding:9px 14px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+  margin:10px auto 0;
+  display:block;
+}
+.notification-btn:hover{transform:translateY(-1px)}
+.notification-btn.active{
+  border-color:#22c55e;
+  background:#102719;
+  color:#74f0a0;
+}
+
 </style>
 </head>
 <body>
@@ -138,6 +160,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   <span class="server-dot"></span>
   <span id="serverStatusText">CONECTANDO AO SERVIDOR...</span>
 </div>
+<button id="notificationButton" class="notification-btn" onclick="requestSystemNotifications()">🔔 ATIVAR NOTIFICAÇÕES</button>
 </header>
 
 <section class="screen active" id="home">
@@ -237,6 +260,7 @@ movimentacoesRef.on("value",snapshot=>{
       ? dados.filter(Boolean)
       : Object.values(dados||{});
 
+    checkMovementNotifications(movimentacoes);
     localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
     almoxFirebaseReady=true;
     renderHistory();
@@ -258,6 +282,7 @@ ordensRef.on("value",snapshot=>{
     ordensRef.set(ordens);
   }else{
     ordens=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
+    checkOSNotifications(ordens);
     localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
     if(selectedOS){
       const atualizada=ordens.find(o=>String(o.id)===String(selectedOS.id));
@@ -304,6 +329,85 @@ window.addEventListener("online",()=>{
 window.addEventListener("offline",()=>{
   setServerStatus("offline");
 });
+updateNotificationButton();
+setTimeout(()=>{notificacoesProntas=true;},2500);
+
+// NOTIFICAÇÕES DO NAVEGADOR
+let notificacoesProntas=false;
+let movimentosConhecidos=new Set();
+let osConhecidas=new Set();
+
+function updateNotificationButton(){
+  const btn=$("notificationButton");
+  if(!btn)return;
+  if(!("Notification" in window)){
+    btn.textContent="🔕 NOTIFICAÇÕES NÃO SUPORTADAS";
+    return;
+  }
+  if(Notification.permission==="granted"){
+    btn.textContent="🔔 NOTIFICAÇÕES ATIVADAS";
+    btn.classList.add("active");
+  }else if(Notification.permission==="denied"){
+    btn.textContent="🔕 NOTIFICAÇÕES BLOQUEADAS";
+  }else{
+    btn.textContent="🔔 ATIVAR NOTIFICAÇÕES";
+  }
+}
+
+function requestSystemNotifications(){
+  if(!("Notification" in window)){
+    toast("Este navegador não suporta notificações.");
+    return;
+  }
+  Notification.requestPermission().then(permission=>{
+    updateNotificationButton();
+    if(permission==="granted"){
+      toast("Notificações ativadas!");
+      notifySystem("Sistema Arasigns","🔔 Notificações ativadas com sucesso.");
+    }else{
+      toast("Permissão de notificações não concedida.");
+    }
+  });
+}
+
+function notifySystem(title,body){
+  if(!("Notification" in window) || Notification.permission!=="granted")return;
+  try{
+    new Notification(title,{body,icon:""});
+  }catch(error){
+    console.error("Erro ao mostrar notificação:",error);
+  }
+}
+
+function checkMovementNotifications(lista){
+  const atuais=new Set(lista.map(m=>String(m._firebaseKey||m.id)));
+  if(!notificacoesProntas){
+    movimentosConhecidos=atuais;
+    return;
+  }
+  lista.forEach(m=>{
+    const id=String(m._firebaseKey||m.id);
+    if(!movimentosConhecidos.has(id)){
+      notifySystem("📦 Nova movimentação",`${m.colaborador||"Alguém"}: ${m.movimento||"MOVIMENTAÇÃO"} • ${m.item||""}`);
+    }
+  });
+  movimentosConhecidos=atuais;
+}
+
+function checkOSNotifications(lista){
+  const atuais=new Set(lista.map(o=>String(o.id)));
+  if(!notificacoesProntas){
+    osConhecidas=atuais;
+    return;
+  }
+  lista.forEach(o=>{
+    const id=String(o.id);
+    if(!osConhecidas.has(id)){
+      notifySystem("📋 Nova Ordem de Serviço",`OS #${o.numero||""} • ${o.cliente||""}`);
+    }
+  });
+  osConhecidas=atuais;
+}
 
 function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const t=$(id);if(t)t.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
 function toast(m){const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
