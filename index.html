@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#08090b">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
 <title>Arasigns — Almoxarifado e OS</title>
 <style>
 :root{--bg:#08090b;--card:#111214;--card2:#17181b;--line:#303136;--white:#f7f7f7;--muted:#a9aaae;--red:#ff1726;--orange:#ff6a00;--yellow:#ffd000;--green:#16d46b;--blue:#3498ff}
@@ -14,7 +16,7 @@
 .option{min-height:78px;display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:17px;background:#151619;color:white;padding:13px 15px;cursor:pointer;text-align:left}.option-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow));font-size:26px}.option-name{font-size:clamp(17px,3vw,22px);font-weight:900}.category{min-height:105px;border:1px solid var(--line);border-radius:20px;background:#151619;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-weight:900;font-size:18px}.category-icon{font-size:38px}
 .summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.summary-box,.dash-card{background:#151619;border:1px solid var(--line);border-radius:17px;padding:14px}.summary-label,.dash-label{color:var(--orange);font-size:13px;font-weight:900;margin-bottom:5px}.summary-value{font-size:20px;font-weight:900}.confirm-button{width:100%;margin-top:16px;padding:22px;border:0;border-radius:18px;background:linear-gradient(90deg,#079447,#16d46b);color:white;font-size:22px;font-weight:900;cursor:pointer}.primary{width:100%;margin-top:16px;padding:18px;border:0;border-radius:18px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));color:white;font-size:20px;font-weight:900;cursor:pointer}.quantity-input{width:100%;min-height:95px;border:2px solid #303136;border-radius:20px;background:#151619;color:white;text-align:center;font-size:42px;font-weight:900;padding:10px;margin-top:12px}.quantity-unit{color:var(--muted);text-align:center;font-size:16px;font-weight:800;margin-top:10px}.cancel-button{width:100%;margin-top:10px;padding:14px;border:1px solid #38393d;border-radius:15px;background:#18191c;color:#ddd;font-size:17px;font-weight:800;cursor:pointer}
 .history-header,.os-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.history-title{font-size:22px;font-weight:900}.history-count{color:var(--yellow);font-weight:900}#history,#osList{display:flex;flex-direction:column;gap:9px}.empty{min-height:120px;display:grid;place-items:center;text-align:center;border:1px solid #292a2d;border-radius:17px;color:var(--muted);padding:20px}.record,.os-card{background:#151619;border:1px solid #2d2e32;border-radius:15px;padding:13px}.record-top{display:flex;justify-content:space-between;gap:10px}.record-type,.os-number{font-weight:900;color:var(--yellow)}.record-date,.os-meta{color:#aaa;font-size:13px}.record-line{margin-top:7px;color:#ddd}.actions{margin-top:14px}.action{min-height:80px;border:0;border-radius:18px;color:white;cursor:pointer;font-weight:900;font-size:18px}.csv{background:linear-gradient(120deg,var(--red),var(--orange),var(--yellow))}.clear{background:#17181b;border:1px solid #35363a}
-input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;border-radius:13px;color:white;padding:14px;font-size:16px;font-family:inherit}textarea{min-height:105px;resize:vertical}.field label{display:block;font-weight:900;margin:0 0 7px}.full{grid-column:1/-1}.os-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}.os-nav button{min-height:95px;border:1px solid var(--line);border-radius:18px;color:white;font-size:18px;font-weight:900;cursor:pointer;background:#151619}.os-nav .register{background:linear-gradient(120deg,var(--red),var(--orange)}
+input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;border-radius:13px;color:white;padding:14px;font-size:16px;font-family:inherit}textarea{min-height:105px;resize:vertical}.field label{display:block;font-weight:900;margin:0 0 7px}.full{grid-column:1/-1}.os-nav{display:grid;grid-template-columns:1fr 1fr;gap:12px}.os-nav button{min-height:95px;border:1px solid var(--line);border-radius:18px;color:white;font-size:18px;font-weight:900;cursor:pointer;background:#151619}.os-nav .register{background:linear-gradient(120deg,var(--red),var(--orange))}
 .dashboard-grid{grid-template-columns:repeat(5,1fr)}.dash-card{text-align:center}.dash-number{font-size:32px;font-weight:900}.dash-red{border-color:#7a2028}.dash-orange{border-color:#7a4a20}.dash-green{border-color:#1f6b42}.next-delivery{border:2px solid var(--yellow);background:linear-gradient(145deg,#1a1911,#111214)}.priority{font-size:14px;font-weight:900;border-radius:999px;padding:7px 11px;display:inline-block}.overdue{background:#55151b;color:#ff9aa1}.today{background:#6a3510;color:#ffd27a}.urgent{background:#604b08;color:#ffe584}.safe{background:#123b25;color:#8ff0b6}.finished{background:#333;color:#ddd}.os-status{font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px;background:#333}.os-card{cursor:pointer}.os-card:hover{border-color:#666}.queue-rank{font-size:22px;font-weight:900;min-width:45px}.queue-head{display:flex;align-items:center;gap:10px}.queue-main{flex:1}.queue-title{font-size:18px;font-weight:900}.os-days{margin-top:10px;padding:9px;border-radius:10px;background:#0d0e10;font-weight:900}.sector-table{display:flex;flex-direction:column;gap:10px}.sector-row{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;font-weight:900}.bar{height:16px;background:#222;border-radius:20px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:20px}.sector-buttons{
   display:flex;
   flex-wrap:wrap;
@@ -73,11 +75,42 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
     font-size:13px;
   }
 }.detail-line{margin-top:10px;padding:12px;background:#151619;border:1px solid var(--line);border-radius:12px}.timeline{margin-top:20px}.timeline-item{padding:12px;border-left:3px solid var(--orange);margin:9px 0;background:#151619}.timeline-item small{display:block;color:#999;margin:5px 0}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0);opacity:1}
-@media(max-width:800px){.dashboard-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid .dash-card:last-child{grid-column:1/-1}.sector-row{grid-template-columns:100px 1fr 30px}}@media(max-width:600px){.app{padding:8px 10px 30px}.card{padding:14px;border-radius:18px}.home-grid,.movement-choice,.options-grid,.category-grid,.os-form-grid,.actions,.os-nav{gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.dashboard-grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr 1fr}.home-button{min-height:105px}.sector-row{grid-template-columns:90px 1fr 28px;font-size:13px}}@media(max-width:700px){.sector-buttons{grid-template-columns:1fr}.sector-button{min-height:82px;font-size:19px}}@media(max-width:390px){.options-grid,.category-grid,.home-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.dashboard-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid .dash-card:last-child{grid-column:1/-1}.sector-row{grid-template-columns:100px 1fr 30px}}@media(max-width:600px){.app{padding:8px 10px 30px}.card{padding:14px;border-radius:18px}.home-grid,.movement-choice,.options-grid,.category-grid,.os-form-grid,.actions,.os-nav{gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.dashboard-grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr 1fr}.home-button{min-height:105px}.sector-row{grid-template-columns:90px 1fr 28px;font-size:13px}}@media(max-width:700px){.sector-button{min-height:54px;font-size:15px}}@media(max-width:390px){.options-grid,.category-grid,.home-grid{grid-template-columns:1fr}}
 #history{max-height:430px;overflow-y:auto;padding-right:3px}.history-title{font-size:clamp(17px,3vw,22px)}
 .record-top{align-items:flex-start}
 .record-delete{border:1px solid #4a2a2d;background:#211315;color:#ff6b72;border-radius:11px;width:42px;height:42px;font-size:20px;font-weight:900;cursor:pointer;flex:0 0 auto;margin-left:8px}
 .record-delete:active{transform:scale(.94)}
+
+.almox-history-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+
+.export-history-button{
+  width:100%;
+  min-height:58px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(135deg,#079447,#16d46b);
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(22,212,107,.18);
+}
+
+.export-history-button:active{
+  transform:scale(.97);
+}
+
+@media(max-width:600px){
+  .almox-history-actions{
+    grid-template-columns:1fr;
+  }
+}
+
 .clear-history-button{width:100%;margin-top:14px;min-height:62px;border:1px solid #6a3034;border-radius:17px;background:#241416;color:#ffb2b7;font-size:18px;font-weight:900;cursor:pointer}
 .clear-history-button:active{transform:scale(.98)}
 
@@ -170,7 +203,11 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
 </div></div></section>
 
-<section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header"><div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div><div class="history-count" id="historyCount">0 REGISTROS</div></div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div><button class="clear-history-button" onclick="clearAlmox()">🗑️ LIMPAR HISTÓRICO</button></div></section>
+<section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header"><div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div><div class="history-count" id="historyCount">0 REGISTROS</div></div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div>
+<div class="almox-history-actions">
+  <button class="export-history-button" onclick="exportAlmoxCSV()">📥 BAIXAR CSV DO ALMOXARIFADO</button>
+  <button class="clear-history-button" onclick="clearAlmox()">🗑️ LIMPAR HISTÓRICO</button>
+</div></div></section>
 <section class="screen" id="employee"><div class="page-top"><button class="back-button" onclick="showScreen('movement')">← VOLTAR</button><div class="page-title">COLABORADOR</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUEM ESTÁ FAZENDO?</div><div class="question-title">SELECIONE</div></div><div class="options-grid" id="employeeOptions"></div></div></section>
 <section class="screen" id="category"><div class="page-top"><button class="back-button" onclick="showScreen('employee')">← VOLTAR</button><div class="page-title">CATEGORIA</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRÓXIMO PASSO</div><div class="question-title">ESCOLHA A CATEGORIA</div></div><div class="category-grid" id="categoryOptions"></div></div></section>
 <section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="showScreen('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="categoryTitle">ITEM</div></div><div class="options-grid" id="itemOptions"></div></div></section>
@@ -198,7 +235,27 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="field full"><label>OBSERVAÇÃO</label><textarea id="osObs" placeholder="Informações adicionais"></textarea></div>
 </div><button class="primary" onclick="registerOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button></div></section>
 
-<section class="screen" id="osView"><div class="page-top"><button class="back-button" onclick="openOSDashboard()">← DASHBOARD</button><div class="page-title">TODAS AS OS</div><div></div></div><div class="card"><div class="field"><label>FILTRAR</label><select id="osFilter" onchange="renderOSList()"><option value="TODAS">TODAS</option><option value="EM ANDAMENTO">EM ANDAMENTO</option><option value="AGUARDANDO">AGUARDANDO</option><option value="FINALIZADA">FINALIZADAS</option></select></div><div id="osList" style="margin-top:14px"></div></div><section class="actions"><button class="action csv" onclick="exportOSCSV()">📄 CSV DAS OS</button><button class="action clear" onclick="clearOS()">🗑️ LIMPAR OS</button></section></section>
+<section class="screen" id="osView">
+<div class="page-top"><button class="back-button" onclick="openOSDashboard()">← DASHBOARD</button><div class="page-title">TODAS AS OS</div><div></div></div>
+<div class="card">
+  <div class="field">
+    <label>🔎 PESQUISAR ORDEM DE SERVIÇO</label>
+    <input type="text" id="osSearch" placeholder="Digite o número da OS..." oninput="filterOSSearch()" onkeyup="filterOSSearch()" onchange="filterOSSearch()" autocomplete="off" inputmode="numeric">
+<button type="button" class="primary" style="margin-top:10px;padding:13px;font-size:16px" onclick="filterOSSearch()">🔎 PESQUISAR OS</button>
+  </div>
+  <div class="field" style="margin-top:14px">
+    <label>FILTRAR POR STATUS</label>
+    <select id="osFilter" onchange="renderOSList()">
+      <option value="TODAS">TODAS</option>
+      <option value="EM ANDAMENTO">EM ANDAMENTO</option>
+      <option value="AGUARDANDO">AGUARDANDO</option>
+      <option value="FINALIZADA">FINALIZADAS</option>
+    </select>
+  </div>
+  <div id="osList" style="margin-top:14px"></div>
+</div>
+<section class="actions"><button class="action csv" onclick="exportOSCSV()">📄 CSV DAS OS</button><button class="action clear" onclick="clearOS()">🗑️ LIMPAR OS</button></section>
+</section>
 
 <section class="screen" id="osDetail"><div class="page-top"><button class="back-button" onclick="openOSList()">← LISTA</button><div class="page-title">DETALHES DA OS</div><div></div></div><div class="card" id="osDetailContent"></div></section>
 </div><div class="toast" id="toast"></div>
@@ -289,7 +346,7 @@ ordensRef.on("value",snapshot=>{
       selectedOS=atualizada||null;
       if(atualizada && $("osDetail").classList.contains("active"))renderOSDetail();
     }
-    if($("osDashboard").classList.contains("active"))renderOSDashboard();
+    if($("osDashboard").classList.contains("active"))renderDashboard();
   }
 
   firebaseReady=true;
@@ -420,11 +477,11 @@ function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].it
 function confirmQuantity(){const q=Number($("quantityInput").value);if(!Number.isFinite(q)||q<=0||!Number.isInteger(q))return toast("Informe uma quantidade válida.");selectedQuantity=q;$("summaryMovement").textContent=selectedMovement;$("summaryEmployee").textContent=selectedEmployee;$("summaryCategory").textContent=selectedCategory;$("summaryItem").textContent=selectedItem;$("summaryQuantity").textContent=selectedQuantity;showScreen("confirm")}
 function confirmMovement(){
 if(!selectedMovement||!selectedEmployee||!selectedCategory||!selectedItem||!selectedQuantity)return toast("Complete todas as etapas.");
-const registro={id:Date.now(),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
+const registro={id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
 movimentacoes.push(registro);
 saveMovements();
 toast(selectedMovement==="RETIRADA"?"Retirada registrada no histórico!":"Devolução registrada no histórico!");
-setTimeout(()=>{showScreen("almox");renderHistory();startMovement()},700)
+setTimeout(()=>{renderHistory();showScreen("movement")},700)
 }
 function resetMovement(){startMovement()}
 function saveMovements(){
@@ -513,8 +570,8 @@ function clearAlmox(){
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
-function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");$("osPrazo").value="";showScreen("osRegister")}
-function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=new Date().toISOString().slice(0,10),status="EM ANDAMENTO",obs=$("osObs").value.trim();if(!numero||!cliente||!descricao)return toast("Preencha OS, cliente e serviço.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now(),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
+function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${escapeHtml(x)}</option>`).join("");["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");showScreen("osRegister")}
+function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=new Date().toISOString().slice(0,10),status="EM ANDAMENTO",obs=$("osObs").value.trim();if(!numero||!cliente||!descricao)return toast("Preencha OS, cliente e serviço.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
 function saveOS(){
   localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
   if(!firebaseReady){
@@ -526,8 +583,17 @@ function saveOS(){
     toast("Erro ao salvar no Firebase.");
   });
 }
-function parseDate(s){return new Date(s+"T00:00:00")}
-function daysDiffFromToday(date){const d=parseDate(date);const today=new Date();today.setHours(0,0,0,0);return Math.round((d-today)/86400000)}
+function parseDate(s){
+  if(!s)return null;
+  const d=new Date(s);
+  return Number.isNaN(d.getTime())?null:d;
+}
+function daysDiffFromToday(date){
+  const d=parseDate(date);
+  if(!d)return Infinity;
+  const today=new Date();today.setHours(0,0,0,0);
+  return Math.floor((d.getTime()-today.getTime())/86400000);
+}
 function sectorElapsed(o){
   const h=o.historico||[];
   if(!h.length)return {days:0,hours:0,minutes:0,text:"0 Dias 0 Horas e 0 Minutos"};
@@ -605,8 +671,101 @@ function renderNextDelivery(){const o=activeOrders()[0],b=$("nextDelivery");if(!
 function renderQueue(){const b=$("queueList"),lista=activeOrders();if(!lista.length){b.innerHTML='<div class="empty">🎉 Fila vazia. Todas as OS foram finalizadas.</div>';return}b.innerHTML="";lista.forEach((o,i)=>{const d=deadlineInfo(o),rank=i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`;const x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="queue-head"><div class="queue-rank">${rank}</div><div class="queue-main"><div class="queue-title">OS #${escapeHtml(o.numero)} — ${escapeHtml(o.cliente)}</div><div class="os-meta">📍 ${escapeHtml(o.setor)} • ⏱️ ${sectorDays(o)} dia${sectorDays(o)!==1?"s":""} no setor</div></div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"} • 📝 ${escapeHtml(o.descricao)}</div>`;b.appendChild(x)})}
 function renderSectorChart(){const b=$("sectorChart"),counts={};SETORES.forEach(s=>counts[s]=0);ordens.filter(o=>o.status!=="FINALIZADA").forEach(o=>{counts[o.setor]=(counts[o.setor]||0)+1});const max=Math.max(1,...Object.values(counts));b.innerHTML=Object.entries(counts).map(([s,n])=>`<div class="sector-row"><div>${s}</div><div class="bar"><div style="width:${(n/max)*100}%"></div></div><div>${n}</div></div>`).join("")}
 function openOSList(){renderOSList();showScreen("osView")}
-function renderOSList(){const filter=$("osFilter").value;let lista=filter==="TODAS"?[...ordens]:ordens.filter(o=>o.status===filter);lista.sort((a,b)=>{if(a.status==="FINALIZADA"&&b.status!=="FINALIZADA")return 1;if(b.status==="FINALIZADA"&&a.status!=="FINALIZADA")return -1;return parseDate(a.prazo)-parseDate(b.prazo)});const b=$("osList");if(!lista.length){b.innerHTML='<div class="empty">🧾<br><br>Nenhuma OS encontrada.</div>';return}b.innerHTML="";lista.forEach(o=>{const d=deadlineInfo(o),x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="record-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)} • ⏱️ ${sectorElapsed(o).text} no setor</div><div class="record-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"}</div>`;b.appendChild(x)})}
-function openOSDetail(id){selectedOS=ordens.find(o=>o.id===id);if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
+function filterOSSearch(){
+  try{
+    renderOSList();
+  }catch(error){
+    console.error("Erro na pesquisa da OS:", error);
+    toast("Erro ao pesquisar. Verifique o console.");
+  }
+}
+
+function normalizeOSNumber(value){
+  return String(value == null ? "" : value)
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g,"");
+}
+
+function renderOSList(){
+  const listBox=$("osList");
+  if(!listBox)return;
+
+  const filterEl=$("osFilter");
+  const searchEl=$("osSearch");
+
+  const filter=filterEl ? String(filterEl.value || "TODAS") : "TODAS";
+  const rawSearch=searchEl ? String(searchEl.value || "").trim() : "";
+  const search=normalizeOSNumber(rawSearch);
+
+  const allOrders=Array.isArray(ordens) ? ordens : [];
+
+  let lista=allOrders.filter(function(o){
+    if(!o)return false;
+
+    const status=String(o.status || "EM ANDAMENTO");
+    if(filter !== "TODAS" && status !== filter)return false;
+
+    if(search){
+      const numero=normalizeOSNumber(o.numero);
+      if(numero.indexOf(search) === -1)return false;
+    }
+
+    return true;
+  });
+
+  lista.sort(function(a,b){
+    const aFinished=String(a.status||"") === "FINALIZADA";
+    const bFinished=String(b.status||"") === "FINALIZADA";
+
+    if(aFinished && !bFinished)return 1;
+    if(bFinished && !aFinished)return -1;
+
+    const da=a.prazo ? new Date(a.prazo).getTime() : Number.MAX_SAFE_INTEGER;
+    const db=b.prazo ? new Date(b.prazo).getTime() : Number.MAX_SAFE_INTEGER;
+
+    return da-db;
+  });
+
+  if(lista.length === 0){
+    listBox.innerHTML =
+      '<div class="empty">🔎<br><br>' +
+      (rawSearch
+        ? 'Nenhuma OS encontrada para <b>#' + escapeHtml(rawSearch) + '</b>.'
+        : 'Nenhuma OS encontrada.') +
+      '</div>';
+    return;
+  }
+
+  listBox.innerHTML="";
+
+  lista.forEach(function(o){
+    const d=deadlineInfo(o);
+    const card=document.createElement("div");
+    card.className="os-card";
+
+    card.addEventListener("click",function(){
+      openOSDetail(o.id);
+    });
+
+    const prazoTexto=o.prazo
+      ? new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})
+      : "Não definido";
+
+    card.innerHTML =
+      '<div class="os-top">' +
+        '<div class="os-number">🧾 OS #' + escapeHtml(o.numero) + '</div>' +
+        '<span class="priority ' + d.cls + '">' + escapeHtml(d.text) + '</span>' +
+      '</div>' +
+      '<div class="record-line">👤 <b>Cliente:</b> ' + escapeHtml(o.cliente) + '</div>' +
+      '<div class="record-line">📍 <b>Setor:</b> ' + escapeHtml(o.setor) + ' • ⏱️ ' + escapeHtml(sectorElapsed(o).text) + ' no setor</div>' +
+      '<div class="record-line">📅 <b>Prazo:</b> ' + escapeHtml(prazoTexto) + '</div>';
+
+    listBox.appendChild(card);
+  });
+}
+
+function openOSDetail(id){selectedOS=ordens.find(o=>String(o.id)===String(id));if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
 function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há <span id="sectorElapsed">${sectorElapsed(o).text}</span> neste setor. &nbsp;•&nbsp; ⏳ <b>Tempo de Execução:</b> <span id="executionTime">${executionTime(o)}</span></div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px">
 <div class="question-label">ATUALIZAR SETOR</div>
 <div class="question-title" style="font-size:22px">SELECIONE O SETOR</div>
@@ -650,7 +809,7 @@ function deleteCurrentOS(){
 
   saveOS();
   renderOSList();
-  showScreen("osList");
+  showScreen("osView");
   toast("OS excluída com sucesso. Voltando para a lista...");
 }
 
@@ -677,9 +836,18 @@ function clearOSHistory(){
   renderOSDetail();
   toast("Histórico da OS limpo com sucesso.");
 }
-function clearOS(){if(!ordens.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;ordens=[];localStorage.removeItem(OS_STORAGE);renderOSList();toast("Todas as OS foram apagadas.")}
+function clearOS(){if(!ordens.length)return toast("Não existem OS.");const senha=prompt("Digite a senha para apagar TODAS as OS:");if(senha===null)return;if(senha!=="007")return toast("Senha incorreta.");if(!confirm("ATENÇÃO: Apagar TODAS as OS permanentemente?"))return;ordens=[];selectedOS=null;saveOS();renderOSList();toast("Todas as OS foram apagadas.")}
 function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","TEMPO NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorElapsed(o).text,deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
 renderEmployees();renderCategories();renderHistory();
+
+const osSearchInput=$("osSearch");
+if(osSearchInput){
+  ["input","keyup","change","paste"].forEach(function(eventName){
+    osSearchInput.addEventListener(eventName,function(){
+      setTimeout(filterOSSearch,0);
+    });
+  });
+}
 setInterval(()=>{
   if(!selectedOS)return;
   const sectorEl=$("sectorElapsed");
