@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#08090b">
-<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-<meta http-equiv="Pragma" content="no-cache">
 <title>Arasigns — Almoxarifado e OS</title>
 <style>
 :root{--bg:#08090b;--card:#111214;--card2:#17181b;--line:#303136;--white:#f7f7f7;--muted:#a9aaae;--red:#ff1726;--orange:#ff6a00;--yellow:#ffd000;--green:#16d46b;--blue:#3498ff}
@@ -75,7 +73,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
     font-size:13px;
   }
 }.detail-line{margin-top:10px;padding:12px;background:#151619;border:1px solid var(--line);border-radius:12px}.timeline{margin-top:20px}.timeline-item{padding:12px;border-left:3px solid var(--orange);margin:9px 0;background:#151619}.timeline-item small{display:block;color:#999;margin:5px 0}.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,120px);opacity:0;z-index:100;background:#17181b;border:1px solid #404146;border-radius:15px;padding:14px 20px;box-shadow:0 15px 35px rgba(0,0,0,.5);transition:.25s;font-weight:900;max-width:90%;text-align:center}.toast.show{transform:translate(-50%,0);opacity:1}
-@media(max-width:800px){.dashboard-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid .dash-card:last-child{grid-column:1/-1}.sector-row{grid-template-columns:100px 1fr 30px}}@media(max-width:600px){.app{padding:8px 10px 30px}.card{padding:14px;border-radius:18px}.home-grid,.movement-choice,.options-grid,.category-grid,.os-form-grid,.actions,.os-nav{gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.dashboard-grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr 1fr}.home-button{min-height:105px}.sector-row{grid-template-columns:90px 1fr 28px;font-size:13px}}@media(max-width:700px){.sector-button{min-height:54px;font-size:15px}}@media(max-width:390px){.options-grid,.category-grid,.home-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.dashboard-grid{grid-template-columns:repeat(2,1fr)}.dashboard-grid .dash-card:last-child{grid-column:1/-1}.sector-row{grid-template-columns:100px 1fr 30px}}@media(max-width:600px){.app{padding:8px 10px 30px}.card{padding:14px;border-radius:18px}.home-grid,.movement-choice,.options-grid,.category-grid,.os-form-grid,.actions,.os-nav{gap:9px}.option{min-height:72px;padding:10px}.option-icon{width:42px;height:42px;flex-basis:42px;font-size:23px}.option-name{font-size:16px}.category{min-height:92px;font-size:15px}.dashboard-grid{grid-template-columns:repeat(2,1fr)}.summary{grid-template-columns:1fr 1fr}.home-button{min-height:105px}.sector-row{grid-template-columns:90px 1fr 28px;font-size:13px}}@media(max-width:700px){.sector-buttons{grid-template-columns:1fr}.sector-button{min-height:82px;font-size:19px}}@media(max-width:390px){.options-grid,.category-grid,.home-grid{grid-template-columns:1fr}}
 #history{max-height:430px;overflow-y:auto;padding-right:3px}.history-title{font-size:clamp(17px,3vw,22px)}
 .record-top{align-items:flex-start}
 .record-delete{border:1px solid #4a2a2d;background:#211315;color:#ff6b72;border-radius:11px;width:42px;height:42px;font-size:20px;font-weight:900;cursor:pointer;flex:0 0 auto;margin-left:8px}
@@ -182,6 +180,49 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   color:#74f0a0;
 }
 
+
+/* CONTROLE DE ESTOQUE — MESMO PADRÃO DO MENU */
+.home-button.estoque{
+  background:linear-gradient(120deg,#075fb9,var(--blue));
+  position:relative;
+  overflow:hidden;
+}
+.home-button.estoque::after{
+  content:"";
+  position:absolute;
+  inset:auto -30px -45px auto;
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+}
+
+
+/* CONTROLE DE ESTOQUE */
+.stock-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stock-summary-card{border:1px solid var(--line);background:#151619;border-radius:16px;padding:12px 10px;display:flex;align-items:center;gap:8px}
+.stock-summary-card span{font-size:22px}.stock-summary-card small{display:block;color:var(--muted);font-size:9px;font-weight:900}.stock-summary-card strong{display:block;font-size:22px;margin-top:3px}
+.stock-summary-card.low{border-color:rgba(255,174,0,.35)}.stock-summary-card.zero{border-color:rgba(255,70,70,.35)}
+.stock-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 14px}
+.stock-tab{padding:14px 8px;border-radius:14px;border:1px solid var(--line);background:#151619;color:#ddd;font-weight:900;cursor:pointer}
+.stock-tab.active{background:linear-gradient(120deg,#075fb9,var(--blue));border-color:transparent;color:#fff}
+.stock-help{color:var(--muted);font-size:13px;line-height:1.5;margin:0 2px 14px}
+.stock-category-block{margin:14px 0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#151619}
+.stock-category-title{padding:13px 15px;font-weight:900;background:#1a1b1f;border-bottom:1px solid var(--line)}
+.stock-row{display:grid;grid-template-columns:1fr 78px 78px;gap:8px;align-items:center;padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.05)}
+.stock-row:last-child{border-bottom:0}
+.stock-row-name{font-size:12px;font-weight:800;line-height:1.2}
+.stock-input-wrap small{display:block;color:var(--muted);font-size:8px;font-weight:900;text-align:center;margin-bottom:3px}
+.stock-input{width:100%;box-sizing:border-box;padding:9px 4px;border-radius:10px;border:1px solid #38393d;background:#101114;color:#fff;text-align:center;font-weight:900}
+.stock-status{font-size:10px;margin-top:4px;color:var(--muted)}
+.stock-ranking-item{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;padding:13px;margin-bottom:8px;border:1px solid var(--line);border-radius:15px;background:#151619}
+.rank-position{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#22242a;font-weight:900}
+.rank-name{font-size:12px;font-weight:900}.rank-category{font-size:9px;color:var(--muted);margin-top:3px}
+.rank-qty{font-size:18px;font-weight:900;text-align:right}.rank-unit{font-size:9px;color:var(--muted);text-align:right}
+.stock-badge{margin-left:auto;min-width:34px;padding:5px 7px;border-radius:999px;background:#22242a;color:#fff;font-size:11px;font-weight:900;text-align:center}
+.stock-badge.low{background:#5b4300;color:#ffd76a}.stock-badge.zero{background:#5a1d22;color:#ff9696}
+@media(max-width:480px){.stock-row{grid-template-columns:1fr 68px 68px}.stock-summary-card{padding:10px 7px}.stock-summary-card strong{font-size:18px}}
+
 </style>
 </head>
 <body>
@@ -200,7 +241,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="card"><div class="question"><div class="question-label">ARASIGNS</div><div class="question-title">O QUE VOCÊ DESEJA ACESSAR?</div></div>
 <div class="home-grid">
 <button class="home-button almox" onclick="startMovement()">📦<br>ALMOXARIFADO</button>
-<button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
+<button class="home-button estoque" onclick="openStockControl()">📦<br>CONTROLE DE<br>ESTOQUE</button><button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
 </div></div></section>
 
 <section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header"><div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div><div class="history-count" id="historyCount">0 REGISTROS</div></div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div>
@@ -226,14 +267,43 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="card"><div class="history-title">🏭 OS POR SETOR</div><div class="sector-table" id="sectorChart" style="margin-top:16px"></div></div>
 </section>
 
+<section class="screen" id="stockControl">
+<div class="page-top">
+  <button class="back-button" onclick="showScreen('home')">← VOLTAR</button>
+  <div class="page-title">📦 CONTROLE DE ESTOQUE</div>
+  <div></div>
+</div>
+
+<div class="stock-summary">
+  <div class="stock-summary-card"><span>📦</span><div><small>ITENS CADASTRADOS</small><strong id="stockTotalItems">0</strong></div></div>
+  <div class="stock-summary-card low"><span>⚠️</span><div><small>ESTOQUE BAIXO</small><strong id="stockLowItems">0</strong></div></div>
+  <div class="stock-summary-card zero"><span>🚨</span><div><small>ZERADOS</small><strong id="stockZeroItems">0</strong></div></div>
+</div>
+
+<div class="stock-tabs">
+  <button class="stock-tab active" onclick="showStockTab('items',this)">📋 ITENS</button>
+  <button class="stock-tab" onclick="showStockTab('ranking',this)">🏆 RANKING</button>
+</div>
+
+<div id="stockItemsPanel">
+  <div class="stock-help">Cadastre a quantidade atual e o estoque mínimo de cada item. Depois, as retiradas e devoluções atualizam o saldo automaticamente.</div>
+  <div id="stockCategoryOptions"></div>
+</div>
+
+<div id="stockRankingPanel" style="display:none">
+  <div class="stock-help">Itens com menor saldo aparecem primeiro. Assim você bate o olho e sabe o que está virando problema 👀</div>
+  <div id="stockRankingList"></div>
+</div>
+</section>
+
 <section class="screen" id="osRegister"><div class="page-top"><button class="back-button" onclick="openOSDashboard()">← VOLTAR</button><div class="page-title">CADASTRAR OS</div><div></div></div><div class="card"><div class="question"><div class="question-label">NOVA ORDEM</div><div class="question-title">DADOS DA OS</div></div><div class="os-form-grid">
 <div class="field"><label>NÚMERO DA OS *</label><input id="osNumero" placeholder="Ex: 1024"></div>
 <div class="field"><label>CLIENTE *</label><input id="osCliente" placeholder="Nome do cliente"></div>
 <div class="field full"><label>DESCRIÇÃO DO SERVIÇO *</label><textarea id="osDescricao" placeholder="Descreva o serviço"></textarea></div>
 <div class="field"><label>SETOR INICIAL</label><select id="osSetor"></select></div>
-<div class="field"><label>HORÁRIO DE ENTREGA / INSTALAÇÃO <span style="opacity:.55">(OPCIONAL)</span></label><input id="osPrazo" type="datetime-local"></div>
+<div class="field"><label>DATA E HORÁRIO DE ENTREGA / INSTALAÇÃO *</label><input id="osPrazo" type="datetime-local" required></div>
 <div class="field full"><label>OBSERVAÇÃO</label><textarea id="osObs" placeholder="Informações adicionais"></textarea></div>
-</div><button class="primary" onclick="registerOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button></div></section>
+</div><button id="osSaveButton" class="primary" onclick="registerOS()">💾 CADASTRAR ORDEM DE SERVIÇO</button></div></section>
 
 <section class="screen" id="osView">
 <div class="page-top"><button class="back-button" onclick="openOSDashboard()">← DASHBOARD</button><div class="page-title">TODAS AS OS</div><div></div></div>
@@ -266,12 +336,11 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 const COLABORADORES=["TOCO","RAMALHO","LUAN","THAMI","DIEGO","WELTON","GILDO","WESLEY","DENIS","BELLA","JU","MARI","CAMINHÃO","SAVEIRO"];
 const COLABORADOR_ICONS={THAMI:"👩",BELLA:"👩",JU:"👩",MARI:"👩",CAMINHÃO:"🚚",SAVEIRO:"🚗"};
 const CATEGORIAS={
-"FERRAMENTAS":{icon:"🛠️",itens:["ALICATE DECAPADOR","ALICATE DE CORTE","TUPIA","LIXADEIRA PLANA","SERRA TICO TICO","FERRO DE SOLDA PISTOLA","FERRO DE SOLDA","VENTOSA","SOPRADOR TÉRMICO"]},
-"FONTES":{icon:"⚡",itens:["FONTE 30A","FONTE 50A"]},
-"MÓDULOS DE LED":{icon:"💡",itens:["MÓDULO DE LED BRANCO QUENTE","MÓDULO DE LED BRANCO FRIO"]},
-"FITAS DE LED":{icon:"🔆",itens:["FITA DE LED BRANCO QUENTE","FITA DE LED BRANCO FRIO"]},
+"FERRAMENTAS":{icon:"🛠️",itens:["TRENA","ALICATE DECAPADOR","ALICATE DE CORTE","TUPIA","LIXADEIRA PLANA","SERRA TICO TICO","ESMERILHADEIRA","FERRO DE SOLDA PISTOLA","FERRO DE SOLDA","FERRO DE SOLDA DE PONTA","VENTOSA","SOPRADOR TÉRMICO"]},
+"ELÉTRICA":{icon:"⚡",itens:["MÓDULO DE LED BRANCO QUENTE","MÓDULO DE LED BRANCO FRIO","FITA DE LED BRANCO QUENTE","FITA DE LED BRANCO FRIO","FONTE 30A","FONTE 50A","REFLETOR DE LED 100W","REFLETOR DE LED 30W"]},
+"COLA / FITA / PU / VEDA CALHA":{icon:"🧴",itens:["COLA","FITA ISOLANTE","FITA DUPLA FACE AMARELA","FITA CREPE VERDE","FITA SILICONE TRANSPARENTE","FITA SILICONE BRANCA","VEDA CALHA","PU"]},
+"PINTURA":{icon:"🎨",itens:["SPRAY","THINNER","VERNIZ","CATALISADOR","FUNDO CINZA"]},
 "CONSUMÍVEIS":{icon:"⚙️",itens:["DISCO DE CORTE","DISCO FLAP","LIXA","LÂMINA PEQUENA","LÂMINA GRANDE","BANANINHA","BASTÃO DE MADEIRA","AGULHA P","AGULHA G"]},
-"COLAS/FITAS":{icon:"🧴",itens:["COLA","FITA ISOLANTE","FITA DUPLA FACE AMARELA","FITA CREPE VERDE","FITA SILICONE TRANSPARENTE","FITA SILICONE BRANCA","VEDA CALHA","PU"]},
 "HIGIENE":{icon:"🧼",itens:["SACO DE LIXO","LUVAS LATEX","BUFALO"]}};
 const ITEM_ICONS={"ALICATE DECAPADOR":"🗜️","ALICATE DE CORTE":"✂️","TUPIA":"🛠️","LIXADEIRA PLANA":"⚙️","SERRA TICO TICO":"🪚","FERRO DE SOLDA PISTOLA":"🔧","FERRO DE SOLDA":"🔧","VENTOSA":"🔵","SOPRADOR TÉRMICO":"🔥","FONTE 30A":"⚡","FONTE 50A":"⚡","MÓDULO DE LED BRANCO QUENTE":"💡","MÓDULO DE LED BRANCO FRIO":"💡","FITA DE LED BRANCO QUENTE":"🔆","FITA DE LED BRANCO FRIO":"🔆","DISCO DE CORTE":"⚙️","DISCO FLAP":"⚙️","LÂMINA PEQUENA":"🔪","LÂMINA GRANDE":"🔪","BANANINHA":"🔩","BASTÃO DE MADEIRA":"🪵","AGULHA P":"📍","AGULHA G":"📍","COLA":"🧴","FITA ISOLANTE":"🖤","FITA DUPLA FACE AMARELA":"🟨","FITA CREPE VERDE":"🟩","FITA SILICONE TRANSPARENTE":"🔘","FITA SILICONE BRANCA":"⚪","VEDA CALHA":"🧴","PU":"🧴","SACO DE LIXO":"🗑️","LUVAS LATEX":"🧤","BUFALO":"🧽"};
 const firebaseConfig={
@@ -287,11 +356,12 @@ firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
 const ordensRef=db.ref("ordens");
 const movimentacoesRef=db.ref("movimentacoes");
+const estoqueRef=db.ref("estoque");
 let almoxFirebaseReady=false;
 let firstMovFirebaseLoad=true;
 
 const SETORES=["COMERCIAL","ARTE FINAL","PRODUÇÃO","MONTAGEM","INSTALAÇÃO / BALCÃO"];
-const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3";
+const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3",ESTOQUE_STORAGE="arasigns_estoque_v1";
 function loadMovements(){
   try{
     const atual=localStorage.getItem(ALMOX_STORAGE);
@@ -302,6 +372,7 @@ function loadMovements(){
   return [];
 }
 let movimentacoes=loadMovements(),ordens=JSON.parse(localStorage.getItem(OS_STORAGE)||"[]");
+let estoque=JSON.parse(localStorage.getItem(ESTOQUE_STORAGE)||"{}");
 let firebaseReady=false;
 let firstFirebaseLoad=true;
 
@@ -330,6 +401,18 @@ movimentacoesRef.on("value",snapshot=>{
   toast("Erro ao sincronizar o histórico do almoxarifado.");
 });
 
+// Escuta o estoque em tempo real.
+estoqueRef.on("value",snapshot=>{
+  const dados=snapshot.val();
+  if(dados===null){
+    if(Object.keys(estoque).length) estoqueRef.set(estoque);
+  }else{
+    estoque=dados||{};
+    localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  }
+  if($("stockControl")) renderStockControl();
+},error=>console.error("Erro ao sincronizar estoque:",error));
+
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
 ordensRef.on("value",snapshot=>{
   const dados=snapshot.val();
@@ -356,7 +439,7 @@ ordensRef.on("value",snapshot=>{
   setServerStatus("offline");
   toast("Erro ao conectar no Firebase.");
 });
-let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null;
+let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null,editingOSId=null;
 const $=id=>document.getElementById(id);
 
 function setServerStatus(status){
@@ -473,14 +556,25 @@ function startMovement(){selectedMovement=selectedEmployee=selectedCategory=sele
 function selectMovement(t){selectedMovement=t;showScreen("employee")}
 function renderEmployees(){const b=$("employeeOptions");b.innerHTML="";COLABORADORES.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${COLABORADOR_ICONS[n]||"👤"}</div><div class="option-name">${escapeHtml(n)}</div>`;x.onclick=()=>{selectedEmployee=n;showScreen("category")};b.appendChild(x)})}
 function renderCategories(){const b=$("categoryOptions");b.innerHTML="";Object.entries(CATEGORIAS).forEach(([n,d])=>{const x=document.createElement("button");x.className="category";x.innerHTML=`<div class="category-icon">${d.icon}</div><div>${n}</div>`;x.onclick=()=>{selectedCategory=n;$("categoryTitle").textContent=n;renderItems(n);showScreen("item")};b.appendChild(x)})}
-function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].itens.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${ITEM_ICONS[n]||"📦"}</div><div class="option-name">${escapeHtml(n)}</div>`;x.onclick=()=>{selectedItem=n;selectedQuantity=1;$("quantityItemName").textContent=selectedItem;$("quantityInput").value=1;showScreen("quantity")};b.appendChild(x)})}
+function getStockKey(c,n){return c+"|||"+n}
+function getStockData(c,n){return estoque[getStockKey(c,n)]||{quantidade:0,minimo:0}}
+function stockBadge(c,n){const d=getStockData(c,n),q=Number(d.quantidade)||0,m=Number(d.minimo)||0;let cls=q<=0?"zero":(m>0&&q<=m?"low":"");return `<div class="stock-badge ${cls}">${q}</div>`}
+function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].itens.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${ITEM_ICONS[n]||"📦"}</div><div class="option-name">${escapeHtml(n)}</div>${stockBadge(c,n)}`;x.onclick=()=>{selectedItem=n;selectedQuantity=1;$("quantityItemName").textContent=selectedItem;$("quantityInput").value=1;showScreen("quantity")};b.appendChild(x)})}
 function confirmQuantity(){const q=Number($("quantityInput").value);if(!Number.isFinite(q)||q<=0||!Number.isInteger(q))return toast("Informe uma quantidade válida.");selectedQuantity=q;$("summaryMovement").textContent=selectedMovement;$("summaryEmployee").textContent=selectedEmployee;$("summaryCategory").textContent=selectedCategory;$("summaryItem").textContent=selectedItem;$("summaryQuantity").textContent=selectedQuantity;showScreen("confirm")}
 function confirmMovement(){
 if(!selectedMovement||!selectedEmployee||!selectedCategory||!selectedItem||!selectedQuantity)return toast("Complete todas as etapas.");
-const registro={id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
+const registro={id:Date.now(),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
+const saldoAtual=getStockData(selectedCategory,selectedItem).quantidade||0;
+if(selectedMovement==="RETIRADA" && Number(selectedQuantity)>Number(saldoAtual)){
+  return toast("⚠️ Quantidade maior que o saldo disponível em estoque.");
+}
 movimentacoes.push(registro);
+const chave=getStockKey(selectedCategory,selectedItem);
+const atual=getStockData(selectedCategory,selectedItem);
+estoque[chave]={...atual,quantidade:selectedMovement==="RETIRADA"?Number(atual.quantidade)-Number(selectedQuantity):Number(atual.quantidade)+Number(selectedQuantity)};
+saveStock();
 saveMovements();
-toast(selectedMovement==="RETIRADA"?"Retirada registrada no histórico!":"Devolução registrada no histórico!");
+toast(selectedMovement==="RETIRADA"?"Retirada registrada e estoque atualizado!":"Devolução registrada e estoque atualizado!");
 setTimeout(()=>{renderHistory();showScreen("movement")},700)
 }
 function resetMovement(){startMovement()}
@@ -570,8 +664,196 @@ function clearAlmox(){
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
-function openOSRegister(){const s=$("osSetor");s.innerHTML=SETORES.map(x=>`<option>${escapeHtml(x)}</option>`).join("");["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");showScreen("osRegister")}
-function registerOS(){const numero=$("osNumero").value.trim(),cliente=$("osCliente").value.trim(),descricao=$("osDescricao").value.trim(),setor=$("osSetor").value,prazo=$("osPrazo").value,dataAbertura=new Date().toISOString().slice(0,10),status="EM ANDAMENTO",obs=$("osObs").value.trim();if(!numero||!cliente||!descricao)return toast("Preencha OS, cliente e serviço.");if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase()))return toast("Esse número de OS já existe.");const agora=new Date().toISOString();ordens.push({id:Date.now().toString()+"_"+Math.random().toString(36).slice(2,8),numero,cliente,descricao,setor,prazo,dataAbertura,status,obs,atualizada:agora,historico:[{setor,dataHora:agora,obs:"OS cadastrada"}]});saveOS();["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");toast("OS cadastrada com sucesso!");setTimeout(openOSDashboard,500)}
+function saveStock(){
+  localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  estoqueRef.set(estoque).catch(e=>console.error("Erro ao salvar estoque:",e));
+}
+function updateStockItem(c,n,field,value){
+  const key=getStockKey(c,n),atual=getStockData(c,n);
+  const numero=Math.max(0,Number(value)||0);
+  estoque[key]={...atual,[field]:numero};
+  saveStock();
+  renderStockSummary();
+  renderStockRanking();
+}
+function renderStockSummary(){
+  const all=[];
+  Object.entries(CATEGORIAS).forEach(([c,d])=>d.itens.forEach(n=>all.push(getStockData(c,n))));
+  const cadastrados=all.filter(x=>Number(x.quantidade)>0||Number(x.minimo)>0).length;
+  const zero=all.filter(x=>Number(x.quantidade)<=0).length;
+  const low=all.filter(x=>Number(x.minimo)>0&&Number(x.quantidade)>0&&Number(x.quantidade)<=Number(x.minimo)).length;
+  $("stockTotalItems").textContent=cadastrados;
+  $("stockLowItems").textContent=low;
+  $("stockZeroItems").textContent=zero;
+}
+function renderStockItems(){
+  const box=$("stockCategoryOptions");box.innerHTML="";
+  Object.entries(CATEGORIAS).forEach(([c,d])=>{
+    const block=document.createElement("div");block.className="stock-category-block";
+    block.innerHTML=`<div class="stock-category-title">${d.icon} ${escapeHtml(c)}</div>`;
+    d.itens.forEach(n=>{
+      const item=getStockData(c,n),row=document.createElement("div");row.className="stock-row";
+      row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"📦"} ${escapeHtml(n)}</div><div class="stock-status">${Number(item.quantidade)<=0?"🔴 Sem saldo":(Number(item.minimo)>0&&Number(item.quantidade)<=Number(item.minimo)?"🟡 Estoque baixo":"🟢 Em estoque")}</div></div>
+      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input" type="number" min="0" step="1" value="${Number(item.quantidade)||0}" onchange="updateStockItem(decodeURIComponent('${encodeURIComponent(c)}'),decodeURIComponent('${encodeURIComponent(n)}'),'quantidade',this.value)"></div>
+      <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input" type="number" min="0" step="1" value="${Number(item.minimo)||0}" onchange="updateStockItem(decodeURIComponent('${encodeURIComponent(c)}'),decodeURIComponent('${encodeURIComponent(n)}'),'minimo',this.value)"></div>`;
+      block.appendChild(row);
+    });
+    box.appendChild(block);
+  });
+}
+function renderStockRanking(){
+  const box=$("stockRankingList");if(!box)return;
+  const all=[];
+  Object.entries(CATEGORIAS).forEach(([c,d])=>d.itens.forEach(n=>{const x=getStockData(c,n);all.push({c,n,q:Number(x.quantidade)||0,m:Number(x.minimo)||0})}));
+  all.sort((a,b)=>a.q-b.q||a.n.localeCompare(b.n,"pt-BR"));
+  box.innerHTML=all.map((x,i)=>{const status=x.q<=0?"zero":(x.m>0&&x.q<=x.m?"low":"");return `<div class="stock-ranking-item"><div class="rank-position">${i+1}</div><div><div class="rank-name">${ITEM_ICONS[x.n]||"📦"} ${escapeHtml(x.n)}</div><div class="rank-category">${escapeHtml(x.c)}</div></div><div><div class="rank-qty ${status}">${x.q}</div><div class="rank-unit">${x.q<=0?"ZERADO":(x.m>0&&x.q<=x.m?"BAIXO":"EM ESTOQUE")}</div></div></div>`}).join("");
+}
+function renderStockControl(){renderStockSummary();renderStockItems();renderStockRanking()}
+function showStockTab(tab,btn){
+  $("stockItemsPanel").style.display=tab==="items"?"block":"none";
+  $("stockRankingPanel").style.display=tab==="ranking"?"block":"none";
+  document.querySelectorAll(".stock-tab").forEach(x=>x.classList.remove("active"));
+  if(btn)btn.classList.add("active");
+}
+function openStockControl(){
+const senha=prompt("🔐 DIGITE A SENHA PARA ACESSAR O CONTROLE DE ESTOQUE:");
+if(senha===null)return;
+if(senha!=="007"){
+  toast("🔒 SENHA INCORRETA! ACESSO NÃO AUTORIZADO.");
+  return;
+}
+renderStockControl();
+showScreen("stockControl");
+}
+
+function openOSRegister(){
+  editingOSId=null;
+  const s=$("osSetor");
+  s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");
+  $("osNumero").value="";
+  $("osCliente").value="";
+  $("osDescricao").value="";
+  $("osPrazo").value="";
+  $("osObs").value="";
+  $("osSaveButton").textContent="💾 CADASTRAR ORDEM DE SERVIÇO";
+  showScreen("osRegister");
+}
+
+function editCurrentOS(){
+  if(!selectedOS)return toast("OS não encontrada.");
+
+  const senha=prompt("🔐 DIGITE A SENHA PARA ALTERAR ESTA OS:");
+
+  if(senha===null)return;
+
+  if(senha!=="007"){
+    toast("🔒 SENHA INCORRETA! ALTERAÇÃO NÃO AUTORIZADA.");
+    return;
+  }
+
+  editingOSId=selectedOS.id;
+
+  const s=$("osSetor");
+  s.innerHTML=SETORES.map(x=>`<option>${x}</option>`).join("");
+
+  $("osNumero").value=selectedOS.numero||"";
+  $("osCliente").value=selectedOS.cliente||"";
+  $("osDescricao").value=selectedOS.descricao||"";
+  $("osSetor").value=selectedOS.setor||SETORES[0];
+  $("osPrazo").value=selectedOS.prazo||"";
+  $("osObs").value=selectedOS.obs||"";
+
+  $("osSaveButton").textContent="💾 SALVAR ALTERAÇÕES DA OS";
+  showScreen("osRegister");
+}
+
+function registerOS(){
+  const numero=$("osNumero").value.trim();
+  const cliente=$("osCliente").value.trim();
+  const descricao=$("osDescricao").value.trim();
+  const setor=$("osSetor").value;
+  const prazo=$("osPrazo").value;
+  const obs=$("osObs").value.trim();
+
+  if(!numero||!cliente||!descricao||!prazo){
+    return toast("⚠️ Preencha OS, cliente, serviço e DATA/HORÁRIO DE ENTREGA.");
+  }
+
+  const agora=new Date().toISOString();
+
+  if(editingOSId!==null){
+    const index=ordens.findIndex(o=>String(o.id)===String(editingOSId));
+
+    if(index===-1){
+      editingOSId=null;
+      return toast("OS não encontrada.");
+    }
+
+    const numeroDuplicado=ordens.some(o=>
+      String(o.numero).toLowerCase()===numero.toLowerCase() &&
+      String(o.id)!==String(editingOSId)
+    );
+
+    if(numeroDuplicado)return toast("Esse número de OS já existe.");
+
+    const antiga=ordens[index];
+
+    ordens[index]={
+      ...antiga,
+      numero,
+      cliente,
+      descricao,
+      setor,
+      prazo,
+      obs,
+      atualizada:agora
+    };
+
+    selectedOS=ordens[index];
+    editingOSId=null;
+
+    saveOS();
+    toast("✏️ OS atualizada com sucesso!");
+
+    setTimeout(()=>{
+      renderOSDetail();
+      showScreen("osDetail");
+    },500);
+
+    return;
+  }
+
+  if(ordens.some(o=>String(o.numero).toLowerCase()===numero.toLowerCase())){
+    return toast("Esse número de OS já existe.");
+  }
+
+  const dataAbertura=new Date().toISOString().slice(0,10);
+
+  ordens.push({
+    id:Date.now(),
+    numero,
+    cliente,
+    descricao,
+    setor,
+    prazo,
+    dataAbertura,
+    status:"EM ANDAMENTO",
+    obs,
+    atualizada:agora,
+    historico:[{
+      setor,
+      dataHora:agora,
+      obs:"OS cadastrada"
+    }]
+  });
+
+  saveOS();
+
+  ["osNumero","osCliente","osDescricao","osPrazo","osObs"].forEach(id=>$(id).value="");
+
+  toast("OS cadastrada com sucesso!");
+  setTimeout(openOSDashboard,500);
+}
 function saveOS(){
   localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
   if(!firebaseReady){
@@ -583,17 +865,8 @@ function saveOS(){
     toast("Erro ao salvar no Firebase.");
   });
 }
-function parseDate(s){
-  if(!s)return null;
-  const d=new Date(s);
-  return Number.isNaN(d.getTime())?null:d;
-}
-function daysDiffFromToday(date){
-  const d=parseDate(date);
-  if(!d)return Infinity;
-  const today=new Date();today.setHours(0,0,0,0);
-  return Math.floor((d.getTime()-today.getTime())/86400000);
-}
+function parseDate(s){return new Date(s+"T00:00:00")}
+function daysDiffFromToday(date){const d=parseDate(date);const today=new Date();today.setHours(0,0,0,0);return Math.round((d-today)/86400000)}
 function sectorElapsed(o){
   const h=o.historico||[];
   if(!h.length)return {days:0,hours:0,minutes:0,text:"0 Dias 0 Horas e 0 Minutos"};
@@ -765,7 +1038,7 @@ function renderOSList(){
   });
 }
 
-function openOSDetail(id){selectedOS=ordens.find(o=>String(o.id)===String(id));if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
+function openOSDetail(id){selectedOS=ordens.find(o=>o.id===id);if(!selectedOS)return toast("OS não encontrada.");renderOSDetail();showScreen("osDetail")}
 function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[]).slice().reverse();$("osDetailContent").innerHTML=`<div class="os-top"><div class="os-number">🧾 OS #${escapeHtml(o.numero)}</div><span class="priority ${d.cls}">${d.text}</span></div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📝 <b>Serviço:</b> ${escapeHtml(o.descricao)}</div><div class="detail-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"}</div><div class="detail-line">🏭 <b>Setor atual:</b> ${escapeHtml(o.setor)}</div><div class="os-days">⏱️ Está há <span id="sectorElapsed">${sectorElapsed(o).text}</span> neste setor. &nbsp;•&nbsp; ⏳ <b>Tempo de Execução:</b> <span id="executionTime">${executionTime(o)}</span></div>${o.obs?`<div class="detail-line">💬 <b>Observação:</b> ${escapeHtml(o.obs)}</div>`:""}<div class="question" style="margin-top:22px;margin-bottom:10px">
 <div class="question-label">ATUALIZAR SETOR</div>
 <div class="question-title" style="font-size:22px">SELECIONE O SETOR</div>
@@ -776,7 +1049,10 @@ function renderOSDetail(){const o=selectedOS,d=deadlineInfo(o),h=(o.historico||[
 <button class="sector-button ${o.setor==="PRODUÇÃO"?"current-sector":""}" ${o.setor==="PRODUÇÃO"?"disabled":""} onclick="transferOS('PRODUÇÃO')">PRODUÇÃO</button>
 <button class="sector-button ${o.setor==="MONTAGEM"?"current-sector":""}" ${o.setor==="MONTAGEM"?"disabled":""} onclick="transferOS('MONTAGEM')">MONTAGEM</button>
 <button class="sector-button ${o.setor==="INSTALAÇÃO / BALCÃO"?"current-sector":""}" ${o.setor==="INSTALAÇÃO / BALCÃO"?"disabled":""} onclick="transferOS('INSTALAÇÃO / BALCÃO')">INSTALAÇÃO / BALCÃO</button>
-</div>${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}<div class="timeline">
+</div>
+<button class="primary" style="margin-top:14px;background:linear-gradient(90deg,#075fb9,#3498ff)" onclick="editCurrentOS()">✏️ EDITAR OS</button>
+${o.status!=="FINALIZADA"?'<button class="primary" onclick="finishOS()">✅ MARCAR COMO FINALIZADA</button>':'<div class="os-days">🎉 ESTA OS FOI FINALIZADA</div>'}
+<div class="timeline">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px">
   <div class="question-label" style="margin:0">HISTÓRICO DA OS</div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
@@ -836,7 +1112,7 @@ function clearOSHistory(){
   renderOSDetail();
   toast("Histórico da OS limpo com sucesso.");
 }
-function clearOS(){if(!ordens.length)return toast("Não existem OS.");const senha=prompt("Digite a senha para apagar TODAS as OS:");if(senha===null)return;if(senha!=="007")return toast("Senha incorreta.");if(!confirm("ATENÇÃO: Apagar TODAS as OS permanentemente?"))return;ordens=[];selectedOS=null;saveOS();renderOSList();toast("Todas as OS foram apagadas.")}
+function clearOS(){if(!ordens.length)return toast("Não existem OS.");if(!confirm("Apagar TODAS as OS?"))return;ordens=[];selectedOS=null;saveOS();renderOSList();toast("Todas as OS foram apagadas.")}
 function exportOSCSV(){if(!ordens.length)return toast("Não existem OS.");exportCSV([["OS","CLIENTE","SERVIÇO","SETOR","ABERTURA","PRAZO","STATUS","TEMPO NO SETOR","SITUAÇÃO"],...ordens.map(o=>[o.numero,o.cliente,o.descricao,o.setor,o.dataAbertura,o.prazo,o.status,sectorElapsed(o).text,deadlineInfo(o).text])],"arasigns_ordens_servico");toast("CSV das OS gerado!")}
 renderEmployees();renderCategories();renderHistory();
 
