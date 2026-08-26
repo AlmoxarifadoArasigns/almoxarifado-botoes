@@ -239,6 +239,13 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 @media(max-width:480px){.stock-tabs-4 .stock-tab{font-size:8px}}
 
 .export-xml-almox{background:linear-gradient(120deg,#075fb9,var(--blue));border-color:rgba(47,155,255,.35)}
+
+.stock-save-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:12px 14px;border:1px solid rgba(47,155,255,.22);background:#151619;border-radius:16px}
+.stock-save-info{font-size:10px;color:var(--muted);line-height:1.4}
+.stock-save-button{border:0;border-radius:12px;padding:11px 14px;background:linear-gradient(120deg,#075fb9,var(--blue));color:#fff;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 8px 20px rgba(7,95,185,.22)}
+.stock-save-button:active{transform:scale(.97)}
+@media(max-width:520px){.stock-save-bar{align-items:stretch;flex-direction:column}.stock-save-button{width:100%}}
+
 </style>
 </head>
 <body>
@@ -305,7 +312,11 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 </div>
 
 <div id="stockItemsPanel">
-  <div class="stock-help">Cadastre a quantidade atual e o estoque mínimo de cada item. Depois, as retiradas e devoluções atualizam o saldo automaticamente.</div>
+  <div class="stock-help">Cadastre a quantidade atual e o estoque mínimo de cada item. Depois clique em <b>SALVAR QUANTIDADES</b> para gravar tudo de uma vez.</div>
+  <div class="stock-save-bar">
+    <div class="stock-save-info">💾 Alterou alguma quantidade? Salve antes de sair.</div>
+    <button class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button>
+  </div>
   <div id="stockCategoryOptions"></div>
 </div>
 
@@ -723,6 +734,28 @@ function renderStockSummary(){
   $("stockLowItems").textContent=low;
   $("stockZeroItems").textContent=zero;
 }
+function saveAllStockQuantities(){
+  const atuais=document.querySelectorAll(".stock-quantity-input");
+  const minimos=document.querySelectorAll(".stock-minimum-input");
+  let total=0;
+  atuais.forEach(input=>{
+    const c=decodeURIComponent(input.dataset.c||"");
+    const n=decodeURIComponent(input.dataset.n||"");
+    const key=getStockKey(c,n);
+    const atual=getStockData(c,n);
+    const quantidade=Math.max(0,Number(input.value)||0);
+    const minimoInput=[...minimos].find(x=>x.dataset.c===input.dataset.c&&x.dataset.n===input.dataset.n);
+    const minimo=Math.max(0,Number(minimoInput?.value)||0);
+    estoque[key]={...atual,quantidade,minimo};
+    total++;
+  });
+  saveStock();
+  renderStockSummary();
+  renderStockRanking();
+  if(typeof renderShoppingList==="function")renderShoppingList();
+  if(typeof renderStockHistory==="function")renderStockHistory();
+  toast(`💾 ${total} itens do estoque salvos com sucesso!`);
+}
 function renderStockItems(){
   const box=$("stockCategoryOptions");box.innerHTML="";
   Object.entries(CATEGORIAS).forEach(([c,d])=>{
@@ -731,8 +764,8 @@ function renderStockItems(){
     d.itens.forEach(n=>{
       const item=getStockData(c,n),row=document.createElement("div");row.className="stock-row";
       row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"📦"} ${escapeHtml(n)}</div><div class="stock-status">${Number(item.quantidade)<=0?"🔴 Sem saldo":(Number(item.minimo)>0&&Number(item.quantidade)<=Number(item.minimo)?"🟡 Estoque baixo":"🟢 Em estoque")}</div></div>
-      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input" type="number" min="0" step="1" value="${Number(item.quantidade)||0}" onchange="updateStockItem(decodeURIComponent('${encodeURIComponent(c)}'),decodeURIComponent('${encodeURIComponent(n)}'),'quantidade',this.value)"></div>
-      <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input" type="number" min="0" step="1" value="${Number(item.minimo)||0}" onchange="updateStockItem(decodeURIComponent('${encodeURIComponent(c)}'),decodeURIComponent('${encodeURIComponent(n)}'),'minimo',this.value)"></div>`;
+      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}"></div>
+      <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input stock-minimum-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.minimo)||0}"></div>`;
       block.appendChild(row);
     });
     box.appendChild(block);
