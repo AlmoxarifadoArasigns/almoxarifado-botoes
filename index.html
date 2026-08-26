@@ -239,13 +239,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 @media(max-width:480px){.stock-tabs-4 .stock-tab{font-size:8px}}
 
 .export-xml-almox{background:linear-gradient(120deg,#075fb9,var(--blue));border-color:rgba(47,155,255,.35)}
-
-.stock-save-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:12px 14px;border:1px solid rgba(47,155,255,.22);background:#151619;border-radius:16px}
-.stock-save-info{font-size:10px;color:var(--muted);line-height:1.4}
-.stock-save-button{border:0;border-radius:12px;padding:11px 14px;background:linear-gradient(120deg,#075fb9,var(--blue));color:#fff;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap;box-shadow:0 8px 20px rgba(7,95,185,.22)}
-.stock-save-button:active{transform:scale(.97)}
-@media(max-width:520px){.stock-save-bar{align-items:stretch;flex-direction:column}.stock-save-button{width:100%}}
-
+.stock-save-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;padding:12px 14px;border:1px solid rgba(47,155,255,.25);background:#151619;border-radius:16px}.stock-save-info{font-size:10px;color:var(--muted);line-height:1.45}.stock-save-button{border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(120deg,#075fb9,var(--blue));color:#fff;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap}.stock-save-button:active{transform:scale(.97)}@media(max-width:520px){.stock-save-bar{flex-direction:column;align-items:stretch}.stock-save-button{width:100%}}
 </style>
 </head>
 <body>
@@ -312,10 +306,10 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 </div>
 
 <div id="stockItemsPanel">
-  <div class="stock-help">Cadastre a quantidade atual e o estoque mínimo de cada item. Depois clique em <b>SALVAR QUANTIDADES</b> para gravar tudo de uma vez.</div>
+  <div class="stock-help">Digite as quantidades, confira tudo e depois clique em <b>SALVAR QUANTIDADES</b>.</div>
   <div class="stock-save-bar">
-    <div class="stock-save-info">💾 Alterou alguma quantidade? Salve antes de sair.</div>
-    <button class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button>
+    <div class="stock-save-info">💾 As alterações só serão gravadas quando você clicar no botão.</div>
+    <button type="button" class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button>
   </div>
   <div id="stockCategoryOptions"></div>
 </div>
@@ -716,6 +710,45 @@ function saveStock(){
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
   estoqueRef.set(estoque).catch(e=>console.error("Erro ao salvar estoque:",e));
 }
+function saveAllStockQuantities(){
+  const atuais=[...document.querySelectorAll(".stock-quantity-input")];
+  const minimos=[...document.querySelectorAll(".stock-minimum-input")];
+
+  if(!atuais.length){
+    toast("⚠️ Nenhum item de estoque encontrado.");
+    return;
+  }
+
+  atuais.forEach(input=>{
+    const c=decodeURIComponent(input.dataset.c||"");
+    const n=decodeURIComponent(input.dataset.n||"");
+    const key=getStockKey(c,n);
+    const atual=getStockData(c,n);
+    const minInput=minimos.find(x=>x.dataset.c===input.dataset.c && x.dataset.n===input.dataset.n);
+
+    estoque[key]={
+      ...atual,
+      quantidade:Math.max(0,Number(input.value)||0),
+      minimo:Math.max(0,Number(minInput?.value)||0)
+    };
+  });
+
+  // Salva localmente e no Firebase
+  localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+
+  estoqueRef.set(estoque)
+    .then(()=>{
+      renderStockSummary();
+      renderStockRanking();
+      if(typeof renderShoppingList==="function")renderShoppingList();
+      toast(`💾 ${atuais.length} itens salvos com sucesso!`);
+    })
+    .catch(error=>{
+      console.error("Erro ao salvar estoque:",error);
+      toast("⚠️ Não foi possível salvar no servidor. Verifique a conexão.");
+    });
+}
+
 function updateStockItem(c,n,field,value){
   const key=getStockKey(c,n),atual=getStockData(c,n);
   const numero=Math.max(0,Number(value)||0);
@@ -733,28 +766,6 @@ function renderStockSummary(){
   $("stockTotalItems").textContent=cadastrados;
   $("stockLowItems").textContent=low;
   $("stockZeroItems").textContent=zero;
-}
-function saveAllStockQuantities(){
-  const atuais=document.querySelectorAll(".stock-quantity-input");
-  const minimos=document.querySelectorAll(".stock-minimum-input");
-  let total=0;
-  atuais.forEach(input=>{
-    const c=decodeURIComponent(input.dataset.c||"");
-    const n=decodeURIComponent(input.dataset.n||"");
-    const key=getStockKey(c,n);
-    const atual=getStockData(c,n);
-    const quantidade=Math.max(0,Number(input.value)||0);
-    const minimoInput=[...minimos].find(x=>x.dataset.c===input.dataset.c&&x.dataset.n===input.dataset.n);
-    const minimo=Math.max(0,Number(minimoInput?.value)||0);
-    estoque[key]={...atual,quantidade,minimo};
-    total++;
-  });
-  saveStock();
-  renderStockSummary();
-  renderStockRanking();
-  if(typeof renderShoppingList==="function")renderShoppingList();
-  if(typeof renderStockHistory==="function")renderStockHistory();
-  toast(`💾 ${total} itens do estoque salvos com sucesso!`);
 }
 function renderStockItems(){
   const box=$("stockCategoryOptions");box.innerHTML="";
