@@ -820,53 +820,69 @@ function previewStockStatus(input){
   }
 }
 
-function saveAllStockQuantities(){
+async function saveAllStockQuantities(){
   const atuais=[...document.querySelectorAll(".stock-quantity-input")];
   const minimos=[...document.querySelectorAll(".stock-minimum-input")];
+  const btn=document.querySelector(".stock-save-button");
 
   if(!atuais.length){
     toast("⚠️ Nenhum item de estoque encontrado.");
     return;
   }
 
+  // Primeiro monta uma cópia completa do estoque com TODOS os valores digitados.
+  const novoEstoque={...estoque};
   atuais.forEach(input=>{
     const c=decodeURIComponent(input.dataset.c||"");
     const n=decodeURIComponent(input.dataset.n||"");
     const key=getStockKey(c,n);
-    const atual=getStockData(c,n);
+    const atual=novoEstoque[key]||getStockData(c,n)||{};
     const minInput=minimos.find(x=>x.dataset.c===input.dataset.c && x.dataset.n===input.dataset.n);
 
-    estoque[key]={
+    novoEstoque[key]={
       ...atual,
       quantidade:Math.max(0,Number(input.value)||0),
       minimo:Math.max(0,Number(minInput?.value)||0)
     };
   });
 
-  // Salva localmente e no Firebase
+  // Atualiza imediatamente a fonte principal usada por TODAS as telas.
+  estoque=novoEstoque;
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
 
-  estoqueRef.set(estoque)
-    .then(()=>{
-      // Atualiza TODAS as telas que usam o saldo recém-salvo
-      renderStockItems();
-      renderStockSummary();
-      renderStockRanking();
-      if(typeof renderShoppingList==="function")renderShoppingList();
+  if(btn){
+    btn.disabled=true;
+    btn.dataset.originalText=btn.textContent;
+    btn.textContent="⏳ SALVANDO...";
+    btn.style.opacity=".65";
+  }
 
-      // Se o almoxarifado estiver aberto depois, os badges usam o mesmo objeto "estoque".
-      // Atualiza também a categoria selecionada imediatamente, quando existir.
-      if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
-        renderItems(selectedCategory);
-      }
+  try{
+    // Aguarda o Firebase confirmar o salvamento antes de mostrar sucesso.
+    await estoqueRef.set(JSON.parse(JSON.stringify(estoque)));
 
-      updateLastUpdate();
-      toast(`💾 ${atuais.length} itens salvos e atualizados!`);
-    })
-    .catch(error=>{
-      console.error("Erro ao salvar estoque:",error);
-      toast("⚠️ Não foi possível salvar no servidor. Verifique a conexão.");
-    });
+    renderStockItems();
+    renderStockSummary();
+    renderStockRanking();
+    if(typeof renderShoppingList==="function")renderShoppingList();
+
+    if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
+      renderItems(selectedCategory);
+    }
+
+    updateLastUpdate();
+    toast(`💾 ${atuais.length} itens salvos e atualizados com sucesso!`);
+  }catch(error){
+    console.error("Erro ao salvar estoque:",error);
+    // Os dados continuam preservados localmente para não perder o que foi digitado.
+    toast("⚠️ Não consegui sincronizar com o Firebase. As quantidades ficaram salvas neste aparelho.");
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      btn.textContent=btn.dataset.originalText||"💾 SALVAR QUANTIDADES";
+      btn.style.opacity="";
+    }
+  }
 }
 
 function updateStockItem(c,n,field,value){
@@ -1421,7 +1437,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 1.4</div>
+  <div class="footer-version">VERSÃO 1.5</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
