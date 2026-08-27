@@ -253,6 +253,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 .footer-update-icon{margin-right:5px}
 
 .footer-version{display:inline-block;margin-bottom:6px;padding:5px 10px;border:1px solid rgba(47,155,255,.28);border-radius:999px;color:var(--blue);font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(47,155,255,.08)}.footer-update-line{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
+.stock-tool-row{grid-template-columns:1fr 120px!important}.tool-holder-status{margin-top:4px;font-size:9px;font-weight:800;color:#8fd3ff;line-height:1.35}@media(max-width:520px){.stock-tool-row{grid-template-columns:1fr!important}.stock-tool-row .stock-input-wrap{margin-top:8px}}
 </style>
 </head>
 <body>
@@ -471,6 +472,7 @@ movimentacoesRef.on("value",snapshot=>{
     localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
     almoxFirebaseReady=true;
     renderHistory();
+    if($("stockCategoryOptions")) renderStockItems();
   }
 
   firstMovFirebaseLoad=false;
@@ -849,53 +851,34 @@ async function saveAllStockQuantities(){
     novoEstoque[key]={
       ...(novoEstoque[key]||{}),
       quantidade:Math.max(0,parseInt(input.value,10)||0),
-      minimo:Math.max(0,parseInt(minInput?.value,10)||0)
+      minimo:minInput?Math.max(0,parseInt(minInput.value,10)||0):Math.max(0,Number((novoEstoque[key]||{}).minimo)||0)
     };
   });
 
-  // ESTA é a fonte que a tela do almoxarifado consulta.
+  // Salva IMEDIATAMENTE no armazenamento local e atualiza a fonte usada pela tela.
   estoque=novoEstoque;
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  updateLastUpdate();
 
   if(btn){
     btn.disabled=true;
-    btn.dataset.originalText=btn.textContent;
-    btn.textContent="⏳ SALVANDO...";
-    btn.style.opacity=".65";
+    btn.textContent="💾 SALVO! ATUALIZANDO...";
   }
 
-  // Atualiza a interface imediatamente, sem esperar outra tela.
-  renderStockItems();
-  renderStockSummary();
-  renderStockRanking();
-  if(typeof renderShoppingList==="function")renderShoppingList();
-  if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
-    renderItems(selectedCategory);
+  // Dispara a sincronização com o Firebase, mas não deixa o botão travado esperando.
+  try{
+    if(typeof estoqueRef!=="undefined" && estoqueRef){
+      estoqueRef.update(JSON.parse(JSON.stringify(novoEstoque)))
+        .catch(error=>console.error("Erro ao sincronizar estoque no Firebase:",error));
+    }
+  }catch(error){
+    console.error("Erro ao iniciar sincronização:",error);
   }
 
-  // Usa UPDATE para gravar cada item e não substituir dados por um snapshot antigo.
-  estoqueRef.update(novoEstoque)
-    .then(()=>{
-      updateLastUpdate();
-      toast(`💾 ${atuais.length} itens salvos! Atualizando a página...`);
-
-      // Pequena pausa para a mensagem aparecer e, em seguida, recarrega
-      // para buscar novamente o estoque já sincronizado.
-      setTimeout(()=>{
-        window.location.reload();
-      },800);
-    })
-    .catch(error=>{
-      console.error("Erro ao salvar estoque no Firebase:",error);
-      toast("⚠️ Erro ao sincronizar no Firebase. O valor ficou salvo localmente.");
-    })
-    .finally(()=>{
-      if(btn){
-        btn.disabled=false;
-        btn.textContent=btn.dataset.originalText||"💾 SALVAR QUANTIDADES";
-        btn.style.opacity="";
-      }
-    });
+  // Recarrega para confirmar que a página está lendo o estoque salvo.
+  setTimeout(()=>{
+    window.location.reload();
+  },700);
 }
 
 function updateStockItem(c,n,field,value){
@@ -916,16 +899,48 @@ function renderStockSummary(){
   $("stockLowItems").textContent=low;
   $("stockZeroItems").textContent=zero;
 }
+function getToolHolders(itemName){
+  const saldoPorPessoa={};
+  const regs=(Array.isArray(movimentacoes)?movimentacoes:[]).filter(m=>
+    String(m.categoria||"").trim().toUpperCase()==="FERRAMENTAS" &&
+    String(m.item||"").trim()===String(itemName).trim()
+  );
+
+  regs.forEach(m=>{
+    const pessoa=String(m.colaborador||"").trim();
+    if(!pessoa)return;
+    const qtd=Math.max(0,Number(m.quantidade)||0);
+    if(m.movimento==="RETIRADA") saldoPorPessoa[pessoa]=(saldoPorPessoa[pessoa]||0)+qtd;
+    if(m.movimento==="DEVOLUÇÃO") saldoPorPessoa[pessoa]=Math.max(0,(saldoPorPessoa[pessoa]||0)-qtd);
+  });
+
+  return Object.entries(saldoPorPessoa).filter(([,q])=>q>0);
+}
+function toolHolderLabel(itemName){
+  const holders=getToolHolders(itemName);
+  if(!holders.length)return "📦 DISPONÍVEL NO ALMOXARIFADO";
+  return "👤 COM: "+holders.map(([nome,q])=>q>1?`${escapeHtml(nome)} (${q})`:escapeHtml(nome)).join(", ");
+}
+
 function renderStockItems(){
   const box=$("stockCategoryOptions");box.innerHTML="";
   Object.entries(CATEGORIAS).forEach(([c,d])=>{
     const block=document.createElement("div");block.className="stock-category-block";
     block.innerHTML=`<div class="stock-category-title">${d.icon} ${escapeHtml(c)}</div>`;
+
     d.itens.forEach(n=>{
       const item=getStockData(c,n),row=document.createElement("div");row.className="stock-row";
-      row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"📦"} ${escapeHtml(n)}</div><div class="stock-status">${Number(item.quantidade)<=0?"🔴 Sem saldo":(Number(item.minimo)>0&&Number(item.quantidade)<=Number(item.minimo)?"🟡 Estoque baixo":"🟢 Em estoque")}</div></div>
-      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}" oninput="previewStockStatus(this)"></div>
-      <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input stock-minimum-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.minimo)||0}"></div>`;
+      const isTool=String(c).trim().toUpperCase()==="FERRAMENTAS";
+
+      if(isTool){
+        row.classList.add("stock-tool-row");
+        row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"🔧"} ${escapeHtml(n)}</div><div class="tool-holder-status">${toolHolderLabel(n)}</div></div>
+        <div class="stock-input-wrap"><small>QUANTIDADE</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}"></div>`;
+      }else{
+        row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"📦"} ${escapeHtml(n)}</div><div class="stock-status">${Number(item.quantidade)<=0?"🔴 Sem saldo":(Number(item.minimo)>0&&Number(item.quantidade)<=Number(item.minimo)?"🟡 Estoque baixo":"🟢 Em estoque")}</div></div>
+        <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}" oninput="previewStockStatus(this)"></div>
+        <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input stock-minimum-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.minimo)||0}"></div>`;
+      }
       block.appendChild(row);
     });
     box.appendChild(block);
@@ -1450,7 +1465,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 1.7</div>
+  <div class="footer-version">VERSÃO 1.9</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
