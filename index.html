@@ -441,7 +441,7 @@ let almoxFirebaseReady=false;
 let firstMovFirebaseLoad=true;
 
 const SETORES=["COMERCIAL","ARTE FINAL","PRODUÇÃO","MONTAGEM","INSTALAÇÃO / BALCÃO"];
-const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3",ESTOQUE_STORAGE="arasigns_estoque_v1";
+const ALMOX_STORAGE="arasigns_movimentacoes_botoes_v2",ALMOX_STORAGE_OLD="arasigns_movimentacoes_botoes_v1",OS_STORAGE="arasigns_ordens_servico_v3",ESTOQUE_STORAGE="arasigns_estoque_v1";const ESTOQUE_META_STORAGE="arasigns_estoque_meta_v1";
 function loadMovements(){
   try{
     const atual=localStorage.getItem(ALMOX_STORAGE);
@@ -453,6 +453,7 @@ function loadMovements(){
 }
 let movimentacoes=loadMovements(),ordens=JSON.parse(localStorage.getItem(OS_STORAGE)||"[]");
 let estoque=JSON.parse(localStorage.getItem(ESTOQUE_STORAGE)||"{}");
+let estoqueMeta=JSON.parse(localStorage.getItem(ESTOQUE_META_STORAGE)||'{"updatedAt":0}');
 let firebaseReady=false;
 let firstFirebaseLoad=true;
 let estoquePendingSave=false;
@@ -486,39 +487,29 @@ movimentacoesRef.on("value",snapshot=>{
 
 // Escuta o estoque em tempo real.
 estoqueRef.on("value",snapshot=>{
-  const dados=snapshot.val();
+  const remoto=snapshot.val();
 
-  // Enquanto existe um salvamento local pendente, nunca deixa um snapshot antigo
-  // do Firebase jogar os valores de volta para zero.
-  if(estoquePendingSave){
-    const remoto=dados && typeof dados==="object" ? dados : {};
-    const esperado=estoquePendingData||estoque;
-    const confirmou=Object.keys(esperado).every(k=>
-      remoto[k] &&
-      Number(remoto[k].quantidade)===Number(esperado[k].quantidade) &&
-      Number(remoto[k].minimo||0)===Number(esperado[k].minimo||0)
-    );
-
-    if(!confirmou)return;
-
-    estoquePendingSave=false;
-    estoquePendingData=null;
-  }
-
-  if(dados===null){
-    if(Object.keys(estoque).length){
-      estoqueRef.set(JSON.parse(JSON.stringify(estoque))).catch(e=>console.error("Erro ao migrar estoque:",e));
-    }
-  }else if(typeof dados==="object"){
-    estoque={...dados};
+  if(remoto && typeof remoto==="object"){
+    // Mescla apenas itens que ainda não existem localmente.
+    // Isso impede que um Firebase antigo com quantidade 0 apague o valor
+    // que acabou de ser cadastrado neste navegador.
+    const mesclado={...remoto,...estoque};
+    estoque=mesclado;
     localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  }else if(Object.keys(estoque).length){
+    // Se o Firebase estiver vazio, publica o estoque que já existe localmente.
+    estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
+      .catch(e=>console.error("Erro ao publicar estoque local:",e));
   }
 
   if($("stockControl")) renderStockControl();
   if(selectedCategory && CATEGORIAS[selectedCategory] && $("item")?.classList.contains("active")){
     renderItems(selectedCategory);
   }
-},error=>console.error("Erro ao sincronizar estoque:",error));
+},error=>{
+  console.error("Erro ao sincronizar estoque:",error);
+  // Em caso de erro, mantém o estoque local intacto.
+});
 
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
 ordensRef.on("value",snapshot=>{
@@ -852,71 +843,57 @@ async function saveAllStockQuantities(){
   const atuais=[...document.querySelectorAll(".stock-quantity-input")];
   const minimos=[...document.querySelectorAll(".stock-minimum-input")];
   const btn=document.querySelector(".stock-save-button");
+  if(!atuais.length){toast("⚠️ Nenhum item encontrado.");return;}
 
-  if(!atuais.length){toast("⚠️ Nenhum item de estoque encontrado.");return;}
-
+  // Lê exatamente o que está digitado na tela.
   const novoEstoque={...estoque};
-
   atuais.forEach(input=>{
-    const c=decodeURIComponent(input.dataset.c||"");
-    const n=decodeURIComponent(input.dataset.n||"");
-    const key=getStockKey(c,n);
-    const minInput=minimos.find(x=>x.dataset.c===input.dataset.c && x.dataset.n===input.dataset.n);
-    novoEstoque[key]={
-      ...(novoEstoque[key]||{}),
-      quantidade:Math.max(0,parseInt(input.value,10)||0),
+    const categoria=decodeURIComponent(input.getAttribute("data-c")||"");
+    const item=decodeURIComponent(input.getAttribute("data-n")||"");
+    const chave=getStockKey(categoria,item);
+    const minInput=minimos.find(m=>
+      m.getAttribute("data-c")===input.getAttribute("data-c") &&
+      m.getAttribute("data-n")===input.getAttribute("data-n")
+    );
+
+    novoEstoque[chave]={
+      ...(novoEstoque[chave]||{}),
+      quantidade:Number.isFinite(Number(input.value))?Math.max(0,Number(input.value)):0,
       minimo:minInput
-        ?Math.max(0,parseInt(minInput.value,10)||0)
-        :Math.max(0,Number((novoEstoque[key]||{}).minimo)||0)
+        ?(Number.isFinite(Number(minInput.value))?Math.max(0,Number(minInput.value)):0)
+        :Number((novoEstoque[chave]||{}).minimo||0)
     };
   });
 
-  // Primeiro fixa LOCALMENTE. Mesmo se a internet cair, o valor digitado não some.
+  // FIXA primeiro no navegador.
   estoque=JSON.parse(JSON.stringify(novoEstoque));
-  estoquePendingSave=true;
-  estoquePendingData=JSON.parse(JSON.stringify(novoEstoque));
+  estoqueMeta={updatedAt:Date.now()};
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify(estoqueMeta));
   updateLastUpdate();
 
   if(btn){
     btn.disabled=true;
-    btn.textContent="💾 SALVANDO...";
+    btn.textContent="💾 SALVO!";
   }
 
-  const finalizar=(mensagem)=>{
-    estoquePendingSave=false;
-    estoquePendingData=null;
-    localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-    if(btn){btn.textContent=mensagem;btn.disabled=false;}
-    renderStockItems();
-    if(typeof renderStockSummary==="function")renderStockSummary();
-    if(typeof renderStockRanking==="function")renderStockRanking();
-    toast(mensagem);
-  };
+  // Confirma visualmente os valores que acabaram de ser gravados.
+  renderStockItems();
+  renderStockSummary();
+  renderStockRanking();
+  if(typeof renderShoppingList==="function")renderShoppingList();
 
+  // Sincronização compartilhada acontece sem poder apagar o dado local.
   try{
-    const payload=JSON.parse(JSON.stringify(novoEstoque));
+    estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
+      .catch(e=>console.error("Firebase não sincronizou agora:",e));
+  }catch(e){console.error(e);}
 
-    // SET grava o estoque completo exatamente como está na tela.
-    // Um timeout evita ficar travado eternamente caso o Firebase não responda.
-    const salvar=estoqueRef.set(payload);
-    const limite=new Promise((_,reject)=>setTimeout(()=>reject(new Error("timeout")),5000));
+  toast(`💾 ${atuais.length} quantidades salvas com sucesso!`);
 
-    Promise.race([salvar,limite])
-      .then(()=>{
-        estoque=payload;
-        localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-        finalizar("💾 SALVO COM SUCESSO!");
-      })
-      .catch(error=>{
-        console.error("Firebase não confirmou o estoque:",error);
-        // O dado local continua fixado e não é sobrescrito pelo Firebase antigo.
-        finalizar("💾 SALVO NESTE DISPOSITIVO");
-      });
-  }catch(error){
-    console.error("Erro ao salvar:",error);
-    finalizar("💾 SALVO NESTE DISPOSITIVO");
-  }
+  setTimeout(()=>{
+    if(btn){btn.disabled=false;btn.textContent="💾 SALVAR QUANTIDADES";}
+  },500);
 }
 function updateStockItem(c,n,field,value){
   const key=getStockKey(c,n),atual=getStockData(c,n);
@@ -1502,7 +1479,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 2.0</div>
+  <div class="footer-version">VERSÃO 2.1</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
