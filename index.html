@@ -240,6 +240,8 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 
 .export-xml-almox{background:linear-gradient(120deg,#075fb9,var(--blue));border-color:rgba(47,155,255,.35)}
 .stock-save-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;padding:12px 14px;border:1px solid rgba(47,155,255,.25);background:#151619;border-radius:16px}.stock-save-info{font-size:10px;color:var(--muted);line-height:1.45}.stock-save-button{border:0;border-radius:12px;padding:12px 16px;background:linear-gradient(120deg,#075fb9,var(--blue));color:#fff;font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap}.stock-save-button:active{transform:scale(.97)}@media(max-width:520px){.stock-save-bar{flex-direction:column;align-items:stretch}.stock-save-button{width:100%}}
+.cart-mini-bar{max-width:1000px;margin:0 auto 12px;padding:12px 15px;border:1px solid rgba(47,155,255,.25);border-radius:16px;background:#151619;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px}.cart-mini-bar b{display:block;color:#fff}.cart-mini-bar span{display:block;color:var(--muted);margin-top:2px}.cart-mini-bar button,.secondary-cart-button{border:1px solid rgba(47,155,255,.4);background:rgba(47,155,255,.12);color:#fff;border-radius:11px;padding:10px 13px;font-size:10px;font-weight:900;cursor:pointer}.cart-mini-bar button span{display:inline;color:#fff;margin:0 0 0 5px;background:var(--blue);padding:2px 6px;border-radius:99px}.secondary-cart-button{width:100%;margin-top:9px}.cart-list{display:flex;flex-direction:column;gap:8px;margin:16px 0}.cart-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:12px;border:1px solid rgba(255,255,255,.08);background:#151619;border-radius:14px}.cart-row-name{font-size:12px;font-weight:900}.cart-row-meta{font-size:9px;color:var(--muted);margin-top:3px}.cart-qty-control{display:flex;align-items:center;gap:5px}.cart-qty-control button{width:28px;height:28px;border:0;border-radius:8px;background:#292b31;color:#fff;font-weight:900;cursor:pointer}.cart-qty-control b{min-width:24px;text-align:center}.cart-remove{border:0;background:transparent;color:#ff5c5c;font-size:18px;cursor:pointer}.cart-total{display:flex;justify-content:space-between;padding:13px;border-radius:12px;background:rgba(47,155,255,.1);font-size:11px}.cart-total b{color:#fff}.cart-subtitle{font-size:10px;color:var(--muted);margin-top:7px}.cart-empty{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+.finish-movement-button{width:100%;margin-top:9px;border:0;border-radius:12px;padding:14px 16px;background:linear-gradient(120deg,#17884a,#35b76b);color:#fff;font-size:11px;font-weight:900;cursor:pointer;box-shadow:0 8px 20px rgba(23,136,74,.18)}.finish-movement-button:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -269,8 +271,10 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 </div></div></section>
 <section class="screen" id="employee"><div class="page-top"><button class="back-button" onclick="showScreen('movement')">← VOLTAR</button><div class="page-title">COLABORADOR</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUEM ESTÁ FAZENDO?</div><div class="question-title">SELECIONE</div></div><div class="options-grid" id="employeeOptions"></div></div></section>
 <section class="screen" id="category"><div class="page-top"><button class="back-button" onclick="showScreen('employee')">← VOLTAR</button><div class="page-title">CATEGORIA</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRÓXIMO PASSO</div><div class="question-title">ESCOLHA A CATEGORIA</div></div><div class="category-grid" id="categoryOptions"></div></div></section>
-<section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="showScreen('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="categoryTitle">ITEM</div></div><div class="options-grid" id="itemOptions"></div></div></section>
-<section class="screen" id="quantity"><div class="page-top"><button class="back-button" onclick="showScreen('item')">← VOLTAR</button><div class="page-title">QUANTIDADE</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUANTO VAI MOVIMENTAR?</div><div class="question-title" id="quantityItemName">ITEM</div></div><input id="quantityInput" class="quantity-input" type="number" min="1" step="1" value="1" inputmode="numeric"><div class="quantity-unit">INFORME A QUANTIDADE E CONTINUE</div><button class="confirm-button" onclick="confirmQuantity()">➡️ PRÓXIMO</button><button class="cancel-button" onclick="resetMovement()">❌ CANCELAR</button></div></section>
+<section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="showScreen('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="cart-mini-bar"><div><b>🛒 CARRINHO</b><span id="cartMiniCount">0 itens</span></div><button onclick="openCart()">VER CARRINHO <span id="cartMiniBadge">0</span></button></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="categoryTitle">ITEM</div></div><div class="options-grid" id="itemOptions"></div></div></section>
+<section class="screen" id="quantity"><div class="page-top"><button class="back-button" onclick="showScreen('item')">← VOLTAR</button><div class="page-title">QUANTIDADE</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUANTO VAI MOVIMENTAR?</div><div class="question-title" id="quantityItemName">ITEM</div></div><input id="quantityInput" class="quantity-input" type="number" min="1" step="1" value="1" inputmode="numeric"><div class="quantity-unit">O QUE DESEJA FAZER?</div><button class="confirm-button" onclick="addCurrentItemToCart()">🛒 ADICIONAR AO CARRINHO</button><button class="finish-movement-button" onclick="finishCurrentMovement()">✅ FINALIZAR MOVIMENTAÇÃO</button><button class="secondary-cart-button" onclick="openCart()">🛒 VER CARRINHO</button><button class="cancel-button" onclick="resetMovement()">❌ CANCELAR</button></div></section>
+
+<section class="screen" id="cart"><div class="page-top"><button class="back-button" onclick="backFromCart()">← VOLTAR</button><div class="page-title">CARRINHO</div><div></div></div><div class="card"><div class="question"><div class="question-label">MOVIMENTAÇÃO</div><div class="question-title" id="cartMovementTitle">ITENS SELECIONADOS</div><div class="cart-subtitle">Confira os materiais antes de confirmar.</div></div><div id="cartList" class="cart-list"></div><div class="cart-total"><span>ITENS NO CARRINHO</span><b id="cartTotalItems">0</b></div><button class="confirm-button" onclick="confirmCartMovement()">✅ CONFIRMAR TODA A MOVIMENTAÇÃO</button><button class="secondary-cart-button" onclick="backFromCart()">➕ ADICIONAR MAIS ITENS</button><button class="cancel-button" onclick="clearCart()">🗑️ LIMPAR CARRINHO</button></div></section>
 
 <section class="screen" id="confirm"><div class="page-top"><button class="back-button" onclick="showScreen('quantity')">← VOLTAR</button><div class="page-title">CONFIRMAR</div><div></div></div><div class="card"><div class="question"><div class="question-label">CONFIRME A MOVIMENTAÇÃO</div><div class="question-title">TUDO CERTO?</div></div><div class="summary"><div class="summary-box"><div class="summary-label">MOVIMENTO</div><div class="summary-value" id="summaryMovement">—</div></div><div class="summary-box"><div class="summary-label">COLABORADOR</div><div class="summary-value" id="summaryEmployee">—</div></div><div class="summary-box"><div class="summary-label">CATEGORIA</div><div class="summary-value" id="summaryCategory">—</div></div><div class="summary-box"><div class="summary-label">ITEM</div><div class="summary-value" id="summaryItem">—</div></div><div class="summary-box"><div class="summary-label">QUANTIDADE</div><div class="summary-value" id="summaryQuantity">—</div></div></div><button class="confirm-button" onclick="confirmMovement()">✅ CONFIRMAR MOVIMENTAÇÃO</button><button class="cancel-button" onclick="resetMovement()">❌ CANCELAR</button></div></section>
 
@@ -481,7 +485,7 @@ ordensRef.on("value",snapshot=>{
   setServerStatus("offline");
   toast("Erro ao conectar no Firebase.");
 });
-let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null,editingOSId=null;
+let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null,editingOSId=null,cartItems=[];
 const $=id=>document.getElementById(id);
 
 function setServerStatus(status){
@@ -594,31 +598,91 @@ function checkOSNotifications(lista){
 function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));const t=$(id);if(t)t.classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
 function toast(m){const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
 function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function startMovement(){selectedMovement=selectedEmployee=selectedCategory=selectedItem=selectedQuantity=null;showScreen("movement")}
+function startMovement(){selectedMovement=selectedEmployee=selectedCategory=selectedItem=selectedQuantity=null;cartItems=[];updateCartUI();showScreen("movement")}
 function selectMovement(t){selectedMovement=t;showScreen("employee")}
 function renderEmployees(){const b=$("employeeOptions");b.innerHTML="";COLABORADORES.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${COLABORADOR_ICONS[n]||"👤"}</div><div class="option-name">${escapeHtml(n)}</div>`;x.onclick=()=>{selectedEmployee=n;showScreen("category")};b.appendChild(x)})}
 function renderCategories(){const b=$("categoryOptions");b.innerHTML="";Object.entries(CATEGORIAS).forEach(([n,d])=>{const x=document.createElement("button");x.className="category";x.innerHTML=`<div class="category-icon">${d.icon}</div><div>${n}</div>`;x.onclick=()=>{selectedCategory=n;$("categoryTitle").textContent=n;renderItems(n);showScreen("item")};b.appendChild(x)})}
 function getStockKey(c,n){return c+"|||"+n}
 function getStockData(c,n){return estoque[getStockKey(c,n)]||{quantidade:0,minimo:0}}
 function stockBadge(c,n){const d=getStockData(c,n),q=Number(d.quantidade)||0,m=Number(d.minimo)||0;let cls=q<=0?"zero":(m>0&&q<=m?"low":"");return `<div class="stock-badge ${cls}">${q}</div>`}
-function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].itens.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${ITEM_ICONS[n]||"📦"}</div><div class="option-name">${escapeHtml(n)}</div>${stockBadge(c,n)}`;x.onclick=()=>{selectedItem=n;selectedQuantity=1;$("quantityItemName").textContent=selectedItem;$("quantityInput").value=1;showScreen("quantity")};b.appendChild(x)})}
-function confirmQuantity(){const q=Number($("quantityInput").value);if(!Number.isFinite(q)||q<=0||!Number.isInteger(q))return toast("Informe uma quantidade válida.");selectedQuantity=q;$("summaryMovement").textContent=selectedMovement;$("summaryEmployee").textContent=selectedEmployee;$("summaryCategory").textContent=selectedCategory;$("summaryItem").textContent=selectedItem;$("summaryQuantity").textContent=selectedQuantity;showScreen("confirm")}
-function confirmMovement(){
-if(!selectedMovement||!selectedEmployee||!selectedCategory||!selectedItem||!selectedQuantity)return toast("Complete todas as etapas.");
-const registro={id:Date.now(),dataHora:new Date().toLocaleString("pt-BR"),movimento:selectedMovement,colaborador:selectedEmployee,categoria:selectedCategory,item:selectedItem,quantidade:Number(selectedQuantity)};
-const saldoAtual=getStockData(selectedCategory,selectedItem).quantidade||0;
-if(selectedMovement==="RETIRADA" && Number(selectedQuantity)>Number(saldoAtual)){
-  return toast("⚠️ Quantidade maior que o saldo disponível em estoque.");
+function renderItems(c){const b=$("itemOptions");b.innerHTML="";CATEGORIAS[c].itens.forEach(n=>{const x=document.createElement("button");x.className="option";x.innerHTML=`<div class="option-icon">${ITEM_ICONS[n]||"📦"}</div><div class="option-name">${escapeHtml(n)}</div>${stockBadge(c,n)}`;x.onclick=()=>{selectedItem=n;selectedQuantity=1;$("quantityItemName").textContent=selectedItem;$("quantityInput").value=1;showScreen("quantity")};b.appendChild(x)});updateCartUI()}
+function addCurrentItemToCart(showMessage=true){
+  const q=Number($("quantityInput").value);
+  if(!Number.isFinite(q)||q<=0||!Number.isInteger(q)){toast("Informe uma quantidade válida.");return false;}
+  const key=getStockKey(selectedCategory,selectedItem);
+  const existing=cartItems.find(x=>getStockKey(x.categoria,x.item)===key);
+  const requested=(existing?Number(existing.quantidade):0)+q;
+  const saldo=Number(getStockData(selectedCategory,selectedItem).quantidade)||0;
+  if(selectedMovement==="RETIRADA"&&requested>saldo){toast(`⚠️ Saldo disponível: ${saldo}. No carrinho já existem ${existing?existing.quantidade:0}.`);return false;}
+  if(existing)existing.quantidade=requested;
+  else cartItems.push({categoria:selectedCategory,item:selectedItem,quantidade:q});
+  updateCartUI();
+  if(showMessage)toast(`🛒 ${selectedItem} adicionado ao carrinho!`);
+  return true;
 }
-movimentacoes.push(registro);
-const chave=getStockKey(selectedCategory,selectedItem);
-const atual=getStockData(selectedCategory,selectedItem);
-estoque[chave]={...atual,quantidade:selectedMovement==="RETIRADA"?Number(atual.quantidade)-Number(selectedQuantity):Number(atual.quantidade)+Number(selectedQuantity)};
-saveStock();
-saveMovements();
-toast(selectedMovement==="RETIRADA"?"Retirada registrada e estoque atualizado!":"Devolução registrada e estoque atualizado!");
-setTimeout(()=>{renderHistory();showScreen("movement")},700)
+function confirmQuantity(){
+  if(addCurrentItemToCart()){renderItems(selectedCategory);showScreen("item");}
 }
+function finishCurrentMovement(){
+  if(!addCurrentItemToCart(false))return;
+  renderCart();
+  confirmCartMovement();
+}
+function updateCartUI(){
+  const total=cartItems.reduce((s,x)=>s+Number(x.quantidade||0),0);
+  const count=cartItems.length;
+  const countEl=$("cartMiniCount"),badge=$("cartMiniBadge");
+  if(countEl)countEl.textContent=`${count} item${count!==1?"s":""} • ${total} unidade${total!==1?"s":""}`;
+  if(badge)badge.textContent=count;
+}
+function openCart(){
+  if(!cartItems.length)return toast("🛒 O carrinho está vazio.");
+  renderCart();
+  showScreen("cart");
+}
+function renderCart(){
+  const box=$("cartList");
+  if(!box)return;
+  $("cartMovementTitle").textContent=selectedMovement==="RETIRADA"?"RETIRADA DE MATERIAIS":"DEVOLUÇÃO DE MATERIAIS";
+  if(!cartItems.length){box.innerHTML='<div class="cart-empty">🛒 Nenhum item no carrinho.</div>';$("cartTotalItems").textContent="0";return}
+  box.innerHTML=cartItems.map((x,i)=>`<div class="cart-row"><div><div class="cart-row-name">${ITEM_ICONS[x.item]||"📦"} ${escapeHtml(x.item)}</div><div class="cart-row-meta">${escapeHtml(x.categoria)} • Saldo atual: ${Number(getStockData(x.categoria,x.item).quantidade)||0}</div></div><div class="cart-qty-control"><button onclick="changeCartQty(${i},-1)">−</button><b>${x.quantidade}</b><button onclick="changeCartQty(${i},1)">+</button></div><button class="cart-remove" onclick="removeCartItem(${i})">×</button></div>`).join("");
+  $("cartTotalItems").textContent=cartItems.reduce((s,x)=>s+Number(x.quantidade||0),0);
+}
+function changeCartQty(i,delta){
+  const x=cartItems[i];if(!x)return;
+  const next=Number(x.quantidade)+delta;
+  if(next<=0){removeCartItem(i);return}
+  const saldo=Number(getStockData(x.categoria,x.item).quantidade)||0;
+  if(selectedMovement==="RETIRADA"&&next>saldo)return toast(`⚠️ Saldo disponível: ${saldo}.`);
+  x.quantidade=next;updateCartUI();renderCart();
+}
+function removeCartItem(i){cartItems.splice(i,1);updateCartUI();renderCart()}
+function clearCart(){cartItems=[];updateCartUI();toast("🗑️ Carrinho limpo.");showScreen("category")}
+function backFromCart(){if(selectedCategory){renderItems(selectedCategory);showScreen("item")}else showScreen("category")}
+function confirmCartMovement(){
+  if(!selectedMovement||!selectedEmployee||!cartItems.length)return toast("Complete a movimentação e adicione itens.");
+  // valida tudo antes de alterar qualquer saldo
+  if(selectedMovement==="RETIRADA"){
+    for(const x of cartItems){
+      const saldo=Number(getStockData(x.categoria,x.item).quantidade)||0;
+      if(Number(x.quantidade)>saldo)return toast(`⚠️ ${x.item}: solicitado ${x.quantidade}, disponível ${saldo}.`);
+    }
+  }
+  const agora=new Date().toLocaleString("pt-BR");
+  const baseId=Date.now();
+  cartItems.forEach((x,i)=>{
+    movimentacoes.push({id:baseId+i,dataHora:agora,movimento:selectedMovement,colaborador:selectedEmployee,categoria:x.categoria,item:x.item,quantidade:Number(x.quantidade)});
+    const chave=getStockKey(x.categoria,x.item),atual=getStockData(x.categoria,x.item);
+    estoque[chave]={...atual,quantidade:selectedMovement==="RETIRADA"?Math.max(0,Number(atual.quantidade)-Number(x.quantidade)):Number(atual.quantidade)+Number(x.quantidade)};
+  });
+  saveStock();
+  saveMovements();
+  const totalItens=cartItems.length;
+  cartItems=[];updateCartUI();
+  toast(`✅ ${totalItens} item${totalItens!==1?"s":""} movimentado${totalItens!==1?"s":""} e estoque atualizado!`);
+  setTimeout(()=>{renderHistory();showScreen("movement")},700);
+}
+
 function resetMovement(){startMovement()}
 function saveMovements(){
   localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
@@ -710,6 +774,18 @@ function saveStock(){
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
   estoqueRef.set(estoque).catch(e=>console.error("Erro ao salvar estoque:",e));
 }
+function previewStockStatus(input){
+  const row=input.closest(".stock-row");
+  if(!row)return;
+  const minimoInput=row.querySelector(".stock-minimum-input");
+  const status=row.querySelector(".stock-status");
+  const q=Math.max(0,Number(input.value)||0);
+  const m=Math.max(0,Number(minimoInput?.value)||0);
+  if(status){
+    status.textContent=q<=0?"🔴 Sem saldo":(m>0&&q<=m?"🟡 Estoque baixo":"🟢 Em estoque");
+  }
+}
+
 function saveAllStockQuantities(){
   const atuais=[...document.querySelectorAll(".stock-quantity-input")];
   const minimos=[...document.querySelectorAll(".stock-minimum-input")];
@@ -738,10 +814,19 @@ function saveAllStockQuantities(){
 
   estoqueRef.set(estoque)
     .then(()=>{
+      // Atualiza TODAS as telas que usam o saldo recém-salvo
+      renderStockItems();
       renderStockSummary();
       renderStockRanking();
       if(typeof renderShoppingList==="function")renderShoppingList();
-      toast(`💾 ${atuais.length} itens salvos com sucesso!`);
+
+      // Se o almoxarifado estiver aberto depois, os badges usam o mesmo objeto "estoque".
+      // Atualiza também a categoria selecionada imediatamente, quando existir.
+      if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
+        renderItems(selectedCategory);
+      }
+
+      toast(`💾 ${atuais.length} itens salvos e atualizados!`);
     })
     .catch(error=>{
       console.error("Erro ao salvar estoque:",error);
@@ -775,7 +860,7 @@ function renderStockItems(){
     d.itens.forEach(n=>{
       const item=getStockData(c,n),row=document.createElement("div");row.className="stock-row";
       row.innerHTML=`<div><div class="stock-row-name">${ITEM_ICONS[n]||"📦"} ${escapeHtml(n)}</div><div class="stock-status">${Number(item.quantidade)<=0?"🔴 Sem saldo":(Number(item.minimo)>0&&Number(item.quantidade)<=Number(item.minimo)?"🟡 Estoque baixo":"🟢 Em estoque")}</div></div>
-      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}"></div>
+      <div class="stock-input-wrap"><small>ATUAL</small><input class="stock-input stock-quantity-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.quantidade)||0}" oninput="previewStockStatus(this)"></div>
       <div class="stock-input-wrap"><small>MÍNIMO</small><input class="stock-input stock-minimum-input" data-c="${encodeURIComponent(c)}" data-n="${encodeURIComponent(n)}" type="number" min="0" step="1" value="${Number(item.minimo)||0}"></div>`;
       block.appendChild(row);
     });
