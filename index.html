@@ -254,9 +254,6 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 
 .footer-version{display:inline-block;margin-bottom:6px;padding:5px 10px;border:1px solid rgba(47,155,255,.28);border-radius:999px;color:var(--blue);font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(47,155,255,.08)}.footer-update-line{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
 .stock-tool-row{grid-template-columns:1fr 120px!important}.tool-holder-status{margin-top:4px;font-size:9px;font-weight:800;color:#8fd3ff;line-height:1.35}@media(max-width:520px){.stock-tool-row{grid-template-columns:1fr!important}.stock-tool-row .stock-input-wrap{margin-top:8px}}
-.sync-status{font-size:9px;color:var(--muted);margin-bottom:5px}.sync-status.online{color:#70d99a}.sync-status.error{color:#ff7777}
-.stock-cloud-refresh-button{display:block;width:100%;margin:8px 0;border:1px solid rgba(47,155,255,.35);border-radius:10px;padding:10px;background:rgba(47,155,255,.08);color:#9ed9ff;font-size:9px;font-weight:900;cursor:pointer}.stock-cloud-refresh-button:active{transform:scale(.98)}
-.cloud-sync-btn{background:linear-gradient(135deg,#173b63,#2f86d5)!important;border-color:rgba(91,183,255,.45)!important}.cloud-sync-btn:hover{filter:brightness(1.08)}
 </style>
 </head>
 <body>
@@ -275,8 +272,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="card"><div class="question"><div class="question-label">ARASIGNS</div><div class="question-title">O QUE VOCÊ DESEJA ACESSAR?</div></div>
 <div class="home-grid">
 <button class="home-button almox" onclick="startMovement()">📦<br>ALMOXARIFADO</button>
-<button class="home-button estoque" onclick="openStockControl()">📦<br>CONTROLE DE<br>ESTOQUE</button>
-<button class="main-btn cloud-sync-btn" onclick="syncEverythingFromCloud()">☁️<span>SINCRONIZAR TUDO</span></button><button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
+<button class="home-button estoque" onclick="openStockControl()">📦<br>CONTROLE DE<br>ESTOQUE</button><button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button>
 </div></div></section>
 
 <section class="screen" id="movement"><div class="page-top"><button class="back-button" onclick="showScreen('home')">← VOLTAR</button><div class="page-title">MOVIMENTAÇÃO</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRIMEIRO PASSO</div><div class="question-title">RETIRADA OU DEVOLUÇÃO?</div></div><div class="movement-choice"><button class="btn-retirada" onclick="selectMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="selectMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div></div><div class="card"><div class="history-header"><div class="history-title">📋 HISTÓRICO DE MOVIMENTAÇÕES</div><div class="history-count" id="historyCount">0 REGISTROS</div></div><div id="history"><div class="empty">📋<br><br>Nenhuma movimentação registrada.</div></div>
@@ -329,7 +325,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   <div class="stock-help">Digite as quantidades, confira tudo e depois clique em <b>SALVAR QUANTIDADES</b>.</div>
   <div class="stock-save-bar">
     <div class="stock-save-info">💾 As alterações só serão gravadas quando você clicar no botão.</div>
-    <button type="button" class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button><button type="button" class="stock-cloud-refresh-button" onclick="forceCloudStockRefresh()">☁️ ATUALIZAR DO SERVIDOR</button>
+    <button type="button" class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button>
   </div>
   <div id="stockCategoryOptions"></div>
 </div>
@@ -466,45 +462,44 @@ let estoquePendingData=null;
 // Escuta o histórico do almoxarifado em TEMPO REAL.
 movimentacoesRef.on("value",snapshot=>{
   const dados=snapshot.val();
+
   if(dados===null && firstMovFirebaseLoad && movimentacoes.length){
-    movimentacoesRef.set(movimentacoes).catch(e=>console.error("Erro ao migrar movimentações:",e));
-  }else if(dados!==null){
-    movimentacoes=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
-    localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
+    // Migra os registros antigos uma única vez.
+    movimentacoesRef.set(movimentacoes);
+  }else{
+    movimentacoes=Array.isArray(dados)
+      ? dados.filter(Boolean)
+      : Object.values(dados||{});
+
     checkMovementNotifications(movimentacoes);
+    localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
     almoxFirebaseReady=true;
-    if($("history"))renderHistory();
-    if($("stockControl"))renderStockControl();
-    if($("stockCategoryOptions"))renderStockItems();
-    if(selectedCategory && CATEGORIAS[selectedCategory] && $("item")?.classList.contains("active"))renderItems(selectedCategory);
+    renderHistory();
+    if($("stockCategoryOptions")) renderStockItems();
   }
+
   firstMovFirebaseLoad=false;
 },error=>{
   console.error("Erro ao sincronizar movimentações:",error);
   almoxFirebaseReady=false;
+  toast("Erro ao sincronizar o histórico do almoxarifado.");
 });
 
 // Escuta o estoque em tempo real.
 estoqueRef.on("value",snapshot=>{
-  const dados=snapshot.val();
+  const remoto=snapshot.val();
 
-  if(dados && typeof dados==="object"){
-    // FIREBASE É A FONTE OFICIAL.
-    // O localStorage é somente cache; nunca ganha de uma informação
-    // que veio do banco compartilhado.
-    estoque={...dados};
+  if(remoto && typeof remoto==="object"){
+    // Mescla apenas itens que ainda não existem localmente.
+    // Isso impede que um Firebase antigo com quantidade 0 apague o valor
+    // que acabou de ser cadastrado neste navegador.
+    const mesclado={...remoto,...estoque};
+    estoque=mesclado;
     localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-    const syncEl=$("syncStatus");if(syncEl){syncEl.textContent="☁️ SINCRONIZADO COM O SERVIDOR";syncEl.className="sync-status online";}
-    localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({updatedAt:Date.now(),source:"firebase"}));
-  }else if(dados===null){
-    // Só cria o nó no Firebase se ele realmente estiver vazio.
-    // O cache local serve para fazer a primeira migração.
-    const local=JSON.parse(localStorage.getItem(ESTOQUE_STORAGE)||"{}");
-    if(Object.keys(local).length){
-      estoque={...local};
-      estoqueRef.set(JSON.parse(JSON.stringify(local)))
-        .catch(e=>console.error("Erro ao criar estoque no Firebase:",e));
-    }
+  }else if(Object.keys(estoque).length){
+    // Se o Firebase estiver vazio, publica o estoque que já existe localmente.
+    estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
+      .catch(e=>console.error("Erro ao publicar estoque local:",e));
   }
 
   if($("stockControl")) renderStockControl();
@@ -513,31 +508,53 @@ estoqueRef.on("value",snapshot=>{
   }
 },error=>{
   console.error("Erro ao sincronizar estoque:",error);
-  const syncEl=$("syncStatus");if(syncEl){syncEl.textContent="⚠️ SEM SINCRONIZAÇÃO";syncEl.className="sync-status error";}
+  // Em caso de erro, mantém o estoque local intacto.
 });
 
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
 ordensRef.on("value",snapshot=>{
   const dados=snapshot.val();
+
   if(dados===null && firstFirebaseLoad && ordens.length){
-    ordensRef.set(ordens).catch(e=>console.error("Erro ao migrar OS:",e));
-  }else if(dados!==null){
+    // Migra automaticamente as OS que já existiam no navegador.
+    ordensRef.set(ordens);
+  }else{
     ordens=Array.isArray(dados)?dados.filter(Boolean):Object.values(dados||{});
-    localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
     checkOSNotifications(ordens);
-    firebaseReady=true;
+    localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
     if(selectedOS){
       const atualizada=ordens.find(o=>String(o.id)===String(selectedOS.id));
       selectedOS=atualizada||null;
-      if(atualizada && $("osDetail")?.classList.contains("active"))renderOSDetail();
+      if(atualizada && $("osDetail").classList.contains("active"))renderOSDetail();
     }
-    if($("osDashboard"))renderDashboard();
+    if($("osDashboard").classList.contains("active"))renderDashboard();
   }
+
+  firebaseReady=true;
   firstFirebaseLoad=false;
 },error=>{
-  console.error("Erro ao sincronizar OS:",error);
-  firebaseReady=false;
+  console.error("Erro ao conectar no Firebase:",error);
+  setServerStatus("offline");
+  toast("Erro ao conectar no Firebase.");
 });
+let selectedMovement=null,selectedEmployee=null,selectedCategory=null,selectedItem=null,selectedQuantity=null,selectedOS=null,editingOSId=null,cartItems=[];
+const $=id=>document.getElementById(id);
+
+function setServerStatus(status){
+  const box=$("serverStatus");
+  const text=$("serverStatusText");
+  if(!box||!text)return;
+
+  box.className="server-status "+status;
+
+  if(status==="connected"){
+    text.textContent="SERVIDOR CONECTADO • TEMPO REAL";
+  }else if(status==="offline"){
+    text.textContent="SEM CONEXÃO • RECONECTANDO...";
+  }else{
+    text.textContent="CONECTANDO AO SERVIDOR...";
+  }
+}
 
 // Status real da conexão com o Firebase.
 db.ref(".info/connected").on("value",snap=>{
@@ -722,9 +739,18 @@ function confirmCartMovement(){
 function resetMovement(){startMovement()}
 function saveMovements(){
   localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
-  movimentacoesRef.set(JSON.parse(JSON.stringify(movimentacoes)))
-    .then(()=>{almoxFirebaseReady=true;})
-    .catch(error=>{console.error("Erro ao salvar movimentações:",error);almoxFirebaseReady=false;toast("❌ Erro ao sincronizar movimentações.");});
+
+  movimentacoesRef.set(movimentacoes)
+    .then(()=>{
+      almoxFirebaseReady=true;
+    })
+    .catch(error=>{
+      console.error("Erro ao salvar movimentações:",error);
+      almoxFirebaseReady=false;
+      toast("Erro ao salvar no servidor.");
+    });
+
+  renderHistory();
 }
 function renderHistory(){
 const b=$("history"),c=$("historyCount");
@@ -799,19 +825,7 @@ function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem mo
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
 function saveStock(){
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-
-  // Movimentações atualizam o estoque no Firebase de forma completa.
-  // O listener em tempo real nos outros dispositivos recebe a alteração.
-  estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
-    .then(()=>{
-      const el=$("syncStatus");
-      if(el){el.textContent="☁️ ESTOQUE SINCRONIZADO";el.className="sync-status online";}
-    })
-    .catch(e=>{
-      console.error("Erro ao salvar estoque:",e);
-      const el=$("syncStatus");
-      if(el){el.textContent="⚠️ ERRO AO SINCRONIZAR";el.className="sync-status error";}
-    });
+  estoqueRef.set(estoque).catch(e=>console.error("Erro ao salvar estoque:",e));
 }
 function previewStockStatus(input){
   const row=input.closest(".stock-row");
@@ -825,123 +839,61 @@ function previewStockStatus(input){
   }
 }
 
-async async function saveAllStockQuantities(){
+async function saveAllStockQuantities(){
   const atuais=[...document.querySelectorAll(".stock-quantity-input")];
   const minimos=[...document.querySelectorAll(".stock-minimum-input")];
   const btn=document.querySelector(".stock-save-button");
+  if(!atuais.length){toast("⚠️ Nenhum item encontrado.");return;}
 
-  if(!atuais.length){
-    toast("⚠️ Nenhum item encontrado.");
-    return;
-  }
-
-  const alteracoes={};
-
-  // Monta SOMENTE os itens que estão na tela.
+  // Lê exatamente o que está digitado na tela.
+  const novoEstoque={...estoque};
   atuais.forEach(input=>{
     const categoria=decodeURIComponent(input.getAttribute("data-c")||"");
     const item=decodeURIComponent(input.getAttribute("data-n")||"");
     const chave=getStockKey(categoria,item);
-
     const minInput=minimos.find(m=>
       m.getAttribute("data-c")===input.getAttribute("data-c") &&
       m.getAttribute("data-n")===input.getAttribute("data-n")
     );
 
-    const atual=estoque[chave]||{};
-    alteracoes[chave]={
-      ...atual,
-      quantidade:Math.max(0,Number(input.value)||0),
+    novoEstoque[chave]={
+      ...(novoEstoque[chave]||{}),
+      quantidade:Number.isFinite(Number(input.value))?Math.max(0,Number(input.value)):0,
       minimo:minInput
-        ?Math.max(0,Number(minInput.value)||0)
-        :Math.max(0,Number(atual.minimo)||0)
+        ?(Number.isFinite(Number(minInput.value))?Math.max(0,Number(minInput.value)):0)
+        :Number((novoEstoque[chave]||{}).minimo||0)
     };
   });
 
-  // Atualiza a interface local imediatamente.
-  estoque={...estoque,...alteracoes};
+  // FIXA primeiro no navegador.
+  estoque=JSON.parse(JSON.stringify(novoEstoque));
+  estoqueMeta={updatedAt:Date.now()};
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+  localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify(estoqueMeta));
+  updateLastUpdate();
 
   if(btn){
     btn.disabled=true;
-    btn.textContent="☁️ SINCRONIZANDO...";
+    btn.textContent="💾 SALVO!";
   }
 
-  const syncEl=$("syncStatus");
-  if(syncEl){
-    syncEl.textContent="☁️ ENVIANDO PARA O SERVIDOR...";
-    syncEl.className="sync-status";
-  }
+  // Confirma visualmente os valores que acabaram de ser gravados.
+  renderStockItems();
+  renderStockSummary();
+  renderStockRanking();
+  if(typeof renderShoppingList==="function")renderShoppingList();
 
+  // Sincronização compartilhada acontece sem poder apagar o dado local.
   try{
-    /*
-      UPDATE por item:
-      em vez de mandar um objeto gigante e correr o risco de substituir
-      dados antigos, cada material é escrito individualmente no Firebase.
-    */
-    await estoqueRef.update(alteracoes);
+    estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
+      .catch(e=>console.error("Firebase não sincronizou agora:",e));
+  }catch(e){console.error(e);}
 
-    // Confirma LENDO DE VOLTA o que acabou de ser gravado.
-    const confirmacao=await estoqueRef.once("value");
-    const remoto=confirmacao.val()||{};
+  toast(`💾 ${atuais.length} quantidades salvas com sucesso!`);
 
-    const erros=[];
-    Object.entries(alteracoes).forEach(([chave,esperado])=>{
-      const recebido=remoto[chave];
-      if(!recebido || Number(recebido.quantidade)!==Number(esperado.quantidade)){
-        erros.push(chave);
-      }
-    });
-
-    if(erros.length){
-      throw new Error("Firebase não confirmou "+erros.length+" item(ns).");
-    }
-
-    // Só aqui consideramos sincronizado.
-    estoque={...remoto};
-    localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-    localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({
-      updatedAt:Date.now(),
-      source:"firebase",
-      verified:true
-    }));
-    updateLastUpdate();
-
-    renderStockItems();
-    renderStockSummary();
-    renderStockRanking();
-    if(typeof renderShoppingList==="function")renderShoppingList();
-    if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
-      renderItems(selectedCategory);
-    }
-
-    if(syncEl){
-      syncEl.textContent="☁️ ESTOQUE SINCRONIZADO E CONFIRMADO";
-      syncEl.className="sync-status online";
-    }
-
-    if(btn){
-      btn.disabled=false;
-      btn.textContent="💾 SALVAR QUANTIDADES";
-    }
-
-    toast(`✅ ${Object.keys(alteracoes).length} itens gravados no servidor!`);
-
-  }catch(error){
-    console.error("ERRO REAL AO SINCRONIZAR ESTOQUE:",error);
-
-    if(syncEl){
-      syncEl.textContent="❌ NÃO FOI POSSÍVEL CONFIRMAR NO SERVIDOR";
-      syncEl.className="sync-status error";
-    }
-
-    if(btn){
-      btn.disabled=false;
-      btn.textContent="💾 TENTAR NOVAMENTE";
-    }
-
-    toast("❌ O servidor não confirmou o salvamento. A quantidade local foi mantida.");
-  }
+  setTimeout(()=>{
+    if(btn){btn.disabled=false;btn.textContent="💾 SALVAR QUANTIDADES";}
+  },500);
 }
 function updateStockItem(c,n,field,value){
   const key=getStockKey(c,n),atual=getStockData(c,n);
@@ -1108,56 +1060,6 @@ function showStockTab(tab,btn){
   if(tab==="shopping")renderShoppingList();
   if(tab==="history")renderStockHistory();
 }
-function forceCloudStockRefresh(){
-  const el=$("syncStatus");
-  if(el){el.textContent="☁️ BUSCANDO ESTOQUE DO SERVIDOR...";el.className="sync-status";}
-  estoqueRef.once("value")
-    .then(snapshot=>{
-      const dados=snapshot.val();
-      if(dados && typeof dados==="object"){
-        estoque={...dados};
-        localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-        localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({updatedAt:Date.now(),source:"firebase",verified:true}));
-        renderStockControl();
-        if(el){el.textContent="☁️ ESTOQUE ATUALIZADO DO SERVIDOR";el.className="sync-status online";}
-        toast("☁️ Estoque atualizado diretamente do servidor!");
-      }else{
-        if(el){el.textContent="⚠️ SERVIDOR SEM ESTOQUE";el.className="sync-status error";}
-        toast("⚠️ O servidor não possui dados de estoque.");
-      }
-    })
-    .catch(error=>{
-      console.error(error);
-      if(el){el.textContent="❌ ERRO AO LER SERVIDOR";el.className="sync-status error";}
-      toast("❌ Não consegui ler o estoque do servidor.");
-    });
-}
-
-async function syncEverythingFromCloud(){
-  const el=$("syncStatus");
-  if(el){el.textContent="☁️ SINCRONIZANDO TODO O SISTEMA...";el.className="sync-status";}
-  try{
-    const [osSnap,movSnap,stockSnap]=await Promise.all([
-      ordensRef.once("value"),movimentacoesRef.once("value"),estoqueRef.once("value")
-    ]);
-    const cloudOS=osSnap.val(), cloudMov=movSnap.val(), cloudStock=stockSnap.val();
-    if(cloudOS!==null){ordens=Array.isArray(cloudOS)?cloudOS.filter(Boolean):Object.values(cloudOS||{});localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));}
-    if(cloudMov!==null){movimentacoes=Array.isArray(cloudMov)?cloudMov.filter(Boolean):Object.values(cloudMov||{});localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));}
-    if(cloudStock!==null){estoque={...cloudStock};localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));}
-    updateLastUpdate();
-    if($("osDashboard"))renderDashboard();
-    if($("history"))renderHistory();
-    if($("stockControl"))renderStockControl();
-    if(selectedCategory && CATEGORIAS[selectedCategory])renderItems(selectedCategory);
-    if(el){el.textContent="☁️ TUDO SINCRONIZADO COM O SERVIDOR";el.className="sync-status online";}
-    toast("☁️ Sistema inteiro sincronizado!");
-  }catch(error){
-    console.error("Erro na sincronização geral:",error);
-    if(el){el.textContent="❌ ERRO NA SINCRONIZAÇÃO GERAL";el.className="sync-status error";}
-    toast("❌ Não consegui sincronizar tudo.");
-  }
-}
-
 function openStockControl(){
 const senha=prompt("🔐 DIGITE A SENHA PARA ACESSAR O CONTROLE DE ESTOQUE:");
 if(senha===null)return;
@@ -1299,10 +1201,14 @@ function registerOS(){
 }
 function saveOS(){
   localStorage.setItem(OS_STORAGE,JSON.stringify(ordens));
-  if(!firebaseReady){toast("⚠️ Ainda conectando ao servidor.");return;}
-  ordensRef.set(JSON.parse(JSON.stringify(ordens)))
-    .then(()=>{const el=$("syncStatus");if(el){el.textContent="☁️ ORDENS DE SERVIÇO SINCRONIZADAS";el.className="sync-status online";}})
-    .catch(error=>{console.error("Erro ao salvar OS:",error);firebaseReady=false;toast("❌ Erro ao sincronizar OS.");});
+  if(!firebaseReady){
+    toast("Conectando ao Firebase...");
+    return;
+  }
+  ordensRef.set(ordens).catch(error=>{
+    console.error("Erro ao salvar no Firebase:",error);
+    toast("Erro ao salvar no Firebase.");
+  });
 }
 function parseDate(s){return new Date(s+"T00:00:00")}
 function daysDiffFromToday(date){const d=parseDate(date);const today=new Date();today.setHours(0,0,0,0);return Math.round((d-today)/86400000)}
@@ -1573,8 +1479,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 2.4</div>
-  <div id="syncStatus" class="sync-status">☁️ SINCRONIZAÇÃO: aguardando...</div>
+  <div class="footer-version">VERSÃO 2.1</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
@@ -1583,4 +1488,3 @@ console.log("Arasigns pronto");
 </footer>
 
 </body></html>
-  
