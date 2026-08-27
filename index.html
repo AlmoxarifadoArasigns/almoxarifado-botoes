@@ -252,6 +252,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 .app-footer strong{color:#d9dde5;margin-left:4px;font-size:10px}
 .footer-update-icon{margin-right:5px}
 
+.footer-version{display:inline-block;margin-bottom:6px;padding:5px 10px;border:1px solid rgba(47,155,255,.28);border-radius:999px;color:var(--blue);font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(47,155,255,.08)}.footer-update-line{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -1420,9 +1421,12 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <span class="footer-update-icon">🕒</span>
-  <span>ÚLTIMA ATUALIZAÇÃO:</span>
-  <strong id="lastUpdate">Carregando...</strong>
+  <div class="footer-version">VERSÃO 1.4</div>
+  <div class="footer-update-line">
+    <span class="footer-update-icon">🕒</span>
+    <span>ÚLTIMA ATUALIZAÇÃO:</span>
+    <strong id="lastUpdate">Carregando...</strong>
+  </div>
 </footer>
 
 </body></html>
