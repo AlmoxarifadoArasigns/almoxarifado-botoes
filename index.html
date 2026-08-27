@@ -483,13 +483,21 @@ movimentacoesRef.on("value",snapshot=>{
 // Escuta o estoque em tempo real.
 estoqueRef.on("value",snapshot=>{
   const dados=snapshot.val();
+
   if(dados===null){
-    if(Object.keys(estoque).length) estoqueRef.set(estoque);
-  }else{
-    estoque=dados||{};
+    if(Object.keys(estoque).length){
+      estoqueRef.update(estoque).catch(e=>console.error("Erro ao migrar estoque:",e));
+    }
+  }else if(typeof dados==="object"){
+    // Firebase é a fonte compartilhada; mantém os dados completos recebidos.
+    estoque={...dados};
     localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
   }
+
   if($("stockControl")) renderStockControl();
+  if(selectedCategory && CATEGORIAS[selectedCategory] && $("item")?.classList.contains("active")){
+    renderItems(selectedCategory);
+  }
 },error=>console.error("Erro ao sincronizar estoque:",error));
 
 // Escuta as OS em tempo real. Qualquer alteração no PC ou tablet atualiza os demais.
@@ -830,23 +838,22 @@ async function saveAllStockQuantities(){
     return;
   }
 
-  // Primeiro monta uma cópia completa do estoque com TODOS os valores digitados.
   const novoEstoque={...estoque};
+
   atuais.forEach(input=>{
     const c=decodeURIComponent(input.dataset.c||"");
     const n=decodeURIComponent(input.dataset.n||"");
     const key=getStockKey(c,n);
-    const atual=novoEstoque[key]||getStockData(c,n)||{};
     const minInput=minimos.find(x=>x.dataset.c===input.dataset.c && x.dataset.n===input.dataset.n);
 
     novoEstoque[key]={
-      ...atual,
-      quantidade:Math.max(0,Number(input.value)||0),
-      minimo:Math.max(0,Number(minInput?.value)||0)
+      ...(novoEstoque[key]||{}),
+      quantidade:Math.max(0,parseInt(input.value,10)||0),
+      minimo:Math.max(0,parseInt(minInput?.value,10)||0)
     };
   });
 
-  // Atualiza imediatamente a fonte principal usada por TODAS as telas.
+  // ESTA é a fonte que a tela do almoxarifado consulta.
   estoque=novoEstoque;
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
 
@@ -857,32 +864,32 @@ async function saveAllStockQuantities(){
     btn.style.opacity=".65";
   }
 
-  try{
-    // Aguarda o Firebase confirmar o salvamento antes de mostrar sucesso.
-    await estoqueRef.set(JSON.parse(JSON.stringify(estoque)));
-
-    renderStockItems();
-    renderStockSummary();
-    renderStockRanking();
-    if(typeof renderShoppingList==="function")renderShoppingList();
-
-    if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
-      renderItems(selectedCategory);
-    }
-
-    updateLastUpdate();
-    toast(`💾 ${atuais.length} itens salvos e atualizados com sucesso!`);
-  }catch(error){
-    console.error("Erro ao salvar estoque:",error);
-    // Os dados continuam preservados localmente para não perder o que foi digitado.
-    toast("⚠️ Não consegui sincronizar com o Firebase. As quantidades ficaram salvas neste aparelho.");
-  }finally{
-    if(btn){
-      btn.disabled=false;
-      btn.textContent=btn.dataset.originalText||"💾 SALVAR QUANTIDADES";
-      btn.style.opacity="";
-    }
+  // Atualiza a interface imediatamente, sem esperar outra tela.
+  renderStockItems();
+  renderStockSummary();
+  renderStockRanking();
+  if(typeof renderShoppingList==="function")renderShoppingList();
+  if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
+    renderItems(selectedCategory);
   }
+
+  // Usa UPDATE para gravar cada item e não substituir dados por um snapshot antigo.
+  estoqueRef.update(novoEstoque)
+    .then(()=>{
+      updateLastUpdate();
+      toast(`💾 ${atuais.length} itens salvos! Estoque sincronizado.`);
+    })
+    .catch(error=>{
+      console.error("Erro ao salvar estoque no Firebase:",error);
+      toast("⚠️ Erro ao sincronizar no Firebase. O valor ficou salvo localmente.");
+    })
+    .finally(()=>{
+      if(btn){
+        btn.disabled=false;
+        btn.textContent=btn.dataset.originalText||"💾 SALVAR QUANTIDADES";
+        btn.style.opacity="";
+      }
+    });
 }
 
 function updateStockItem(c,n,field,value){
@@ -1437,7 +1444,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 1.5</div>
+  <div class="footer-version">VERSÃO 1.6</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
