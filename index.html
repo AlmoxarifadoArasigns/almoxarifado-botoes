@@ -877,7 +877,13 @@ async function saveAllStockQuantities(){
   estoqueRef.update(novoEstoque)
     .then(()=>{
       updateLastUpdate();
-      toast(`💾 ${atuais.length} itens salvos! Estoque sincronizado.`);
+      toast(`💾 ${atuais.length} itens salvos! Atualizando a página...`);
+
+      // Pequena pausa para a mensagem aparecer e, em seguida, recarrega
+      // para buscar novamente o estoque já sincronizado.
+      setTimeout(()=>{
+        window.location.reload();
+      },800);
     })
     .catch(error=>{
       console.error("Erro ao salvar estoque no Firebase:",error);
@@ -1444,7 +1450,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 1.6</div>
+  <div class="footer-version">VERSÃO 1.7</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
