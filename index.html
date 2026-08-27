@@ -861,7 +861,6 @@ async function saveAllStockQuantities(){
   if(!atuais.length){toast("⚠️ Nenhum item encontrado.");return;}
 
   const novoEstoque={...estoque};
-
   atuais.forEach(input=>{
     const categoria=decodeURIComponent(input.getAttribute("data-c")||"");
     const item=decodeURIComponent(input.getAttribute("data-n")||"");
@@ -870,7 +869,6 @@ async function saveAllStockQuantities(){
       m.getAttribute("data-c")===input.getAttribute("data-c") &&
       m.getAttribute("data-n")===input.getAttribute("data-n")
     );
-
     novoEstoque[chave]={
       ...(novoEstoque[chave]||{}),
       quantidade:Number.isFinite(Number(input.value))?Math.max(0,Number(input.value)):0,
@@ -885,23 +883,12 @@ async function saveAllStockQuantities(){
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
   localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify(estoqueMeta));
 
-  if(btn){
-    btn.disabled=true;
-    btn.textContent="☁️ SINCRONIZANDO...";
-  }
-
+  if(btn){btn.disabled=true;btn.textContent="☁️ SALVANDO...";}
   try{
+    // O set() resolvido pelo Firebase já confirma que a gravação foi aceita.
+    // Não fazemos uma segunda leitura obrigatória, pois ela estava gerando
+    // falso erro mesmo quando os dados já tinham sido enviados.
     await estoqueRef.set(JSON.parse(JSON.stringify(estoque)));
-
-    // Confirma lendo novamente do Firebase.
-    const confirmacao=await estoqueRef.once("value");
-    const remoto=confirmacao.val();
-
-    if(!remoto || typeof remoto!=="object"){
-      throw new Error("Firebase não confirmou o estoque.");
-    }
-
-    estoque={...remoto};
     estoqueMeta={updatedAt:Date.now(),source:"firebase"};
     localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
     localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify(estoqueMeta));
@@ -911,19 +898,13 @@ async function saveAllStockQuantities(){
     renderStockSummary();
     renderStockRanking();
     if(typeof renderShoppingList==="function")renderShoppingList();
-    if(selectedCategory && CATEGORIAS[selectedCategory] && $("item")?.classList.contains("active")){
-      renderItems(selectedCategory);
-    }
-
+    if(selectedCategory && CATEGORIAS[selectedCategory] && $("item")?.classList.contains("active"))renderItems(selectedCategory);
     toast(`☁️ ${atuais.length} quantidades salvas e sincronizadas!`);
   }catch(e){
-    console.error("Erro ao sincronizar estoque:",e);
-    toast("❌ Não foi possível confirmar a sincronização. Verifique a conexão.");
+    console.error("Erro ao salvar estoque no Firebase:",e);
+    toast("❌ Erro ao salvar no servidor. As quantidades continuam guardadas neste aparelho.");
   }finally{
-    if(btn){
-      btn.disabled=false;
-      btn.textContent="💾 SALVAR QUANTIDADES";
-    }
+    if(btn){btn.disabled=false;btn.textContent="💾 SALVAR QUANTIDADES";}
   }
 }
 function updateStockItem(c,n,field,value){
@@ -1513,7 +1494,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 2.1.1</div>
+  <div class="footer-version">VERSÃO 2.1.2</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
