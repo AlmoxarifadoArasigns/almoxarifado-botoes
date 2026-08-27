@@ -255,6 +255,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 .footer-version{display:inline-block;margin-bottom:6px;padding:5px 10px;border:1px solid rgba(47,155,255,.28);border-radius:999px;color:var(--blue);font-size:9px;font-weight:900;letter-spacing:1px;background:rgba(47,155,255,.08)}.footer-update-line{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap}
 .stock-tool-row{grid-template-columns:1fr 120px!important}.tool-holder-status{margin-top:4px;font-size:9px;font-weight:800;color:#8fd3ff;line-height:1.35}@media(max-width:520px){.stock-tool-row{grid-template-columns:1fr!important}.stock-tool-row .stock-input-wrap{margin-top:8px}}
 .sync-status{font-size:9px;color:var(--muted);margin-bottom:5px}.sync-status.online{color:#70d99a}.sync-status.error{color:#ff7777}
+.stock-cloud-refresh-button{display:block;width:100%;margin:8px 0;border:1px solid rgba(47,155,255,.35);border-radius:10px;padding:10px;background:rgba(47,155,255,.08);color:#9ed9ff;font-size:9px;font-weight:900;cursor:pointer}.stock-cloud-refresh-button:active{transform:scale(.98)}
 </style>
 </head>
 <body>
@@ -326,7 +327,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   <div class="stock-help">Digite as quantidades, confira tudo e depois clique em <b>SALVAR QUANTIDADES</b>.</div>
   <div class="stock-save-bar">
     <div class="stock-save-info">💾 As alterações só serão gravadas quando você clicar no botão.</div>
-    <button type="button" class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button>
+    <button type="button" class="stock-save-button" onclick="saveAllStockQuantities()">💾 SALVAR QUANTIDADES</button><button type="button" class="stock-cloud-refresh-button" onclick="forceCloudStockRefresh()">☁️ ATUALIZAR DO SERVIDOR</button>
   </div>
   <div id="stockCategoryOptions"></div>
 </div>
@@ -832,7 +833,19 @@ function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem mo
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
 function saveStock(){
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-  estoqueRef.set(estoque).catch(e=>console.error("Erro ao salvar estoque:",e));
+
+  // Movimentações atualizam o estoque no Firebase de forma completa.
+  // O listener em tempo real nos outros dispositivos recebe a alteração.
+  estoqueRef.set(JSON.parse(JSON.stringify(estoque)))
+    .then(()=>{
+      const el=$("syncStatus");
+      if(el){el.textContent="☁️ ESTOQUE SINCRONIZADO";el.className="sync-status online";}
+    })
+    .catch(e=>{
+      console.error("Erro ao salvar estoque:",e);
+      const el=$("syncStatus");
+      if(el){el.textContent="⚠️ ERRO AO SINCRONIZAR";el.className="sync-status error";}
+    });
 }
 function previewStockStatus(input){
   const row=input.closest(".stock-row");
@@ -846,74 +859,123 @@ function previewStockStatus(input){
   }
 }
 
-async function saveAllStockQuantities(){
+async async function saveAllStockQuantities(){
   const atuais=[...document.querySelectorAll(".stock-quantity-input")];
   const minimos=[...document.querySelectorAll(".stock-minimum-input")];
   const btn=document.querySelector(".stock-save-button");
-  if(!atuais.length){toast("⚠️ Nenhum item encontrado.");return;}
 
-  const novoEstoque={...estoque};
+  if(!atuais.length){
+    toast("⚠️ Nenhum item encontrado.");
+    return;
+  }
 
+  const alteracoes={};
+
+  // Monta SOMENTE os itens que estão na tela.
   atuais.forEach(input=>{
     const categoria=decodeURIComponent(input.getAttribute("data-c")||"");
     const item=decodeURIComponent(input.getAttribute("data-n")||"");
     const chave=getStockKey(categoria,item);
+
     const minInput=minimos.find(m=>
       m.getAttribute("data-c")===input.getAttribute("data-c") &&
       m.getAttribute("data-n")===input.getAttribute("data-n")
     );
 
-    novoEstoque[chave]={
-      ...(novoEstoque[chave]||{}),
+    const atual=estoque[chave]||{};
+    alteracoes[chave]={
+      ...atual,
       quantidade:Math.max(0,Number(input.value)||0),
       minimo:minInput
         ?Math.max(0,Number(minInput.value)||0)
-        :Math.max(0,Number((novoEstoque[chave]||{}).minimo)||0)
+        :Math.max(0,Number(atual.minimo)||0)
     };
   });
 
-  // Mostra imediatamente na tela.
-  estoque=JSON.parse(JSON.stringify(novoEstoque));
+  // Atualiza a interface local imediatamente.
+  estoque={...estoque,...alteracoes};
   localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
 
   if(btn){
     btn.disabled=true;
-    btn.textContent="⏳ ENVIANDO...";
+    btn.textContent="☁️ SINCRONIZANDO...";
   }
 
-  // O Firebase passa a ser a fonte compartilhada entre PC, tablet e celular.
-  estoqueRef.set(JSON.parse(JSON.stringify(novoEstoque)))
-    .then(()=>{
-      estoque=JSON.parse(JSON.stringify(novoEstoque));
-      localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
-      localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({updatedAt:Date.now(),source:"firebase"}));
-      updateLastUpdate();
+  const syncEl=$("syncStatus");
+  if(syncEl){
+    syncEl.textContent="☁️ ENVIANDO PARA O SERVIDOR...";
+    syncEl.className="sync-status";
+  }
 
-      renderStockItems();
-      renderStockSummary();
-      renderStockRanking();
-      if(typeof renderShoppingList==="function")renderShoppingList();
-      if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
-        renderItems(selectedCategory);
+  try{
+    /*
+      UPDATE por item:
+      em vez de mandar um objeto gigante e correr o risco de substituir
+      dados antigos, cada material é escrito individualmente no Firebase.
+    */
+    await estoqueRef.update(alteracoes);
+
+    // Confirma LENDO DE VOLTA o que acabou de ser gravado.
+    const confirmacao=await estoqueRef.once("value");
+    const remoto=confirmacao.val()||{};
+
+    const erros=[];
+    Object.entries(alteracoes).forEach(([chave,esperado])=>{
+      const recebido=remoto[chave];
+      if(!recebido || Number(recebido.quantidade)!==Number(esperado.quantidade)){
+        erros.push(chave);
       }
-
-      if(btn){
-        btn.disabled=false;
-        btn.textContent="💾 SALVAR QUANTIDADES";
-      }
-
-      toast(`💾 ${atuais.length} itens sincronizados!`);
-    })
-    .catch(error=>{
-      console.error("Erro ao salvar estoque no Firebase:",error);
-
-      if(btn){
-        btn.disabled=false;
-        btn.textContent="💾 SALVAR QUANTIDADES";
-      }
-
-      toast("❌ Não foi possível sincronizar. Verifique a internet.");
     });
+
+    if(erros.length){
+      throw new Error("Firebase não confirmou "+erros.length+" item(ns).");
+    }
+
+    // Só aqui consideramos sincronizado.
+    estoque={...remoto};
+    localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+    localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({
+      updatedAt:Date.now(),
+      source:"firebase",
+      verified:true
+    }));
+    updateLastUpdate();
+
+    renderStockItems();
+    renderStockSummary();
+    renderStockRanking();
+    if(typeof renderShoppingList==="function")renderShoppingList();
+    if(typeof renderItems==="function" && selectedCategory && CATEGORIAS[selectedCategory]){
+      renderItems(selectedCategory);
+    }
+
+    if(syncEl){
+      syncEl.textContent="☁️ ESTOQUE SINCRONIZADO E CONFIRMADO";
+      syncEl.className="sync-status online";
+    }
+
+    if(btn){
+      btn.disabled=false;
+      btn.textContent="💾 SALVAR QUANTIDADES";
+    }
+
+    toast(`✅ ${Object.keys(alteracoes).length} itens gravados no servidor!`);
+
+  }catch(error){
+    console.error("ERRO REAL AO SINCRONIZAR ESTOQUE:",error);
+
+    if(syncEl){
+      syncEl.textContent="❌ NÃO FOI POSSÍVEL CONFIRMAR NO SERVIDOR";
+      syncEl.className="sync-status error";
+    }
+
+    if(btn){
+      btn.disabled=false;
+      btn.textContent="💾 TENTAR NOVAMENTE";
+    }
+
+    toast("❌ O servidor não confirmou o salvamento. A quantidade local foi mantida.");
+  }
 }
 function updateStockItem(c,n,field,value){
   const key=getStockKey(c,n),atual=getStockData(c,n);
@@ -1080,6 +1142,31 @@ function showStockTab(tab,btn){
   if(tab==="shopping")renderShoppingList();
   if(tab==="history")renderStockHistory();
 }
+function forceCloudStockRefresh(){
+  const el=$("syncStatus");
+  if(el){el.textContent="☁️ BUSCANDO ESTOQUE DO SERVIDOR...";el.className="sync-status";}
+  estoqueRef.once("value")
+    .then(snapshot=>{
+      const dados=snapshot.val();
+      if(dados && typeof dados==="object"){
+        estoque={...dados};
+        localStorage.setItem(ESTOQUE_STORAGE,JSON.stringify(estoque));
+        localStorage.setItem(ESTOQUE_META_STORAGE,JSON.stringify({updatedAt:Date.now(),source:"firebase",verified:true}));
+        renderStockControl();
+        if(el){el.textContent="☁️ ESTOQUE ATUALIZADO DO SERVIDOR";el.className="sync-status online";}
+        toast("☁️ Estoque atualizado diretamente do servidor!");
+      }else{
+        if(el){el.textContent="⚠️ SERVIDOR SEM ESTOQUE";el.className="sync-status error";}
+        toast("⚠️ O servidor não possui dados de estoque.");
+      }
+    })
+    .catch(error=>{
+      console.error(error);
+      if(el){el.textContent="❌ ERRO AO LER SERVIDOR";el.className="sync-status error";}
+      toast("❌ Não consegui ler o estoque do servidor.");
+    });
+}
+
 function openStockControl(){
 const senha=prompt("🔐 DIGITE A SENHA PARA ACESSAR O CONTROLE DE ESTOQUE:");
 if(senha===null)return;
@@ -1499,7 +1586,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 2.2</div>
+  <div class="footer-version">VERSÃO 2.3</div>
   <div id="syncStatus" class="sync-status">☁️ SINCRONIZAÇÃO: aguardando...</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
