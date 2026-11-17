@@ -10,7 +10,7 @@
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}body{min-height:100vh}.app{width:min(1200px,100%);margin:auto;padding:14px 16px 40px}
 .header{text-align:center;padding:5px 0 12px}.logo{max-width:520px;width:90%;max-height:110px;object-fit:contain}.brand{font-size:clamp(15px,2.5vw,22px);letter-spacing:4px;font-weight:900;color:#ddd}.brand-line{height:3px;width:90%;margin:12px auto 15px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));border-radius:10px}
 .screen{display:none}.screen.active{display:block}.page-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.page-title{font-size:clamp(21px,4vw,30px);font-weight:900;text-align:center}.back-button,.small-button{border:1px solid #3b3c40;background:#17181b;color:white;padding:12px 18px;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer}.card{margin-top:14px;background:linear-gradient(145deg,#111214,#0d0e10);border:1px solid var(--line);border-radius:22px;padding:18px}.question{text-align:center;margin-bottom:20px}.question-label{color:var(--orange);font-size:14px;font-weight:900;letter-spacing:1px;margin-bottom:7px}.question-title{font-size:clamp(24px,5vw,34px);font-weight:900}
-.home-grid,.movement-choice,.options-grid,.category-grid,.dashboard-grid,.actions,.os-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.home-button,.movement-choice button{min-height:120px;border:0;border-radius:20px;color:white;font-size:clamp(19px,4vw,26px);font-weight:900;cursor:pointer}.home-button.almox{background:linear-gradient(120deg,var(--red),var(--orange))}.home-button.os{background:linear-gradient(120deg,#075fb9,var(--blue))}.btn-retirada{background:linear-gradient(120deg,var(--red),var(--orange))}.btn-devolucao{background:linear-gradient(120deg,#079447,var(--green))}
+.home-grid,.movement-choice,.options-grid,.category-grid,.dashboard-grid,.actions,.os-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.home-button,.movement-choice button{min-height:120px;border:0;border-radius:20px;color:white;font-size:clamp(19px,4vw,26px);font-weight:900;cursor:pointer}.home-button.almox{background:linear-gradient(120deg,var(--red),var(--orange))}.home-button.nfc{background:linear-gradient(120deg,#174f8f,#167bd2)}.home-button.os{background:linear-gradient(120deg,#075fb9,var(--blue))}.btn-retirada{background:linear-gradient(120deg,var(--red),var(--orange))}.btn-devolucao{background:linear-gradient(120deg,#079447,var(--green))}
 .option{min-height:78px;display:flex;align-items:center;gap:13px;border:1px solid var(--line);border-radius:17px;background:#151619;color:white;padding:13px 15px;cursor:pointer;text-align:left}.option-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--orange),var(--yellow));font-size:26px}.option-name{font-size:clamp(17px,3vw,22px);font-weight:900}.category{min-height:105px;border:1px solid var(--line);border-radius:20px;background:#151619;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;font-weight:900;font-size:18px}.category-icon{font-size:38px}
 .summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.summary-box,.dash-card{background:#151619;border:1px solid var(--line);border-radius:17px;padding:14px}.summary-label,.dash-label{color:var(--orange);font-size:13px;font-weight:900;margin-bottom:5px}.summary-value{font-size:20px;font-weight:900}.confirm-button{width:100%;margin-top:16px;padding:22px;border:0;border-radius:18px;background:linear-gradient(90deg,#079447,#16d46b);color:white;font-size:22px;font-weight:900;cursor:pointer}.primary{width:100%;margin-top:16px;padding:18px;border:0;border-radius:18px;background:linear-gradient(90deg,var(--red),var(--orange),var(--yellow));color:white;font-size:20px;font-weight:900;cursor:pointer}.quantity-input{width:100%;min-height:95px;border:2px solid #303136;border-radius:20px;background:#151619;color:white;text-align:center;font-size:42px;font-weight:900;padding:10px;margin-top:12px}.quantity-unit{color:var(--muted);text-align:center;font-size:16px;font-weight:800;margin-top:10px}.cancel-button{width:100%;margin-top:10px;padding:14px;border:1px solid #38393d;border-radius:15px;background:#18191c;color:#ddd;font-size:17px;font-weight:800;cursor:pointer}
 .history-header,.os-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.history-title{font-size:22px;font-weight:900}.history-count{color:var(--yellow);font-weight:900}#history,#osList{display:flex;flex-direction:column;gap:9px}.empty{min-height:120px;display:grid;place-items:center;text-align:center;border:1px solid #292a2d;border-radius:17px;color:var(--muted);padding:20px}.record,.os-card{background:#151619;border:1px solid #2d2e32;border-radius:15px;padding:13px}.record-top{display:flex;justify-content:space-between;gap:10px}.record-type,.os-number{font-weight:900;color:var(--yellow)}.record-date,.os-meta{color:#aaa;font-size:13px}.record-line{margin-top:7px;color:#ddd}.actions{margin-top:14px}.action{min-height:80px;border:0;border-radius:18px;color:white;cursor:pointer;font-weight:900;font-size:18px}.csv{background:linear-gradient(120deg,var(--red),var(--orange),var(--yellow))}.clear{background:#17181b;border:1px solid #35363a}
@@ -291,6 +291,49 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 .almox-dash-list{display:grid;gap:9px}.almox-dash-list-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 12px;background:#111316;border:1px solid #262a30;border-radius:13px}.almox-dash-list-main{min-width:0}.almox-dash-list-name{font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.almox-dash-list-meta{font-size:9px;color:#737c88;margin-top:4px}.almox-dash-pill{padding:5px 8px;border-radius:999px;font-size:9px;font-weight:900;white-space:nowrap}.almox-dash-pill.red{background:#35171a;color:#ff9ca3}.almox-dash-pill.yellow{background:#332b12;color:#ffd768}.almox-dash-pill.green{background:#122a1c;color:#78e8a1}.almox-dash-pill.blue{background:#112a42;color:#8bc8ff}.almox-empty{padding:18px;text-align:center;color:#717985;font-size:11px}.almox-insight{border-left:3px solid #2f9bff;padding:11px 13px;background:#101419;border-radius:0 12px 12px 0;color:#c8d0da;font-size:11px;line-height:1.55;margin-top:12px}.almox-insight b{color:#fff}
 @media(max-width:900px){.almox-kpis{grid-template-columns:repeat(2,1fr)}.almox-dash-grid{grid-template-columns:1fr}}@media(max-width:600px){.almox-dash-hero{align-items:flex-start;flex-direction:column}.almox-dash-date{text-align:left}.almox-dash-title{font-size:24px}.almox-bar-row{grid-template-columns:105px 1fr 35px}.almox-kpi strong{font-size:24px}}
 
+
+/* V2.2.3 — FILA DE PRODUÇÃO E FILTRO MENSAL */
+.os-month-filter{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:14px}
+.os-month-title{font-size:18px;font-weight:950;letter-spacing:.02em;margin-top:4px}
+.os-month-filter select{max-width:240px;font-weight:900}
+.os-live-board{position:relative;overflow:hidden;margin-top:14px;border:1px solid #30343b;border-radius:22px;background:radial-gradient(circle at 80% 10%,rgba(255,106,0,.15),transparent 34%),linear-gradient(135deg,#15171b,#090a0c);box-shadow:0 18px 48px rgba(0,0,0,.28)}
+.os-live-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px}
+.os-live-kicker{font-size:10px;color:var(--orange);font-weight:900;letter-spacing:1.6px}
+.os-live-title{font-size:18px;font-weight:950;margin-top:5px;letter-spacing:-.3px}
+.os-live-clock{font-size:10px;color:#aab0ba;font-weight:900;white-space:nowrap}
+.os-live-window{overflow:hidden;border-top:1px solid #292c32;background:rgba(0,0,0,.18)}
+.os-live-track{display:flex;width:max-content;animation:osSlowMarquee 72s linear infinite;will-change:transform}
+.os-live-board:hover .os-live-track{animation-play-state:paused}
+.os-live-item{min-width:310px;display:flex;align-items:center;gap:13px;padding:18px 22px;border-right:1px solid rgba(255,255,255,.08)}
+.os-live-index{width:36px;height:36px;flex:0 0 36px;border-radius:11px;background:#252830;display:grid;place-items:center;color:#c7cbd2;font-weight:950;font-size:12px}
+.os-live-number{font-size:24px;font-weight:950;letter-spacing:-.7px;white-space:nowrap}
+.os-live-client{font-size:10px;color:#a5aab3;font-weight:800;margin-top:4px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.os-live-dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#ff5a26;box-shadow:0 0 12px rgba(255,90,38,.8)}
+.os-live-empty{padding:25px 18px;color:#a5aab3;font-size:12px;font-weight:900}
+@keyframes osSlowMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:620px){.os-month-filter{align-items:stretch;flex-direction:column}.os-month-filter select{max-width:none}.os-live-item{min-width:270px;padding:16px}.os-live-number{font-size:21px}}
+
+
+/* NFC SIGNAL RADAR */
+.nfc-radar-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:18px auto 8px;padding:18px 12px;border:1px solid rgba(55,145,235,.22);border-radius:18px;background:radial-gradient(circle at 50% 45%,rgba(24,112,205,.13),rgba(12,15,20,.96) 68%);overflow:hidden}
+.nfc-radar{position:relative;width:142px;height:142px;display:grid;place-items:center}
+.nfc-radar .radar-ring{position:absolute;border:1px solid rgba(67,165,255,.35);border-radius:50%;inset:12px;opacity:.45}
+.nfc-radar .radar-ring.r2{inset:0;opacity:.25}
+.nfc-radar .radar-ring.r3{inset:25px;opacity:.55}
+.nfc-radar.active .radar-ring{animation:nfcWave 2.2s ease-out infinite}
+.nfc-radar.active .radar-ring.r2{animation-delay:.72s}
+.nfc-radar.active .radar-ring.r3{animation-delay:1.44s}
+.nfc-radar-core{position:relative;z-index:2;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,#174f8f,#1684e8);box-shadow:0 0 22px rgba(35,145,255,.32);font-size:27px}
+.nfc-signal-dot{position:absolute;z-index:3;width:7px;height:7px;border-radius:50%;background:#65c5ff;box-shadow:0 0 10px #35aaff;opacity:0}
+.nfc-signal-dot.d1{top:12px;left:68px}.nfc-signal-dot.d2{right:10px;top:67px}.nfc-signal-dot.d3{bottom:12px;left:68px}.nfc-signal-dot.d4{left:10px;top:67px}
+.nfc-radar.active .nfc-signal-dot{animation:nfcDot 1.8s ease-in-out infinite}
+.nfc-radar.active .nfc-signal-dot.d2{animation-delay:.45s}.nfc-radar.active .nfc-signal-dot.d3{animation-delay:.9s}.nfc-radar.active .nfc-signal-dot.d4{animation-delay:1.35s}
+.nfc-radar.read-ok .nfc-radar-core{background:linear-gradient(145deg,#087b48,#20b875);box-shadow:0 0 25px rgba(32,184,117,.4)}
+.nfc-radar-label{font-size:13px;font-weight:800;letter-spacing:1.2px;color:#91cfff;text-align:center;text-transform:uppercase}
+.nfc-radar-sub{font-size:12px;color:#9299a3;text-align:center}
+@keyframes nfcWave{0%{transform:scale(.72);opacity:.65}100%{transform:scale(1.18);opacity:0}}
+@keyframes nfcDot{0%,100%{opacity:.12;transform:scale(.65)}45%{opacity:1;transform:scale(1.35)}}
+
 </style>
 </head>
 <body>
@@ -309,6 +352,7 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <div class="card"><div class="question"><div class="question-label">ARASIGNS</div><div class="question-title">O QUE VOCÊ DESEJA ACESSAR?</div></div>
 <div class="home-grid">
 <button class="home-button almox" onclick="startMovement()">📦<br>ALMOXARIFADO</button>
+<button class="home-button nfc" onclick="openNfcMovement()">📡<br>LEITURA NFC</button>
 <button class="home-button estoque" onclick="openStockControl()">📦<br>CONTROLE DE<br>ESTOQUE</button><button class="home-button os" onclick="openOSDashboard()">🧾<br>ORDEM DE SERVIÇO</button><button class="home-button dashboard" onclick="openAlmoxDashboard()">📊<br>DASHBOARD</button>
 </div></div></section>
 
@@ -318,6 +362,36 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
   <button class="export-history-button export-xml-almox" onclick="exportMovementsXML()">📄 BAIXAR XML DO HISTÓRICO</button>
   <button class="clear-history-button" onclick="clearAlmox()">🗑️ LIMPAR HISTÓRICO</button>
 </div></div></section>
+<section class="screen" id="nfcMovement">
+<div class="page-top"><button class="back-button" onclick="closeNfcMovement()">← INÍCIO</button><div class="page-title">📡 LEITURA NFC</div><div></div></div>
+<div class="card">
+  <div class="question"><div class="question-label">MOVIMENTAÇÃO INTELIGENTE</div><div class="question-title">IDENTIFIQUE FUNCIONÁRIO E FERRAMENTAS</div></div>
+  <div class="movement-choice"><button class="btn-retirada" onclick="setNfcMovement('RETIRADA')">⬆️<br>RETIRADA</button><button class="btn-devolucao" onclick="setNfcMovement('DEVOLUÇÃO')">⬇️<br>DEVOLUÇÃO</button></div>
+  <div class="nfc-status" id="nfcStatus" style="margin-top:16px;padding:16px;border:1px solid #34363b;border-radius:15px;background:#151619;text-align:center">Escolha retirada ou devolução para começar.</div>
+  <div class="nfc-radar-wrap" id="nfcRadarWrap">
+    <div class="nfc-radar" id="nfcRadar">
+      <span class="radar-ring r2"></span><span class="radar-ring"></span><span class="radar-ring r3"></span>
+      <span class="nfc-signal-dot d1"></span><span class="nfc-signal-dot d2"></span><span class="nfc-signal-dot d3"></span><span class="nfc-signal-dot d4"></span>
+      <div class="nfc-radar-core" id="nfcRadarCore">📡</div>
+    </div>
+    <div class="nfc-radar-label" id="nfcRadarLabel">SINAL NFC</div>
+    <div class="nfc-radar-sub" id="nfcRadarSub">Escolha retirada ou devolução para ativar</div>
+  </div>
+  <div class="summary" style="margin-top:14px">
+    <div class="summary-box"><div class="summary-label">FUNCIONÁRIO</div><div class="summary-value" id="nfcEmployee">Aguardando leitura</div></div>
+    <div class="summary-box"><div class="summary-label">FERRAMENTAS LIDAS</div><div class="summary-value" id="nfcItemCount">0</div></div>
+  </div>
+  <div id="nfcScanArea" style="display:none;margin-top:14px">
+    <button class="primary" id="nfcStartButton" onclick="startNfcScan()">📡 INICIAR LEITURA NFC</button>
+    <div class="nfc-help" style="color:#aaa;line-height:1.6;margin-top:12px;font-size:14px">1. Aproxime a tag do funcionário. Depois, aproxime uma tag de ferramenta por vez. Você pode bipar várias ferramentas na mesma operação.</div>
+    <div id="nfcScannedItems" style="display:flex;flex-direction:column;gap:8px;margin-top:14px"></div>
+    <button class="confirm-button" id="nfcFinishButton" onclick="finishNfcMovement()" disabled>✅ FINALIZAR E REGISTRAR</button>
+    <button class="cancel-button" onclick="stopNfcScan()">⏸️ PAUSAR LEITURA</button>
+  </div>
+  <div id="nfcUnsupported" style="display:none;margin-top:14px;color:#ffbd78;line-height:1.6">Este aparelho/navegador não oferece leitura NFC pela página. Use Chrome em Android, com o site publicado em HTTPS e NFC ativado no celular.</div>
+</div>
+<div class="card"><div class="history-title">📘 COMO PROGRAMAR AS TAGS</div><p style="color:#bbb;line-height:1.6">Grave cada tag como texto NDEF usando um app como NFC Tools. O conteúdo precisa seguir exatamente um destes formatos:</p><div class="record" style="font-family:monospace">FUNC|RAMALHO</div><div class="record" style="font-family:monospace;margin-top:8px">ITEM|FERRAMENTAS|TRENA|TR-001</div><p style="color:#aaa;line-height:1.6;font-size:13px">Use o nome do funcionário da lista do sistema. Para ferramenta, use categoria, nome e um código único da etiqueta (ex.: TR-001). Cada ferramenta física deve ter um código diferente, mesmo quando forem do mesmo modelo.</p></div>
+</section>
 <section class="screen" id="employee"><div class="page-top"><button class="back-button" onclick="showScreen('movement')">← VOLTAR</button><div class="page-title">COLABORADOR</div><div></div></div><div class="card"><div class="question"><div class="question-label">QUEM ESTÁ FAZENDO?</div><div class="question-title">SELECIONE</div></div><div class="options-grid" id="employeeOptions"></div></div></section>
 <section class="screen" id="category"><div class="page-top"><button class="back-button" onclick="showScreen('employee')">← VOLTAR</button><div class="page-title">CATEGORIA</div><div></div></div><div class="card"><div class="question"><div class="question-label">PRÓXIMO PASSO</div><div class="question-title">ESCOLHA A CATEGORIA</div></div><div class="category-grid" id="categoryOptions"></div></div></section>
 <section class="screen" id="item"><div class="page-top"><button class="back-button" onclick="showScreen('category')">← VOLTAR</button><div class="page-title">ITEM</div><div></div></div><div class="cart-mini-bar"><div><b>🛒 CARRINHO</b><span id="cartMiniCount">0 itens</span></div><button onclick="openCart()">VER CARRINHO <span id="cartMiniBadge">0</span></button></div><div class="card"><div class="question"><div class="question-label">ESCOLHA O MATERIAL</div><div class="question-title" id="categoryTitle">ITEM</div></div><div class="options-grid" id="itemOptions"></div></div></section>
@@ -332,6 +406,14 @@ input,select,textarea{width:100%;background:#17181b;border:1px solid #35363a;bor
 <section class="screen" id="osDashboard">
 <div class="page-top"><button class="back-button" onclick="showScreen('home')">← INÍCIO</button><div class="page-title">ORDEM DE SERVIÇO</div><div></div></div>
 <div class="os-nav"><button class="register" onclick="openOSRegister()">➕<br>CADASTRAR OS</button><button onclick="openOSList()">📋<br>VISUALIZAR OS</button></div>
+<div class="os-month-filter card">
+  <div><div class="question-label">ORGANIZAÇÃO DA PRODUÇÃO</div><div class="os-month-title">VISUALIZAR POR MÊS</div></div>
+  <select id="osMonthFilter" aria-label="Filtrar ordens por mês" onchange="changeOSMonth(this.value)"></select>
+</div>
+<div class="os-live-board">
+  <div class="os-live-head"><div><div class="os-live-kicker">ARASIGNS • PAINEL DE PRODUÇÃO</div><div class="os-live-title">PRÓXIMAS 5 OS DA FILA</div></div><div class="os-live-clock" id="osLiveClock">AO VIVO</div></div>
+  <div class="os-live-window"><div class="os-live-track" id="osLiveTrack"></div></div>
+</div>
 <div class="card"><div class="question"><div class="question-label">VISÃO GERAL</div><div class="question-title">DASHBOARD DE PRODUÇÃO</div></div><div class="dashboard-grid" id="dashboardCards"></div></div>
 <div class="card next-delivery" id="nextDelivery"></div>
 <div class="card"><div class="history-title">🏁 FILA DE PRODUÇÃO — PRAZO MAIS PRÓXIMO PRIMEIRO</div><div id="queueList" style="margin-top:14px"></div></div>
@@ -1021,6 +1103,112 @@ async function confirmCartMovement(){
     }
   }
 }
+// LEITURA NFC (Web NFC / Android Chrome / HTTPS)
+let nfcReader=null,nfcAbort=null,nfcMovementActive=false,nfcStage="employee",nfcSeenTags=new Set();
+function setNfcRadar(mode,label,sub){
+  const radar=$("nfcRadar"),lab=$("nfcRadarLabel"),desc=$("nfcRadarSub"),core=$("nfcRadarCore");
+  if(!radar)return;
+  radar.classList.toggle("active",mode==="active");
+  radar.classList.toggle("read-ok",mode==="ok");
+  if(lab&&label)lab.textContent=label;
+  if(desc&&sub)desc.textContent=sub;
+  if(core)core.textContent=mode==="ok"?"✓":"📡";
+}
+function openNfcMovement(){
+  stopNfcScan();selectedMovement=null;selectedEmployee=null;cartItems=[];nfcStage="employee";nfcSeenTags.clear();
+  $("nfcEmployee").textContent="Aguardando leitura";$("nfcItemCount").textContent="0";$("nfcScannedItems").innerHTML="";$("nfcFinishButton").disabled=true;$("nfcScanArea").style.display="none";$("nfcUnsupported").style.display="none";$("nfcStatus").textContent="Escolha retirada ou devolução para começar.";
+  setNfcRadar("idle","SINAL NFC","Escolha retirada ou devolução para ativar");
+  showScreen("nfcMovement");
+}
+function closeNfcMovement(){stopNfcScan();showScreen("home")}
+function setNfcMovement(type){
+  selectedMovement=type;selectedEmployee=null;cartItems=[];nfcStage="employee";nfcSeenTags.clear();
+  $("nfcEmployee").textContent="Aguardando leitura";$("nfcItemCount").textContent="0";$("nfcScannedItems").innerHTML="";$("nfcFinishButton").disabled=true;
+  $("nfcScanArea").style.display="block";
+  $("nfcStatus").textContent=`${type}: aproxime primeiro a tag do funcionário.`;
+  setNfcRadar("active","AGUARDANDO FUNCIONÁRIO","Aproxime a tag NFC do colaborador");
+  if(!("NDEFReader" in window)){$("nfcUnsupported").style.display="block";$("nfcStartButton").disabled=true;return}
+  $("nfcUnsupported").style.display="none";$("nfcStartButton").disabled=false;
+  startNfcScan();
+}
+function nfcTextFromReading(event){
+  for(const record of event.message.records){
+    if(record.recordType==="text"){
+      try{return new TextDecoder(record.encoding||"utf-8").decode(record.data).trim()}catch(e){}
+    }
+  }
+  return "";
+}
+function normalizeNfcText(v){return String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toUpperCase()}
+async function startNfcScan(){
+  if(!selectedMovement)return toast("Escolha retirada ou devolução primeiro.");
+  if(!("NDEFReader" in window))return toast("Leitura NFC não suportada neste aparelho.");
+  try{
+    stopNfcScan();nfcReader=new NDEFReader();nfcAbort=new AbortController();
+    nfcReader.addEventListener("readingerror",()=>{$("nfcStatus").textContent="Não foi possível ler a tag. Aproxime novamente."});
+    nfcReader.addEventListener("reading",handleNfcReading);
+    await nfcReader.scan({signal:nfcAbort.signal});nfcMovementActive=true;
+    $("nfcStartButton").textContent="📡 LEITURA ATIVA — APROXIME A TAG";
+    $("nfcStatus").textContent=nfcStage==="employee"?"Aproxime a tag NFC do funcionário.":`Funcionário: ${selectedEmployee}. Agora aproxime as tags das ferramentas.`;
+    setNfcRadar("active",nfcStage==="employee"?"AGUARDANDO FUNCIONÁRIO":"AGUARDANDO FERRAMENTA",nfcStage==="employee"?"Aproxime a tag NFC do colaborador":`Funcionário identificado: ${selectedEmployee}`);
+  }catch(error){
+    console.error("NFC:",error);
+    $("nfcStatus").textContent=error?.name==="NotAllowedError"?"Permita o uso de NFC no navegador e tente novamente.":"Não foi possível iniciar. Confira NFC ativado, Chrome e HTTPS.";
+    toast("Não foi possível iniciar a leitura NFC.");
+  }
+}
+function stopNfcScan(){
+  nfcMovementActive=false;
+  try{if(nfcAbort)nfcAbort.abort()}catch(e){}
+  nfcAbort=null;nfcReader=null;
+  setNfcRadar("idle","LEITURA PAUSADA","Toque em retomar para continuar");
+  const b=$("nfcStartButton");if(b)b.textContent="📡 RETOMAR LEITURA NFC";
+}
+function handleNfcReading(event){
+  const payload=nfcTextFromReading(event);
+  if(!payload){$("nfcStatus").textContent="Tag sem texto NDEF. Grave o conteúdo conforme o modelo indicado abaixo.";return}
+  const parts=payload.split("|").map(x=>x.trim());
+  if(nfcStage==="employee"){
+    if(parts.length!==2||normalizeNfcText(parts[0])!=="FUNC"){$("nfcStatus").textContent="Esta não parece ser uma tag de funcionário. Aproxime uma tag FUNC|NOME.";return}
+    const nome=COLABORADORES.find(n=>normalizeNfcText(n)===normalizeNfcText(parts[1]));
+    if(!nome){$("nfcStatus").textContent=`Funcionário '${parts[1]}' não encontrado na lista do sistema.`;return}
+    selectedEmployee=nome;nfcStage="items";$("nfcEmployee").textContent=nome;
+    $("nfcStatus").textContent=`Funcionário ${nome} identificado. Agora aproxime as tags das ferramentas.`;
+    setNfcRadar("ok","FUNCIONÁRIO IDENTIFICADO",`${nome} • agora aproxime as ferramentas`);
+    setTimeout(()=>{if(nfcStage==="items"&&nfcMovementActive)setNfcRadar("active","AGUARDANDO FERRAMENTA","Aproxime a tag NFC de cada ferramenta");},900);
+    return;
+  }
+  if(parts.length<3||normalizeNfcText(parts[0])!=="ITEM"){$("nfcStatus").textContent="Tag não reconhecida. Para ferramenta, use ITEM|CATEGORIA|NOME.";return}
+  const cats=getCategoriasCompletas();
+  const categoria=Object.keys(cats).find(c=>normalizeNfcText(c)===normalizeNfcText(parts[1]));
+  const item=categoria?(cats[categoria].itens||[]).find(i=>normalizeNfcText(i)===normalizeNfcText(parts[2])):null;
+  if(!categoria||!item){$("nfcStatus").textContent=`Ferramenta não encontrada: ${parts[1]} / ${parts[2]}. Confira categoria e nome no cadastro.`;return}
+  const tagKey=normalizeNfcText(parts[3]||event.serialNumber||payload);
+  if(nfcSeenTags.has(tagKey)){$("nfcStatus").textContent=`${item}: esta tag já foi lida nesta operação.`;return}
+  const saldo=Number(getStockData(categoria,item).quantidade)||0;
+  const existing=cartItems.find(x=>x.categoria===categoria&&x.item===item);
+  const requested=(existing?existing.quantidade:0)+1;
+  if(selectedMovement==="RETIRADA"&&requested>saldo){$("nfcStatus").textContent=`Saldo insuficiente para ${item}. Disponível: ${saldo}.`;return}
+  nfcSeenTags.add(tagKey);
+  if(existing)existing.quantidade=requested;else cartItems.push({categoria,item,quantidade:1});
+  updateNfcItems();
+  $("nfcStatus").textContent=`✅ ${item} lida. Pode aproximar a próxima ferramenta.`;
+  setNfcRadar("ok","FERRAMENTA IDENTIFICADA",`${item} • aproxime a próxima`);
+  setTimeout(()=>{if(nfcMovementActive)setNfcRadar("active","AGUARDANDO FERRAMENTA","Aproxime a tag NFC de cada ferramenta");},850);
+}
+function updateNfcItems(){
+  const box=$("nfcScannedItems");
+  box.innerHTML=cartItems.map(x=>`<div class="record"><b>${escapeHtml(x.item)}</b><div class="record-date">${escapeHtml(x.categoria)} • Quantidade: ${x.quantidade}</div></div>`).join("")||'<div class="empty">Aguardando leitura das ferramentas.</div>';
+  $("nfcItemCount").textContent=String(cartItems.reduce((t,x)=>t+x.quantidade,0));
+  $("nfcFinishButton").disabled=!selectedEmployee||!cartItems.length;
+}
+async function finishNfcMovement(){
+  if(!selectedEmployee||!cartItems.length)return toast("Leia o funcionário e pelo menos uma ferramenta.");
+  stopNfcScan();
+  await confirmCartMovement();
+  if(!cartItems.length){showScreen("movement");}
+}
+
 function resetMovement(){startMovement()}
 function saveMovements(){
   localStorage.setItem(ALMOX_STORAGE,JSON.stringify(movimentacoes));
@@ -1116,6 +1304,18 @@ function clearAlmox(){
 }
 function exportCSV(rows,name){const csv="\uFEFF"+rows.map(r=>r.map(v=>`"${String(v??"").replaceAll('"','""')}"`).join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name+"_"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)}
 function exportAlmoxCSV(){if(!movimentacoes.length)return toast("Não existem movimentações.");exportCSV([["DATA/HORA","MOVIMENTO","COLABORADOR","CATEGORIA","ITEM","QUANTIDADE"],...movimentacoes.map(r=>[r.dataHora,r.movimento,r.colaborador,r.categoria,r.item,r.quantidade??1])],"arasigns_movimentacoes");toast("CSV gerado!")}
+
+let osLiveClockInterval=null;
+function startOSLiveClock(){
+  if(osLiveClockInterval)clearInterval(osLiveClockInterval);
+  osLiveClockInterval=setInterval(()=>{
+    const el=$("osLiveClock");
+    if(el && $("osDashboard")?.classList.contains("active"))
+      el.textContent=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})+" • AO VIVO";
+  },15000);
+}
+startOSLiveClock();
+
 function openOSDashboard(){renderDashboard();showScreen("osDashboard")}
 function saveStock(){
   const payload=JSON.parse(JSON.stringify(estoque));
@@ -2025,10 +2225,113 @@ function activeOrders(){return ordens.filter(o=>o.status!=="FINALIZADA").sort((a
   const db=b.prazo?new Date(b.prazo).getTime():Infinity;
   return da-db;
 })}
-function renderDashboard(){const total=ordens.length,atrasadas=ordens.filter(o=>o.status!=="FINALIZADA"&&daysDiffFromToday(o.prazo)<0).length,hoje=ordens.filter(o=>o.status!=="FINALIZADA"&&daysDiffFromToday(o.prazo)===0).length,andamento=ordens.filter(o=>o.status==="EM ANDAMENTO").length,finalizadas=ordens.filter(o=>o.status==="FINALIZADA").length;$("dashboardCards").innerHTML=`<div class="dash-card"><div class="dash-label">TOTAL DE OS</div><div class="dash-number">${total}</div></div><div class="dash-card dash-red"><div class="dash-label">ATRASADAS</div><div class="dash-number">${atrasadas}</div></div><div class="dash-card dash-orange"><div class="dash-label">VENCEM HOJE</div><div class="dash-number">${hoje}</div></div><div class="dash-card"><div class="dash-label">EM ANDAMENTO</div><div class="dash-number">${andamento}</div></div><div class="dash-card dash-green"><div class="dash-label">FINALIZADAS</div><div class="dash-number">${finalizadas}</div></div>`;renderNextDelivery();renderQueue();renderSectorChart()}
-function renderNextDelivery(){const o=activeOrders()[0],b=$("nextDelivery");if(!o){b.innerHTML='<div class="question-title">🎉 NÃO EXISTEM OS PENDENTES</div>';return}const d=deadlineInfo(o);b.innerHTML=`<div class="question-label">🚨 PRÓXIMA ENTREGA</div><div class="question-title">OS #${escapeHtml(o.numero)}</div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)}</div><div class="detail-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"}</div><div class="os-days"><span class="priority ${d.cls}">${d.text}</span></div>`}
-function renderQueue(){const b=$("queueList"),lista=activeOrders();if(!lista.length){b.innerHTML='<div class="empty">🎉 Fila vazia. Todas as OS foram finalizadas.</div>';return}b.innerHTML="";lista.forEach((o,i)=>{const d=deadlineInfo(o),rank=i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`;const x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);x.innerHTML=`<div class="queue-head"><div class="queue-rank">${rank}</div><div class="queue-main"><div class="queue-title">OS #${escapeHtml(o.numero)} — ${escapeHtml(o.cliente)}</div><div class="os-meta">📍 ${escapeHtml(o.setor)} • ⏱️ ${sectorDays(o)} dia${sectorDays(o)!==1?"s":""} no setor</div></div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"} • 📝 ${escapeHtml(o.descricao)}</div>`;b.appendChild(x)})}
-function renderSectorChart(){const b=$("sectorChart"),counts={};SETORES.forEach(s=>counts[s]=0);ordens.filter(o=>o.status!=="FINALIZADA").forEach(o=>{counts[o.setor]=(counts[o.setor]||0)+1});const max=Math.max(1,...Object.values(counts));b.innerHTML=Object.entries(counts).map(([s,n])=>`<div class="sector-row"><div>${s}</div><div class="bar"><div style="width:${(n/max)*100}%"></div></div><div>${n}</div></div>`).join("")}
+let selectedOSMonth="";
+
+function osMonthKey(o){
+  const raw=String(o?.prazo||"");
+  if(raw.length>=7 && /^\d{4}-\d{2}/.test(raw))return raw.slice(0,7);
+  const date=o?.dataAbertura?String(o.dataAbertura):"";
+  if(date.length>=7 && /^\d{4}-\d{2}/.test(date))return date.slice(0,7);
+  return "SEM-DATA";
+}
+function monthLabel(key){
+  if(key==="TODOS")return "TODOS OS MESES";
+  if(key==="SEM-DATA")return "SEM DATA";
+  const [y,m]=key.split("-").map(Number);
+  return new Date(y,m-1,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).toUpperCase();
+}
+function monthScopedOrders(){
+  if(!selectedOSMonth || selectedOSMonth==="TODOS")return ordens.slice();
+  return ordens.filter(o=>osMonthKey(o)===selectedOSMonth);
+}
+function monthActiveOrders(){
+  return monthScopedOrders().filter(o=>o.status!=="FINALIZADA").sort((a,b)=>{
+    const da=a.prazo?new Date(a.prazo).getTime():Infinity;
+    const db=b.prazo?new Date(b.prazo).getTime():Infinity;
+    return da-db;
+  });
+}
+function renderOSMonthFilter(){
+  const el=$("osMonthFilter");
+  if(!el)return;
+  const current=new Date();
+  const currentKey=`${current.getFullYear()}-${String(current.getMonth()+1).padStart(2,"0")}`;
+  const keys=[...new Set([currentKey,...ordens.map(osMonthKey)])].sort((a,b)=>{
+    if(a==="SEM-DATA")return 1;
+    if(b==="SEM-DATA")return -1;
+    return b.localeCompare(a);
+  });
+  const options=[{value:"TODOS",label:"TODOS OS MESES"},...keys.map(k=>({value:k,label:monthLabel(k)}))];
+  if(!options.some(x=>x.value===selectedOSMonth))selectedOSMonth=currentKey;
+  el.innerHTML=options.map(x=>`<option value="${x.value}">${x.label}</option>`).join("");
+  el.value=selectedOSMonth;
+}
+function changeOSMonth(value){
+  selectedOSMonth=value||"TODOS";
+  renderDashboard();
+}
+function renderDashboard(){
+  renderOSMonthFilter();
+  const lista=monthScopedOrders();
+  const total=lista.length;
+  const atrasadas=lista.filter(o=>o.status!=="FINALIZADA"&&deadlineInfo(o).cls==="overdue").length;
+  const hoje=lista.filter(o=>o.status!=="FINALIZADA"&&o.prazo&&new Date(o.prazo).toDateString()===new Date().toDateString()).length;
+  const andamento=lista.filter(o=>o.status==="EM ANDAMENTO").length;
+  const finalizadas=lista.filter(o=>o.status==="FINALIZADA").length;
+  $("dashboardCards").innerHTML=
+    `<div class="dash-card"><div class="dash-label">TOTAL DE OS</div><div class="dash-number">${total}</div></div>`+
+    `<div class="dash-card dash-red"><div class="dash-label">ATRASADAS</div><div class="dash-number">${atrasadas}</div></div>`+
+    `<div class="dash-card dash-orange"><div class="dash-label">VENCEM HOJE</div><div class="dash-number">${hoje}</div></div>`+
+    `<div class="dash-card"><div class="dash-label">EM ANDAMENTO</div><div class="dash-number">${andamento}</div></div>`+
+    `<div class="dash-card dash-green"><div class="dash-label">FINALIZADAS</div><div class="dash-number">${finalizadas}</div></div>`;
+  renderOSLiveBoard();
+  renderNextDelivery();
+  renderQueue();
+  renderSectorChart();
+}
+function renderOSLiveBoard(){
+  const track=$("osLiveTrack"),clock=$("osLiveClock");
+  if(!track)return;
+  if(clock)clock.textContent=new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})+" • AO VIVO";
+  const lista=monthActiveOrders().slice(0,5);
+  if(!lista.length){
+    track.style.animation="none";
+    track.innerHTML='<div class="os-live-empty">🎉 NENHUMA OS PENDENTE NESTE PERÍODO</div>';
+    return;
+  }
+  const cards=lista.map((o,i)=>{
+    const d=deadlineInfo(o);
+    return `<div class="os-live-item">
+      <div class="os-live-index">${String(i+1).padStart(2,"0")}</div>
+      <div style="min-width:0">
+        <div style="display:flex;align-items:center;gap:8px"><span class="os-live-dot"></span><div class="os-live-number">OS #${escapeHtml(o.numero)}</div></div>
+        <div class="os-live-client">${escapeHtml(o.cliente)} • ${escapeHtml(o.setor||"SEM SETOR")}</div>
+      </div>
+      <span class="priority ${d.cls}" style="margin-left:auto;white-space:nowrap">${escapeHtml(d.text)}</span>
+    </div>`;
+  }).join("");
+  track.style.animation="";
+  track.innerHTML=cards+cards;
+  track.style.animationDuration=lista.length===1?"28s":lista.length===2?"42s":"72s";
+}
+function renderNextDelivery(){
+  const o=monthActiveOrders()[0],b=$("nextDelivery");
+  if(!o){b.innerHTML='<div class="question-title">🎉 NÃO EXISTEM OS PENDENTES NESTE MÊS</div>';return;}
+  const d=deadlineInfo(o);
+  b.innerHTML=`<div class="question-label">🚨 PRÓXIMA ENTREGA • ${escapeHtml(monthLabel(selectedOSMonth))}</div><div class="question-title">OS #${escapeHtml(o.numero)}</div><div class="detail-line">👤 <b>Cliente:</b> ${escapeHtml(o.cliente)}</div><div class="detail-line">📍 <b>Setor:</b> ${escapeHtml(o.setor)}</div><div class="detail-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"}</div><div class="os-days"><span class="priority ${d.cls}">${d.text}</span></div>`;
+}
+function renderQueue(){
+  const b=$("queueList"),lista=monthActiveOrders();
+  if(!lista.length){b.innerHTML='<div class="empty">🎉 Fila vazia neste mês. Nenhuma OS pendente.</div>';return;}
+  b.innerHTML="";
+  lista.forEach((o,i)=>{
+    const d=deadlineInfo(o),rank=i===0?"🥇":i===1?"🥈":i===2?"🥉":`#${i+1}`;
+    const x=document.createElement("div");x.className="os-card";x.onclick=()=>openOSDetail(o.id);
+    x.innerHTML=`<div class="queue-head"><div class="queue-rank">${rank}</div><div class="queue-main"><div class="queue-title">OS #${escapeHtml(o.numero)} — ${escapeHtml(o.cliente)}</div><div class="os-meta">📍 ${escapeHtml(o.setor)} • ⏱️ ${sectorDays(o)} dia${sectorDays(o)!==1?"s":""} no setor</div></div><span class="priority ${d.cls}">${d.text}</span></div><div class="record-line">📅 <b>Prazo:</b> ${o.prazo?new Date(o.prazo).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"}):"Não definido"} • 📝 ${escapeHtml(o.descricao)}</div>`;
+    b.appendChild(x);
+  });
+}
+function renderSectorChart(){const b=$("sectorChart"),counts={};SETORES.forEach(s=>counts[s]=0);monthActiveOrders().forEach(o=>{counts[o.setor]=(counts[o.setor]||0)+1});const max=Math.max(1,...Object.values(counts));b.innerHTML=Object.entries(counts).map(([s,n])=>`<div class="sector-row"><div>${s}</div><div class="bar"><div style="width:${(n/max)*100}%"></div></div><div>${n}</div></div>`).join("")}
 function openOSList(){renderOSList();showScreen("osView")}
 function filterOSSearch(){
   try{
@@ -2220,7 +2523,7 @@ setInterval(()=>{
 console.log("Arasigns pronto");
 </script>
 <footer class="app-footer">
-  <div class="footer-version">VERSÃO 2.2.0</div>
+  <div class="footer-version">VERSÃO 2.2.4</div>
   <div class="footer-update-line">
     <span class="footer-update-icon">🕒</span>
     <span>ÚLTIMA ATUALIZAÇÃO:</span>
